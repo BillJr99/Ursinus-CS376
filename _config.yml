@@ -8,11 +8,11 @@ relative_links:
 
 theme: jekyll-theme-slate
 
-title: "CS377"
-description: "Database Design"
+title: "CS376"
+description: "Operating Systems"
 
 url                      : https://BillJr99.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
-baseurl                  : "/Ursinus-CS377-Fall2023" # the subpath of your site, e.g. "/blog"
+baseurl                  : "/Ursinus-CS376-Spring2024" # the subpath of your site, e.g. "/blog"
     
 # Reading Files
 include:
