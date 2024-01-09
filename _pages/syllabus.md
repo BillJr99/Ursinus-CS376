@@ -53,13 +53,13 @@ info:
     <div style="width: 100%; display: table; border-collapse:separate; border-spacing:5px;">
     <div style="width: 100%; display: table-row;">
         <div style="display: table-cell; padding:5px; width:33%;">
-            <a title="Maxtremus, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Round-robin_schedule_quantum_3.png"><img width="512" alt="Round-robin schedule quantum 3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Round-robin_schedule_quantum_3.png/512px-Round-robin_schedule_quantum_3.png"></a>
+            <a title="Maxtremus, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Round-robin_schedule_quantum_3.png"><img width="100%" alt="Round-robin schedule quantum 3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Round-robin_schedule_quantum_3.png/512px-Round-robin_schedule_quantum_3.png"></a>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
-            <a title="Huihermit, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:MINIX_3.2_Top_Command.png"><img width="512" alt="MINIX 3.2 Top Command" src="https://upload.wikimedia.org/wikipedia/commons/2/2e/MINIX_3.2_Top_Command.png"></a>
+            <a title="Huihermit, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:MINIX_3.2_Top_Command.png"><img width="100%" alt="MINIX 3.2 Top Command" src="https://upload.wikimedia.org/wikipedia/commons/2/2e/MINIX_3.2_Top_Command.png"></a>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
-            <a title="Traced by User:Stannered, original by en:User:Dysprosia, BSD &lt;http://opensource.org/licenses/bsd-license.php&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Virtual_address_space_and_physical_address_space_relationship.svg"><img width="256" alt="Virtual address space and physical address space relationship" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Virtual_address_space_and_physical_address_space_relationship.svg/512px-Virtual_address_space_and_physical_address_space_relationship.svg.png"></a>
+            <a title="Traced by User:Stannered, original by en:User:Dysprosia, BSD &lt;http://opensource.org/licenses/bsd-license.php&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Virtual_address_space_and_physical_address_space_relationship.svg"><img width="100%" alt="Virtual address space and physical address space relationship" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Virtual_address_space_and_physical_address_space_relationship.svg/512px-Virtual_address_space_and_physical_address_space_relationship.svg.png"></a>
         </div>
     </div>
     </div>
