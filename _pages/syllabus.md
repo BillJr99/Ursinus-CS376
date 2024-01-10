@@ -174,7 +174,7 @@ schedule:
       - dtitle: "Lab: Debugging and Memory Management in C Handed Out"
         dlink: "Labs/MemoryDebugC"
         points: 100
-        rubricpath: "_pages/Labs/lab_memorydebugc.md"
+        rubricpath: "_pages/Labs/lab-memorydebugc.md"
   - week: "2"
     date: "0"
     title: "File I/O"
@@ -189,11 +189,11 @@ schedule:
       - dtitle: "Lab: Debugging and Memory Management in C Due"
         dlink: "Labs/MemoryDebugC"
         points: 100
-        rubricpath: "_pages/Labs/lab_memorydebugc.md"
+        rubricpath: "_pages/Labs/lab-memorydebugc.md"
       - dtitle: "Assignment: File I/O Handed Out"
         dlink: "Assignments/FileIO"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_fileio.md"
+        rubricpath: "_pages/Assignments/asmt-fileio.md"
   - week: "3"
     date: "0"
     title: "Network Programming"
@@ -212,11 +212,11 @@ schedule:
       - dtitle: "Assignment: File I/O Due"
         dlink: "Assignments/FileIO"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_fileio.md"
+        rubricpath: "_pages/Assignments/asmt-fileio.md"
       - dtitle: "Assignment: Web Client and Server Handed Out"
         dlink: "Assignments/WebClientServer"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_webclientserver.md"
+        rubricpath: "_pages/Assignments/asmt-webclientserver.md"
     readings:
       - rtitle: "OS Concepts Chapter 20.11"
         rlink: false
@@ -240,11 +240,11 @@ schedule:
       - dtitle: "Assignment: Web Client and Server Due"
         dlink: "Assignments/WebClientServer"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_webclientserver.md"
+        rubricpath: "_pages/Assignments/asmt-webclientserver.md"
       - dtitle: "Lab: Shell Handed Out"
         dlink: "Labs/Shell"
         points: 100
-        rubricpath: "_pages/Labs/lab_shell.md"
+        rubricpath: "_pages/Labs/lab-shell.md"
     readings:
       - rtitle: "Livelock"
         rlink: "http://queue.acm.org/detail.cfm?id=1365494"
@@ -269,7 +269,7 @@ schedule:
       - dtitle: "Lab: Shell Due"
         dlink: "Labs/Shell"
         points: 100
-        rubricpath: "_pages/Labs/lab_shell.md"
+        rubricpath: "_pages/Labs/lab-shell.md"
     readings:
       - rtitle: "OS Concepts Chapter 6.6"
         rlink: false
@@ -281,7 +281,7 @@ schedule:
       - dtitle: "Assignment: Threaded Programming Handed Out"
         dlink: "Assignments/Threads"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_threads.md"
+        rubricpath: "_pages/Assignments/asmt-threads.md"
     readings:
       - rtitle: "OS Concepts Chapter 6.7"
         rlink: false
@@ -299,7 +299,7 @@ schedule:
       - dtitle: "Assignment: Threaded Programming Due"
         dlink: "Assignments/Threads"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_threads.md"
+        rubricpath: "_pages/Assignments/asmt-threads.md"
       - dtitle: "Midterm: Midterm Exam Handed Out"
         dlink: false
         points: 100
@@ -326,7 +326,7 @@ schedule:
       - dtitle: "Lab: Booting a Custom Linux Kernel Handed Out"
         dlink: "Projects/BootingCustomKernel"
         points: 100
-        rubricpath: "_pages/Projects/proj_booting.md"
+        rubricpath: "_pages/Projects/proj-booting.md"
   - week: "10"
     date: "1"
     title: "CPU Process Scheduling Algorithms"
@@ -342,11 +342,11 @@ schedule:
       - dtitle: "Lab: Booting a Custom Linux Kernel Due"
         dlink: "Projects/BootingCustomKernel"
         points: 100
-        rubricpath: "_pages/Projects/proj_booting.md"
+        rubricpath: "_pages/Projects/proj-booting.md"
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Handed Out"
         dlink: "Projects/SyscallProcess"
         points: 100
-        rubricpath: "_pages/Projects/proj_syscallprocess.md"
+        rubricpath: "_pages/Projects/proj-syscallprocess.md"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
@@ -368,7 +368,7 @@ schedule:
       - dtitle: "Assignment: FAT File System Handed Out"
         dlink: "Assignments/FAT"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_fat.md"
+        rubricpath: "_pages/Assignments/asmt-fat.md"
   - week: "12"
     date: "1"
     title: "I/O Systems and Disk Scheduling"
@@ -377,11 +377,11 @@ schedule:
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
         dlink: "Projects/SyscallProcess"
         points: 100
-        rubricpath: "_pages/Projects/proj_syscallprocess.md"
+        rubricpath: "_pages/Projects/proj-syscallprocess.md"
       - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
         dlink: "Projects/Mailbox"
         points: 100
-        rubricpath: "_pages/Projects/proj_mailbox.md"
+        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "OS Concepts Chapter 11-12"
         rlink: false
@@ -400,11 +400,11 @@ schedule:
       - dtitle: "Lab: Interprocess Communication via a Mailbox Due"
         dlink: "Projects/Mailbox"
         points: 100
-        rubricpath: "_pages/Projects/proj_mailbox.md"
+        rubricpath: "_pages/Projects/proj-mailbox.md"
       - dtitle: "Lab: Fair Share Process Scheduling Handed Out"
         dlink: "Projects/FairShareProcessScheduling"
         points: 100
-        rubricpath: "_pages/Projects/proj_fairshareprocessscheduling.md"
+        rubricpath: "_pages/Projects/proj-fairshareprocessscheduling.md"
     readings:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
@@ -420,7 +420,7 @@ schedule:
       - dtitle: "Assignment: FAT File System Due"
         dlink: "Assignments/FAT"
         points: 100
-        rubricpath: "_pages/Assignments/asmt_fat.md"
+        rubricpath: "_pages/Assignments/asmt-fat.md"
     readings:
       - rtitle: "OS Concepts Chapter 20.6"
         rlink: false
@@ -431,7 +431,7 @@ schedule:
       - dtitle: "Lab: Fair Share Process Scheduling Due"
         dlink: "Projects/FairShareProcessScheduling"
         points: 100
-        rubricpath: "_pages/Projects/proj_fairshareprocessscheduling.md"
+        rubricpath: "_pages/Projects/proj-fairshareprocessscheduling.md"
         
 university:
   semester: "Spring"
