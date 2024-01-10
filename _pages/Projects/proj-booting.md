@@ -182,7 +182,7 @@ Specifically, if the new printme argument is set, you'll print "Hello World from
 Build and boot the kernel as before:
 
 * `cd ~/linux-2.6.22.19`
-* `make EXTRAVERSION='.19-LASTNAME' -j8
+* `make EXTRAVERSION='.19-LASTNAME' -j8`
 * `su`
 * `make install`
 * `update-grub`

@@ -10,3 +10,6 @@
 [submodule "_pages/Exercises"]
 	path = _pages/Exercises
 	url = https://github.com/BillJr99/Ursinus-Exercises.git
+[submodule "files/linux-2.6.22.19"]
+	path = files/linux-2.6.22.19
+	url = https://github.com/BillJr99/linux-2.6.22.19.git
