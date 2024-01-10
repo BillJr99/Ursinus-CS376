@@ -32,7 +32,9 @@ info:
     - rlink: https://launchpad.net/linux/2.6.22/2.6.22.19
       rtitle: "Linux Version 2.6.22.19 Download Page"
     - rlink: https://kernelnewbies.org/
-      rtitle: "Kernelnewbies - a Community of Aspiring Linux kernel developers"
+      rtitle: "Kernelnewbies - a Community of Aspiring Linux Kernel Developers"
+    - rlink: https://makelinux.github.io/kernel/map/
+      rtitle: "Interactive Map of Linux Kernel Functions"
 
 tags:
   - linux
