@@ -223,7 +223,7 @@ Navigate to [https://github.com/BillJr99/linux-2.6.22.19](https://github.com/Bil
 
 Clone that forked repository on your computer with the following command:
 
-`git clone https://github.com/<your git username>/linux-2.6.22.19.git`
+`git clone git@github.com:<your git username>/linux-2.6.22.19.git`
 
 Now, you can work entirely from your local computer and verify the results on your virtual machine!
 
