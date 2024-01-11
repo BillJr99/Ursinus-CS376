@@ -218,7 +218,9 @@ You can see a list of your commits by typing `git log`.  Each log entry will hav
 
 Submit this file as part of your submission.
 
-## Note - For KVM Users
+## Notes
+
+### For KVM Users
 
 If you have kvm installed, you can replace this command:
 
@@ -228,7 +230,9 @@ with this one:
 
 `kvm -curses -drive file=local.qcow2 -redir tcp:2222::22`
 
-In addition, you can boot your kernel directly from your local computer (without having to clone, build, run `make install` and run `update-grub` on the virtual machine) by adding these two parameters to the `kvm` command:
+### Building and Booting a Kernel From your Local Computer
+
+It is faster to compile the kernel from your local computer rather than through the virtual machine.  You can boot your kernel directly from your local computer (without having to clone, build, run `make install` and run `update-grub` on the virtual machine) by adding these two parameters to the `kvm` command:
 
 `-kernel arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'`
 
