@@ -83,7 +83,6 @@ There are several parts here:
 
 * `qemu-system-x86_64`: This is the qemu client in which your virtual machine will boot.  We are booting a 64-bit virtual machine, so we run the client for `x86_64` architectures.
 * `-drive file=local.qcow2`: This points to the virtual disk you just created (which is automatically linked to `base.qcow2` from earlier).
-* `-device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22`: This creates a virtual network device within your virtual machine that will be connected through your host computer's network connection.  It also forwards port 2222 to the ssh port of 22, so that you can remotely log into the virtual machine.  I've omitted the `hostfwd` parameter above in case you do not plan to use ssh or scp to log in and/or copy files to your virtual machine, but you are welcome to add it as shown here.
 * `-m 1024M -smp 8 -accel tcg`: These specify how much memory, how many CPU cores, and the underlying virtualization accelerator to use, respectively.
 
 Your virtual machine should boot and allow you to log in.  There are two options for logging into your machine:
@@ -93,31 +92,13 @@ Your virtual machine should boot and allow you to log in.  There are two options
 
 Please log into each of these accounts and change the password to better ones that you will remember right away.  You can run the `passwd` command to change your password.
 
-### Optional - Logging into Your Virtual Machine with ssh
-
-If you'd like to use tools like `ssh` or `scp` to remote login to your virtual machine, you can enable the `hostfwd` parameter above, and run the following command from your local computer:
-
-`ssh localhost -p 2222 -o PasswordAuthentication=yes -l user -o HostKeyAlgorithms=+ssh-rsa -o PubkeyAcceptedAlgorithms=+ssh-rsa`
-
 ## Compiling Your Custom Kernel
 
 In the `user` account home directory, you will see a `linux-2.6.22.19` directory and a `pristine_linux` directory, which contain the Linux Kernel source code.  It is included twice so that you have a convenient backup of the original source code.
 
-You could work directly in the `linux-2.6.22.19` directory; however, it is somewhat slow and cumbersome to work within the virtual machine.  Instead, I recommend cloning the source code from a git repository on your local computer **and** on the virtual machine.  As you work from your local computer, you can push to the repository, and pull from that repository on the virtual machine to build.
+You can work directly in the `linux-2.6.22.19` directory; however, it is somewhat slower to work directly within the virtual machine.  I discuss later how to clone and build the kernel on your local computer, and then pass the resulting kernel image to qemu.  But for now, we'll just build and modify the kernel directly on the virtual machine, to make sure everything is set up correctly.
 
-For now, we'll just build and modify the kernel directly on the virtual machine, to make sure everything is set up correctly.
-
-### Step 1 - Cloning the Kernel Source from git
-
-Rename the `linux-2.6.22.19` directory to something else like `linux-2.6.22.19-orig` so that it is out of the way of the repository you're about to clone.  
-
-Navigate to [https://github.com/BillJr99/linux-2.6.22.19](https://github.com/BillJr99/linux-2.6.22.19) and click the `Fork` button to copy the repository into your own account.
-
-Clone that forked repository on the virtual machine with the following command:
-
-`git clone https://github.com/<your git username>/linux-2.6.22.19.git`
-
-### Step 2 - Building the Kernel
+### Step 1 - Building the Kernel
 
 Now it's time to compile the kernel!  The kernel is just another piece of software, and it compiles and executes almost like any other.  The major exception is that it runs immediately upon bootup, rather than executing it from a console.  As a result, it runs with supervisory privileges over the hardware of the computer not enjoyed by any other user software.
 
@@ -137,7 +118,7 @@ To build the kernel, you run `make`.  You should do so within your linux directo
 
 This will build a file called `arch/x86_64/boot/bzImage`.  
 
-### Step 3 - Installing Your Kernel to the Boot Loader
+### Step 2 - Installing Your Kernel to the Boot Loader
 
 There is a bootloader program called GRUB that lists and boots the kernel of your choice, which is useful if you have more than one kernel or more than one Operating System installed.  To add this new image file to your `/boot` directory and to GRUB, execute the following commands (starting with `su`, which gives you supervisor / root privileges to make these changes):
 
@@ -153,7 +134,7 @@ You can exit the root environment back to your user account by entering the `exi
 
 You can boot the kernel on your virtual machine by typing the same command to the one you used to boot the operating system earlier:
 
-`qemu-system-x86_64 -drive file=local.qcow2 -device e1000,netdev=net0 -netdev user,id=net0 -m 1024M -smp 8 -accel tcg`
+`qemu-system-x86_64 -drive file=local.qcow2 -m 1024M -smp 8 -accel tcg`
 
 Alternatively, if you are still in your virtual machine, you can simply reboot it:
 
@@ -200,9 +181,63 @@ When the virtual machine boots, log in and run the following command to see if y
 
 Then, boot normally without adding this `printme` parameter (by hitting enter in GRUB when you select your kernel), and re-run this `dmesg | grep "Hello World from Me"`.  The message should only appear when you include the `printme` parameter!
 
-## Creating a diff Patch for Submission
+### Step 4 - Create a diff Patch File for Submission
 
-The kernel is a large source tree.  As a result, it is helpful to create a single file that captures the revisions you've made.
+The kernel is a large source tree.  As a result, it is helpful to create a single file that captures the revisions you've made.  You can create a single file, known as a patch, that captures these differences (and allows others to automatically apply your changes to their own files automatically!).
+
+The `pristine_linux` directory was set up to allow you to compare your work against the original kernel source tree.  You can create a patch by running the following from your user home directory:
+
+```
+cd linux-2.6.22.19
+make clean
+cd ..
+cd pristine_linux
+make clean
+cd ..
+diff -cruB linux-2.6.22.19 pristine_linux >my.patch
+```
+
+The `make clean` commands are important so that you don't diff the binary object files you built earlier when you create your patch.  Therefore, I suggest creating this only when you are ready to submit your work.
+
+## Optimizations
+
+### For KVM Users
+
+If you have kvm installed, you can replace this command:
+
+`qemu-system-x86_64 -drive file=local.qcow2 -m 1024M -smp 8 -accel tcg`
+
+with this one:
+
+`kvm -curses -drive file=local.qcow2`
+
+### Building and Booting a Kernel From your Local Computer
+
+It is faster to compile the kernel from your local computer rather than through the virtual machine.  You can boot your kernel directly from your local computer (without having to clone, build, run `make install` and run `update-grub` on the virtual machine). 
+
+#### Step 1 - Cloning the Kernel Source from git
+
+Rename the `linux-2.6.22.19` directory to something else like `linux-2.6.22.19-orig` so that it is out of the way of the repository you're about to clone.  
+
+Navigate to [https://github.com/BillJr99/linux-2.6.22.19](https://github.com/BillJr99/linux-2.6.22.19) and click the `Fork` button to copy the repository into your own account.
+
+Clone that forked repository on your computer with the following command:
+
+`git clone https://github.com/<your git username>/linux-2.6.22.19.git`
+
+Now, you can work entirely from your local computer and verify the results on your virtual machine!
+
+#### Step 2 - Booting the Kernel from Your Local Computer
+
+Once you have configured the kernel by downloading the `Makefile` and `.config` file using the same steps above, and compiled the kernel by running `make` as before, you can add these two parameters to the `kvm` or `qemu-system-x86_64` command you ran earlier to boot your virtual machine:
+
+`-kernel arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'`
+
+You can also add the `printme` parameter right after `root=/dev/hda1 ro'` to add that kernel parameter at boot time as well.
+
+#### Step 3 - Creating a diff Patch File for Submission
+
+One advantage of using git is that you can automatically create a patch file from your commit history.
 
 Commit and push your changes to git as usual with the following commands:
 
@@ -216,44 +251,14 @@ You can see a list of your commits by typing `git log`.  Each log entry will hav
 
 `git format-patch firstcommit^..lastcommit --stdout >my.patch`
 
-Submit this file as part of your submission.
-
-## Notes
-
-### For KVM Users
-
-If you have kvm installed, you can replace this command:
-
-`qemu-system-x86_64 -drive file=local.qcow2 -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::2222-:22 -m 1024M -smp 8 -accel tcg`
-
-with this one:
-
-`kvm -curses -drive file=local.qcow2 -redir tcp:2222::22`
-
-### Building and Booting a Kernel From your Local Computer
-
-It is faster to compile the kernel from your local computer rather than through the virtual machine.  You can boot your kernel directly from your local computer (without having to clone, build, run `make install` and run `update-grub` on the virtual machine) by adding these two parameters to the `kvm` command:
-
-`-kernel arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'`
-
-You can add the `printme` parameter right after `root=/dev/hda1 ro'` to add that kernel parameter at boot time as well.
-
 <!-- 
 References:
-https://vault.centos.org/5.5/isos/i386/
-https://qemu.weilnetz.de/w64/
-https://superuser.com/questions/986875/grub2-is-it-possible-to-disable-graphics-drivers-through-kernel-boot-command
-https://wiki.qemu.org/Documentation/Networking
-https://support.genymotion.com/hc/en-us/articles/9500420360093-I-get-the-error-no-matching-host-key-type-found-Their-offer-ssh-rsa-when-trying-to-connect-with-SSH
-https://launchpad.net/linux/2.6.22/2.6.22.19
-https://www.qemu.org/download/
+Grub boot no graphical splash: https://superuser.com/questions/986875/grub2-is-it-possible-to-disable-graphics-drivers-through-kernel-boot-command
+Download kernel: https://launchpad.net/linux/2.6.22/2.6.22.19
+Download qemu: https://www.qemu.org/download/
+Download QEMU for Windows: https://qemu.weilnetz.de/w64/
 Linux Cross Reference: https://elixir.bootlin.com/linux/v2.6.22.19/source
 apt-key update: https://www.linuxquestions.org/questions/linux-software-2/unable-to-connect-to-keys-gnupg-net-838576/
-iptables: https://upcloud.com/resources/tutorials/configure-iptables-debian
-iptables on startup: https://askubuntu.com/questions/270693/how-can-set-these-iptables-rules-to-run-at-startup
 update certificates: https://serverfault.com/questions/891734/debian-wheezy-outdated-root-certificates
-install curlconfig: https://askubuntu.com/questions/359267/cannot-find-curl-config-in-ubuntu-13-04
-install git from source: https://forums.docker.com/t/docker-build-for-git-2-39-1-error-required-c99-support-is-in-a-test-phase/134540/3
-force gnu99: https://stackoverflow.com/questions/11647208/where-to-add-a-cflag-such-as-std-gnu99-into-an-autotools-project
 debugging: https://nickdesaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-kernel-in-qemu-and-debugging-it-with-gdb/
 -->
