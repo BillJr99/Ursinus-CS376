@@ -77,7 +77,7 @@ Note that you must keep these files together in your working directory.
 
 To boot your image, run the following command:
 
-`qemu-system-x86_64 -drive file=local.qcow2 -device e1000,netdev=net0 -netdev user,id=net0 -m 1024M -smp 8 -accel tcg`
+`qemu-system-x86_64 -drive file=local.qcow2 -m 1024M -smp 8 -accel tcg`
 
 There are several parts here:
 
