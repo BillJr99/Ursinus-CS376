@@ -211,7 +211,7 @@ schedule:
   - week: "2"
     date: "1"
     title: "File I/O"
-    link: "../files/lectures/fileio.pptx"
+    link: "./files/lectures/fileio.pptx"
     deliverables:
       - dtitle: "Lab: Debugging and Memory Management in C Due"
         dlink: "Labs/MemoryDebugC"
@@ -230,7 +230,7 @@ schedule:
   - week: "3"
     date: "1"
     title: "Network Programming"
-    link: "../files/lectures/networkprogramming.pptx"
+    link: "./files/lectures/networkprogramming.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 19, 20.10"
         rlink: false
@@ -249,7 +249,7 @@ schedule:
   - week: "4"
     date: "1"
     title: "The Shell"
-    link: "../files/lectures/shell.pptx"
+    link: "./files/lectures/shell.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 20.11"
         rlink: false
@@ -259,7 +259,7 @@ schedule:
   - week: "5"
     date: "1"
     title: "Multithreading and Cache Considerations"
-    link: "../files/lectures/threading.pptx"
+    link: "./files/lectures/threading.pptx"
     deliverables:
       - dtitle: "Assignment: Web Client and Server Due"
         dlink: "Assignments/WebClientServer"
@@ -279,7 +279,7 @@ schedule:
   - week: "6"
     date: "0"
     title: "Mutual Exclusion"
-    link: "../files/lectures/mutex.pptx"
+    link: "./files/lectures/mutex.pptx"
     readings:
       - rtitle: "Livelock"
         rlink: "http://queue.acm.org/detail.cfm?id=1365494"
@@ -292,7 +292,7 @@ schedule:
   - week: "6"
     date: "1"
     title: "Thread Correctness Proofs"
-    link: "../files/lectures/mutexcorrectness.pptx"
+    link: "./files/lectures/mutexcorrectness.pptx"
     deliverables:
       - dtitle: "Lab: Shell Due"
         dlink: "Labs/Shell"
