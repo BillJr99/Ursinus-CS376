@@ -101,9 +101,9 @@ If you'd like to use tools like `ssh` or `scp` to remote login to your virtual m
 
 ## Compiling Your Custom Kernel
 
-In the `user` account home directory, you will see a `linux-2.6.22-19` directory and a `pristine_linux` directory, which contain the Linux Kernel source code.  It is included twice so that you have a convenient backup of the original source code.
+In the `user` account home directory, you will see a `linux-2.6.22.19` directory and a `pristine_linux` directory, which contain the Linux Kernel source code.  It is included twice so that you have a convenient backup of the original source code.
 
-You could work directly in the `linux-2.6.22-19` directory; however, it is somewhat slow and cumbersome to work within the virtual machine.  Instead, I recommend cloning the source code from a git repository on your local computer **and** on the virtual machine.  As you work from your local computer, you can push to the repository, and pull from that repository on the virtual machine to build.
+You could work directly in the `linux-2.6.22.19` directory; however, it is somewhat slow and cumbersome to work within the virtual machine.  Instead, I recommend cloning the source code from a git repository on your local computer **and** on the virtual machine.  As you work from your local computer, you can push to the repository, and pull from that repository on the virtual machine to build.
 
 For now, we'll just build and modify the kernel directly on the virtual machine, to make sure everything is set up correctly.
 
@@ -124,7 +124,7 @@ Now it's time to compile the kernel!  The kernel is just another piece of softwa
 First, we'll download a custom Makefile and build configuration file.  Normally, you would run `make menuconfig` to make choices about the hardware on your computer and what preferences and options you wish to set for this kernel.  This can be a cumbersome process, so I've set these options for you already and made them available for you to use.  Re-initialize the settings for this kernel and download my configuration settings into your kernel source directory with the following commands:
 
 ```
-cd linux-2.6.22-19
+cd linux-2.6.22.19
 make clean; make mrproper; make clean
 wget --no-check-certificate www.billmongan.com/Ursinus-CS376/files/proj-booting/config-2.6.22.19-debian -O .config
 wget --no-check-certificate www.billmongan.com/Ursinus-CS376/files/proj-booting/Makefile -O Makefile`
