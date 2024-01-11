@@ -401,10 +401,6 @@ schedule:
         dlink: "Projects/Mailbox"
         points: 100
         rubricpath: "_pages/Projects/proj-mailbox.md"
-      - dtitle: "Lab: Fair Share Process Scheduling Handed Out"
-        dlink: "Projects/FairShareProcessScheduling"
-        points: 100
-        rubricpath: "_pages/Projects/proj-fairshareprocessscheduling.md"
     readings:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
@@ -427,11 +423,6 @@ schedule:
   - week: "15"
     date: "0"
     title: "Review"
-    deliverables:
-      - dtitle: "Lab: Fair Share Process Scheduling Due"
-        dlink: "Projects/FairShareProcessScheduling"
-        points: 100
-        rubricpath: "_pages/Projects/proj-fairshareprocessscheduling.md"
         
 university:
   semester: "Spring"
