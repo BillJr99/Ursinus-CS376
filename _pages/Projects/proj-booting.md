@@ -151,13 +151,13 @@ To get your feet wet, you'll make a small change to the kernel source tree.  Spe
 
 ### Step 1 - Modifying the Kernel
 
-Specifically, if the new printme argument is set, you'll print "Hello World from Me!" to the screen during boot time.  Here's what to do:
+Specifically, if the new printme argument is set, you'll print `"Hello World from Me!"` to the screen during boot time.  Here's what to do:
 
 * `cd linux-2.6.22.19`
 * `cd init`
 * `vim main.c`
 * Look at how kernel command line `reset_devices` is coded. This provides an example of how you should code the `printme` kernel parameter.  Search for `reset_devices` everywhere in this file by typing `/reset_devices` and pressing the `n` character to cycle through the next instance of the string.  Everywhere you find `reset_devices`, copy the block and change `reset_devices` to `printme`.
-* After the `calibrate_delay()` call in the `start_kernel()` function, add code to check for the `printme` parameter by checking if `printme` is equal to `1`, and printk("Hello World from Me!\n"); if it is set.
+* After the `calibrate_delay()` call in the `start_kernel()` function, add code to check for the `printme` parameter by checking if `printme` is equal to `1`, and `printk("Hello World from Me!\n");` if it is set.
 * Save and exit
 
 ### Step 2 - Building and Installing the Kernel
