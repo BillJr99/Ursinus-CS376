@@ -91,6 +91,20 @@ textbooks:
   link: https://ursinus.bncollege.com/c/Operating-Systems-Concepts/p/MBS_2765951_dg
   isrequired: true 
   freelyavailable: false
+- title: "Computer Systems: A Programmer's Perspective"
+  authors: "Randal Bryant and David O'Hallaron"
+  edition: "3rd Edition"
+  isbn: "9780134092669"
+  link: https://www.amazon.com/Computer-Systems-Programmers-Perspective-3rd/dp/013409266X
+  isrequired: false 
+  freelyavailable: false  
+- title: "Principles of Concurrent and Distributed Programming"
+  authors: "Mordechai Ben-Ari"
+  edition: "2nd Edition"
+  isbn: "0321312839"
+  link: https://www.amazon.com/Principles-Concurrent-Distributed-Programming-2nd/dp/032131283X
+  isrequired: false 
+  freelyavailable: false    
 - title: "Linux Kernel Development"
   authors: "Robert Love"
   edition: "2nd Edition"
@@ -164,7 +178,7 @@ schedule:
   - week: "1"
     date: "0"
     title: "Introduction to C Programming, gdb, and Valgrind"
-    link: "./Activities/IntroCProgramming"
+    link: "./files/lectures/introc.pptx"
     deliverables:
       - dtitle: "Assignment: Warmup Due"
         dlink: "Assignments/Written/Warmup"
@@ -173,14 +187,13 @@ schedule:
       - dtitle: "Assignment: Shell Scripting Handed Out"
         dlink: "Assignments/ShellScripting"
         points: 100
-        rubric: "_pages/Assignments/asmt-shellscripting.md"
+        rubricpath: "_pages/Assignments/asmt-shellscripting.md"
     readings:
       - rtitle: "OS Concepts Chapter 1-2"
         rlink: false
   - week: "1"
     date: "1"
-    title: "Compilers, Linkers, and Loaders"
-    link: "./Activities/CompilerLinkerLoader"
+    title: "Introduction to C Programming, gdb, and Valgrind"
     deliverables:
       - dtitle: "Lab: Debugging and Memory Management in C Handed Out"
         dlink: "Labs/MemoryDebugC"
@@ -188,19 +201,17 @@ schedule:
         rubricpath: "_pages/Labs/lab-memorydebugc.md"
   - week: "2"
     date: "0"
-    title: "File I/O"
-    link: "./Activities/FileIO"
-    readings:
-      - rtitle: "OS Concepts Chapter 13, 20.8"
-        rlink: false
+    title: "Compilers, Linkers, and Loaders"
+    link: "./files/lectures/compilerlinker.pptx"
     deliverables:
       - dtitle: "Assignment: Shell Scripting Due"
         dlink: "Assignments/ShellScripting"
         points: 100
-        rubric: "_pages/Assignments/asmt-shellscripting.md"    
+        rubricpath: "_pages/Assignments/asmt-shellscripting.md"
   - week: "2"
     date: "1"
     title: "File I/O"
+    link: "../files/lectures/fileio.pptx"
     deliverables:
       - dtitle: "Lab: Debugging and Memory Management in C Due"
         dlink: "Labs/MemoryDebugC"
@@ -210,20 +221,22 @@ schedule:
         dlink: "Assignments/FileIO"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fileio.md"
+    readings:
+      - rtitle: "OS Concepts Chapter 13, 20.8"
+        rlink: false
   - week: "3"
     date: "0"
-    title: "Network Programming"
-    link: "./Activities/NetworkProgramming"
-    readings:
-      - rtitle: "OS Concepts Chapter 19, 20.10"
-        rlink: false
+    title: "File I/O"
   - week: "3"
     date: "1"
     title: "Network Programming"
+    link: "../files/lectures/networkprogramming.pptx"
+    readings:
+      - rtitle: "OS Concepts Chapter 19, 20.10"
+        rlink: false
   - week: "4"
     date: "0"
-    title: "The Shell"
-    link: "./Activities/Shell"
+    title: "Network Programming"
     deliverables:
       - dtitle: "Assignment: File I/O Due"
         dlink: "Assignments/FileIO"
@@ -233,25 +246,20 @@ schedule:
         dlink: "Assignments/WebClientServer"
         points: 100
         rubricpath: "_pages/Assignments/asmt-webclientserver.md"
-    readings:
-      - rtitle: "OS Concepts Chapter 20.11"
-        rlink: false
   - week: "4"
     date: "1"
     title: "The Shell"
-  - week: "5"
-    date: "0"
-    title: "Multithreading and Cache Considerations"
-    link: "./Activities/ThreadingCache"
+    link: "../files/lectures/shell.pptx"
     readings:
-      - rtitle: "pthreads Tutorial from the LLNL"
-        rlink: "https://computing.llnl.gov/tutorials/pthreads/"
-      - rtitle: "OS Concepts Chapter 4, 6.1-6.2"
+      - rtitle: "OS Concepts Chapter 20.11"
         rlink: false
   - week: "5"
+    date: "0"
+    title: "The Shell"
+  - week: "5"
     date: "1"
-    title: "Mutual Exclusion"
-    link: "./Activities/Mutex"
+    title: "Multithreading and Cache Considerations"
+    link: "../files/lectures/threading.pptx"
     deliverables:
       - dtitle: "Assignment: Web Client and Server Due"
         dlink: "Assignments/WebClientServer"
@@ -262,6 +270,17 @@ schedule:
         points: 100
         rubricpath: "_pages/Labs/lab-shell.md"
     readings:
+      - rtitle: "pthreads Tutorial from the LLNL"
+        rlink: "https://computing.llnl.gov/tutorials/pthreads/"
+      - rtitle: "Eliminate False Sharing"
+        rlink: "https://www.drdobbs.com/parallel/eliminate-false-sharing/217500206"
+      - rtitle: "OS Concepts Chapter 4, 6.1-6.2"
+        rlink: false
+  - week: "6"
+    date: "0"
+    title: "Mutual Exclusion"
+    link: "../files/lectures/mutex.pptx"
+    readings:
       - rtitle: "Livelock"
         rlink: "http://queue.acm.org/detail.cfm?id=1365494"
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 1"
@@ -271,46 +290,40 @@ schedule:
       - rtitle: "OS Concepts Chapter 7-8"
         rlink: false
   - week: "6"
-    date: "0"
-    title: "Thread Correctness Proofs"
-    link: "./Activities/ThreadCorrectnessProofs"
-    readings:
-      - rtitle: "OS Concepts Chapter 6.3-6.5"
-        rlink: false
-  - week: "6"
     date: "1"
-    title: "Semaphores"
-    link: "./Activities/Semaphores"
+    title: "Thread Correctness Proofs"
+    link: "../files/lectures/mutexcorrectness.pptx"
     deliverables:
       - dtitle: "Lab: Shell Due"
         dlink: "Labs/Shell"
         points: 100
         rubricpath: "_pages/Labs/lab-shell.md"
     readings:
-      - rtitle: "OS Concepts Chapter 6.6"
+      - rtitle: "OS Concepts Chapter 6.3-6.5"
         rlink: false
   - week: "8"
     date: "0"
-    title: "Condition Variables and Monitors"
-    link: "./Activities/Monitors"
+    title: "Semaphores"
+    link: "./Activities/Semaphores"
     deliverables:
       - dtitle: "Assignment: Threaded Programming Handed Out"
         dlink: "Assignments/Threads"
         points: 100
         rubricpath: "_pages/Assignments/asmt-threads.md"
     readings:
-      - rtitle: "OS Concepts Chapter 6.7"
+      - rtitle: "OS Concepts Chapter 6.6"
         rlink: false
   - week: "8"
     date: "1"
-    title: "Processes and Interprocess Communication"
-    link: "./Activities/ProcessesAndIPC"
+    title: "Condition Variables and Monitors"
+    link: "./Activities/Monitors"
     readings:
-      - rtitle: "OS Concepts Chapter 3"
+      - rtitle: "OS Concepts Chapter 6.7"
         rlink: false
   - week: "9"
     date: "0"
     title: "Processes and Interprocess Communication"
+    link: "./Activities/ProcessesAndIPC"
     deliverables:
       - dtitle: "Assignment: Threaded Programming Due"
         dlink: "Assignments/Threads"
@@ -320,20 +333,16 @@ schedule:
         dlink: false
         points: 100
         submission_types: "onpaper"
+    readings:
+      - rtitle: "OS Concepts Chapter 3"
+        rlink: false
   - week: "9"
     date: "1"
-    title: "Representing Processes and Threads in Linux"
-    link: "./Activities/LinuxProcesses"
-    readings:
-      - rtitle: "Linux Task Management"
-        rlink: "http://tldp.org/LDP/lki/lki-2.html"
-      - rtitle: "Linux Kernel Process Management"
-        rlink: "http://www.informit.com/articles/article.aspx?p=370047"
-      - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
-        rlink: false
+    title: "Processes and Interprocess Communication"
   - week: "10"
     date: "0"
     title: "Representing Processes and Threads in Linux"
+    link: "./Activities/LinuxProcesses"
     deliverables:
       - dtitle: "Midterm: Midterm Exam Due"
         dlink: false
@@ -343,17 +352,20 @@ schedule:
         dlink: "Projects/BootingCustomKernel"
         points: 100
         rubricpath: "_pages/Projects/proj-booting.md"
+    readings:
+      - rtitle: "Linux Task Management"
+        rlink: "http://tldp.org/LDP/lki/lki-2.html"
+      - rtitle: "Linux Kernel Process Management"
+        rlink: "http://www.informit.com/articles/article.aspx?p=370047"
+      - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
+        rlink: false
   - week: "10"
     date: "1"
-    title: "CPU Process Scheduling Algorithms"
-    link: "./Activities/ProcessScheduling"
-    readings:
-      - rtitle: "OS Concepts Chapter 5"
-        rlink: false
+    title: "Representing Processes and Threads in Linux"
   - week: "11"
     date: "0"
-    title: "Process Scheduling Algorithms in Linux"
-    link: "./Activities/LinuxProcessScheduling"
+    title: "CPU Process Scheduling Algorithms"
+    link: "./Activities/ProcessScheduling"
     deliverables:
       - dtitle: "Lab: Booting a Custom Linux Kernel Due"
         dlink: "Projects/BootingCustomKernel"
@@ -363,38 +375,38 @@ schedule:
         dlink: "Projects/SyscallProcess"
         points: 100
     readings:
+      - rtitle: "OS Concepts Chapter 5"
+        rlink: false
+  - week: "11"
+    date: "1"
+    title: "Process Scheduling Algorithms in Linux"
+    link: "./Activities/LinuxProcessScheduling"
+    readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
       - rtitle: "OS Concepts Chapter 20.5"
         rlink: false
-  - week: "11"
-    date: "1"
+  - week: "12"
+    date: "0"
     title: "Filesystem Interface and Implementation"
     link: "./Activities/Filesystems"
+    deliverables:
+      - dtitle: "Assignment: FAT File System Handed Out"
+        dlink: "Assignments/FAT"
+        points: 100
+        rubricpath: "_pages/Assignments/asmt-fat.md"
     readings:
       - rtitle: "FAT Booting"
         rlink: "http://www.win.tue.nl/%7Eaeb/linux/fs/fat/fat-1.html"
       - rtitle: "OS Concepts Chapter 14-15"
         rlink: false
   - week: "12"
-    date: "0"
-    title: "Filesystem Interface and Implementation"
-    deliverables:
-      - dtitle: "Assignment: FAT File System Handed Out"
-        dlink: "Assignments/FAT"
-        points: 100
-        rubricpath: "_pages/Assignments/asmt-fat.md"
-  - week: "12"
     date: "1"
-    title: "I/O Systems and Disk Scheduling"
-    link: "./Activites/IODiskScheduling"
-    readings:
-      - rtitle: "OS Concepts Chapter 11-12"
-        rlink: false
+    title: "Filesystem Interface and Implementation"
   - week: "13"
     date: "0"
-    title: "Disk Scheduling Algorithms in Linux"
-    link: "./Activities/LinuxDiskScheduling"
+    title: "I/O Systems and Disk Scheduling"
+    link: "./Activites/IODiskScheduling"
     deliverables:
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
         dlink: "Projects/SyscallProcess"
@@ -402,12 +414,19 @@ schedule:
       - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
         dlink: "Projects/Mailbox"
         points: 100
-        rubricpath: "_pages/Projects/proj-mailbox.md"    
+        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
-      - rtitle: "OS Concepts Chapter 20.7-8"
+      - rtitle: "OS Concepts Chapter 11-12"
         rlink: false
   - week: "13"
     date: "1"
+    title: "Disk Scheduling Algorithms in Linux"
+    link: "./Activities/LinuxDiskScheduling"
+    readings:
+      - rtitle: "OS Concepts Chapter 20.7-8"
+        rlink: false
+  - week: "14"
+    date: "0"
     title: "Virtual Memory"
     link: "./Activites/VirtualMemory"
     readings:
@@ -416,27 +435,24 @@ schedule:
       - rtitle: "OS Concepts Chapter 9-10"
         rlink: false
   - week: "14"
-    date: "0"
-    title: "Virtual Memory"
-  - week: "14"
     date: "1"
     title: "Virtual Memory"
     deliverables:
       - dtitle: "Lab: Interprocess Communication via a Mailbox Due"
         dlink: "Projects/Mailbox"
         points: 100
-        rubricpath: "_pages/Projects/proj-mailbox.md"    
-    readings:
-      - rtitle: "OS Concepts Chapter 20.6"
-        rlink: false
+        rubricpath: "_pages/Projects/proj-mailbox.md"
   - week: "15"
     date: "0"
-    title: "Review"
+    title: "Virtual Memory"
     deliverables:
       - dtitle: "Assignment: FAT File System Due"
         dlink: "Assignments/FAT"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fat.md"
+    readings:
+      - rtitle: "OS Concepts Chapter 20.6"
+        rlink: false
         
 university:
   semester: "Spring"
