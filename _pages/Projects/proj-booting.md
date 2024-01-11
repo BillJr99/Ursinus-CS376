@@ -244,4 +244,12 @@ https://support.genymotion.com/hc/en-us/articles/9500420360093-I-get-the-error-n
 https://launchpad.net/linux/2.6.22/2.6.22.19
 https://www.qemu.org/download/
 Linux Cross Reference: https://elixir.bootlin.com/linux/v2.6.22.19/source
+apt-key update: https://www.linuxquestions.org/questions/linux-software-2/unable-to-connect-to-keys-gnupg-net-838576/
+iptables: https://upcloud.com/resources/tutorials/configure-iptables-debian
+iptables on startup: https://askubuntu.com/questions/270693/how-can-set-these-iptables-rules-to-run-at-startup
+update certificates: https://serverfault.com/questions/891734/debian-wheezy-outdated-root-certificates
+install curlconfig: https://askubuntu.com/questions/359267/cannot-find-curl-config-in-ubuntu-13-04
+install git from source: https://forums.docker.com/t/docker-build-for-git-2-39-1-error-required-c99-support-is-in-a-test-phase/134540/3
+force gnu99: https://stackoverflow.com/questions/11647208/where-to-add-a-cflag-such-as-std-gnu99-into-an-autotools-project
+debugging: https://nickdesaulniers.github.io/blog/2018/10/24/booting-a-custom-linux-kernel-in-qemu-and-debugging-it-with-gdb/
 -->
