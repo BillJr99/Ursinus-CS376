@@ -379,14 +379,6 @@ schedule:
     date: "1"
     title: "I/O Systems and Disk Scheduling"
     link: "./Activites/IODiskScheduling"
-    deliverables:
-      - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
-        dlink: "Projects/SyscallProcess"
-        points: 100
-      - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
-        dlink: "Projects/Mailbox"
-        points: 100
-        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "OS Concepts Chapter 11-12"
         rlink: false
@@ -394,6 +386,14 @@ schedule:
     date: "0"
     title: "Disk Scheduling Algorithms in Linux"
     link: "./Activities/LinuxDiskScheduling"
+    deliverables:
+      - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
+        dlink: "Projects/SyscallProcess"
+        points: 100
+      - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
+        dlink: "Projects/Mailbox"
+        points: 100
+        rubricpath: "_pages/Projects/proj-mailbox.md"    
     readings:
       - rtitle: "OS Concepts Chapter 20.7-8"
         rlink: false
@@ -401,11 +401,6 @@ schedule:
     date: "1"
     title: "Virtual Memory"
     link: "./Activites/VirtualMemory"
-    deliverables:
-      - dtitle: "Lab: Interprocess Communication via a Mailbox Due"
-        dlink: "Projects/Mailbox"
-        points: 100
-        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
@@ -418,16 +413,21 @@ schedule:
     date: "1"
     title: "Virtual Memory"
     deliverables:
-      - dtitle: "Assignment: FAT File System Due"
-        dlink: "Assignments/FAT"
+      - dtitle: "Lab: Interprocess Communication via a Mailbox Due"
+        dlink: "Projects/Mailbox"
         points: 100
-        rubricpath: "_pages/Assignments/asmt-fat.md"
+        rubricpath: "_pages/Projects/proj-mailbox.md"    
     readings:
       - rtitle: "OS Concepts Chapter 20.6"
         rlink: false
   - week: "15"
     date: "0"
     title: "Review"
+    deliverables:
+      - dtitle: "Assignment: FAT File System Due"
+        dlink: "Assignments/FAT"
+        points: 100
+        rubricpath: "_pages/Assignments/asmt-fat.md"
         
 university:
   semester: "Spring"
