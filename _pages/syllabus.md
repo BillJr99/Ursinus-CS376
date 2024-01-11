@@ -170,6 +170,10 @@ schedule:
         dlink: "Assignments/Written/Warmup"
         points: 15
         submission_types: "onpaper"
+      - dtitle: "Assignment: Shell Scripting Handed Out"
+        dlink: "Assignments/ShellScripting"
+        points: 100
+        rubric: "_pages/Assignments/asmt-shellscripting.md"
     readings:
       - rtitle: "OS Concepts Chapter 1-2"
         rlink: false
@@ -189,6 +193,11 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 13, 20.8"
         rlink: false
+    deliverables:
+      - dtitle: "Assignment: Shell Scripting Due"
+        dlink: "Assignments/ShellScripting"
+        points: 100
+        rubric: "_pages/Assignments/asmt-shellscripting.md"    
   - week: "2"
     date: "1"
     title: "File I/O"
