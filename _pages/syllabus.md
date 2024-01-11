@@ -91,6 +91,13 @@ textbooks:
   link: https://ursinus.bncollege.com/c/Operating-Systems-Concepts/p/MBS_2765951_dg
   isrequired: true 
   freelyavailable: false
+- title: "Linux Kernel Development"
+  authors: "Robert Love"
+  edition: "2nd Edition"
+  isbn: "9780672327209"
+  link: https://litux.nl/mirror/kerneldevelopment/0672327201/toc.html
+  isrequired: false
+  freelyavailable: https://litux.nl/mirror/kerneldevelopment/0672327201/toc.html
 
 objectives:
 - objective: "To write thread-safe multithreaded programs"
@@ -346,7 +353,6 @@ schedule:
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Handed Out"
         dlink: "Projects/SyscallProcess"
         points: 100
-        rubricpath: "_pages/Projects/proj-syscallprocess.md"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
@@ -377,7 +383,6 @@ schedule:
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
         dlink: "Projects/SyscallProcess"
         points: 100
-        rubricpath: "_pages/Projects/proj-syscallprocess.md"
       - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
         dlink: "Projects/Mailbox"
         points: 100

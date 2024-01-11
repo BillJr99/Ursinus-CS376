@@ -35,6 +35,8 @@ info:
       rtitle: "Kernelnewbies - a Community of Aspiring Linux Kernel Developers"
     - rlink: https://makelinux.github.io/kernel/map/
       rtitle: "Interactive Map of Linux Kernel Functions"
+    - rlink: https://tldp.org/
+      rtitle: "The Linux Documentation Project"
 
 tags:
   - linux
