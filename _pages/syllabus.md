@@ -112,6 +112,12 @@ textbooks:
   link: https://litux.nl/mirror/kerneldevelopment/0672327201/toc.html
   isrequired: false
   freelyavailable: https://litux.nl/mirror/kerneldevelopment/0672327201/toc.html
+- title: "The Little Book of Semaphores"
+  authors: "Allen B. Downey"
+  edition: "Version 2.2.1"
+  link: https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
+  isrequired: false
+  freelyavailable: https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
 
 objectives:
 - objective: "To write thread-safe multithreaded programs"
@@ -248,14 +254,14 @@ schedule:
         rubricpath: "_pages/Assignments/asmt-webclientserver.md"
   - week: "4"
     date: "1"
-    title: "The Shell"
-    link: "./files/lectures/shell.pptx"
+    title: "Interprocess Communication and The Shell"
+    link: "./files/lectures/shellipc.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 20.11"
         rlink: false
   - week: "5"
     date: "0"
-    title: "The Shell"
+    title: "Interprocess Communication and The Shell"
   - week: "5"
     date: "1"
     title: "Multithreading and Cache Considerations"
@@ -304,7 +310,7 @@ schedule:
   - week: "8"
     date: "0"
     title: "Semaphores"
-    link: "./Activities/Semaphores"
+    link: "./files/lectures/semaphores.pptx"
     deliverables:
       - dtitle: "Assignment: Threaded Programming Handed Out"
         dlink: "Assignments/Threads"
@@ -316,14 +322,14 @@ schedule:
   - week: "8"
     date: "1"
     title: "Condition Variables and Monitors"
-    link: "./Activities/Monitors"
+    link: "./files/lectures/monitors.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 6.7"
         rlink: false
   - week: "9"
     date: "0"
-    title: "Processes and Interprocess Communication"
-    link: "./Activities/ProcessesAndIPC"
+    title: "Process Management"
+    link: "./files/lectures/processes.pptx"
     deliverables:
       - dtitle: "Assignment: Threaded Programming Due"
         dlink: "Assignments/Threads"
@@ -338,11 +344,11 @@ schedule:
         rlink: false
   - week: "9"
     date: "1"
-    title: "Processes and Interprocess Communication"
+    title: "Process Management"
   - week: "10"
     date: "0"
     title: "Representing Processes and Threads in Linux"
-    link: "./Activities/LinuxProcesses"
+    link: "./files/lectures/linuxprocesses.pptx"
     deliverables:
       - dtitle: "Midterm: Midterm Exam Due"
         dlink: false
@@ -365,7 +371,7 @@ schedule:
   - week: "11"
     date: "0"
     title: "CPU Process Scheduling Algorithms"
-    link: "./Activities/ProcessScheduling"
+    link: "./files/lectures/scheduling.pptx"
     deliverables:
       - dtitle: "Lab: Booting a Custom Linux Kernel Due"
         dlink: "Projects/BootingCustomKernel"
@@ -380,7 +386,7 @@ schedule:
   - week: "11"
     date: "1"
     title: "Process Scheduling Algorithms in Linux"
-    link: "./Activities/LinuxProcessScheduling"
+    link: "./files/lectures/linuxscheduling.ppts"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
@@ -389,7 +395,7 @@ schedule:
   - week: "12"
     date: "0"
     title: "Filesystem Interface and Implementation"
-    link: "./Activities/Filesystems"
+    link: "./files/lectures/filesystems.pptx"
     deliverables:
       - dtitle: "Assignment: FAT File System Handed Out"
         dlink: "Assignments/FAT"
@@ -406,7 +412,7 @@ schedule:
   - week: "13"
     date: "0"
     title: "I/O Systems and Disk Scheduling"
-    link: "./Activites/IODiskScheduling"
+    link: "./files/lectures/diskscheduling.pptx"
     deliverables:
       - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
         dlink: "Projects/SyscallProcess"
@@ -421,14 +427,14 @@ schedule:
   - week: "13"
     date: "1"
     title: "Disk Scheduling Algorithms in Linux"
-    link: "./Activities/LinuxDiskScheduling"
+    link: "./files/lectures/linuxdiskscheduling.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 20.7-8"
         rlink: false
   - week: "14"
     date: "0"
     title: "Virtual Memory"
-    link: "./Activites/VirtualMemory"
+    link: "./files/lectures/virtualmemory.pptx"
     readings:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
@@ -453,7 +459,7 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 20.6"
         rlink: false
-        
+
 university:
   semester: "Spring"
   academicyear: "2023-24"
