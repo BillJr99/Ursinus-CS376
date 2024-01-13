@@ -197,6 +197,8 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 1-2"
         rlink: false
+      - rtitle: "Linux Kernel Development Chapter 19, Appendix A"
+        rlink: false
   - week: "1"
     date: "1"
     title: "Introduction to C Programming, gdb, and Valgrind"
@@ -282,18 +284,20 @@ schedule:
         rlink: "https://www.drdobbs.com/parallel/eliminate-false-sharing/217500206"
       - rtitle: "OS Concepts Chapter 4, 6.1-6.2"
         rlink: false
+      - rtitle: "Little Book of Semaphores Chapter 3.7"
+        rlink: false
   - week: "6"
     date: "0"
     title: "Mutual Exclusion"
     link: "./files/lectures/mutex.pptx"
     readings:
-      - rtitle: "Livelock"
-        rlink: "http://queue.acm.org/detail.cfm?id=1365494"
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 1"
         rlink: "http://www.cs.utexas.edu/users/EWD/transcriptions/EWD01xx/EWD123.html"
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 2"
         rlink: "http://www.cs.utexas.edu/users/EWD/transcriptions/EWD01xx/EWD123-2.html"
       - rtitle: "OS Concepts Chapter 7-8"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 8-9"
         rlink: false
   - week: "6"
     date: "1"
@@ -307,6 +311,8 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 6.3-6.5"
         rlink: false
+      - rtitle: "Livelock"
+        rlink: "http://queue.acm.org/detail.cfm?id=1365494"
   - week: "8"
     date: "0"
     title: "Semaphores"
@@ -318,6 +324,8 @@ schedule:
         rubricpath: "_pages/Assignments/asmt-threads.md"
     readings:
       - rtitle: "OS Concepts Chapter 6.6"
+        rlink: false
+      - rtitle: "Little Book of Semaphores Chapter 4, Appendix A-B"
         rlink: false
   - week: "8"
     date: "1"
@@ -345,6 +353,9 @@ schedule:
   - week: "9"
     date: "1"
     title: "Process Management"
+    readings:
+      - rtitle: "Linux Kernel Development Chapter 2"
+        rlink: false
   - week: "10"
     date: "0"
     title: "Representing Processes and Threads in Linux"
@@ -359,11 +370,13 @@ schedule:
         points: 100
         rubricpath: "_pages/Projects/proj-booting.md"
     readings:
-      - rtitle: "Linux Task Management"
+      - rtitle: "Linux Kernel Internals - Linux Task Management"
         rlink: "http://tldp.org/LDP/lki/lki-2.html"
       - rtitle: "Linux Kernel Process Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=370047"
       - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 3"
         rlink: false
   - week: "10"
     date: "1"
@@ -383,6 +396,8 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 5"
         rlink: false
+      - rtitle: "Linux Kernel Development Chapter 5-6"
+        rlink: false
   - week: "11"
     date: "1"
     title: "Process Scheduling Algorithms in Linux"
@@ -391,6 +406,8 @@ schedule:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
       - rtitle: "OS Concepts Chapter 20.5"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 4"
         rlink: false
   - week: "12"
     date: "0"
@@ -405,6 +422,8 @@ schedule:
       - rtitle: "FAT Booting"
         rlink: "http://www.win.tue.nl/%7Eaeb/linux/fs/fat/fat-1.html"
       - rtitle: "OS Concepts Chapter 14-15"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 12"
         rlink: false
   - week: "12"
     date: "1"
@@ -424,6 +443,8 @@ schedule:
     readings:
       - rtitle: "OS Concepts Chapter 11-12"
         rlink: false
+      - rtitle: "Linux Kernel Development Chapter 13"
+        rlink: false
   - week: "13"
     date: "1"
     title: "Disk Scheduling Algorithms in Linux"
@@ -439,6 +460,8 @@ schedule:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
       - rtitle: "OS Concepts Chapter 9-10"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 11, 14-15"
         rlink: false
   - week: "14"
     date: "1"
@@ -458,6 +481,8 @@ schedule:
         rubricpath: "_pages/Assignments/asmt-fat.md"
     readings:
       - rtitle: "OS Concepts Chapter 20.6"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 18, 20"
         rlink: false
 
 university:
