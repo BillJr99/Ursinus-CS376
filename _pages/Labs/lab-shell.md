@@ -64,11 +64,13 @@ tags:
 ## Part 1: Exploring the UNIX Shell
 
 1. Create a subfolder in your home directory and populate it with a number of files (their names and contents do not matter).  Give them different file permissions (they don't matter -- just mix them up).  Make some directories as well.  
+
 2. Within this subdirectory:
-  1. Write a UNIX command to find all files that are files (that is, not directories -- and even files that are in subdirectories)
-  2. Write a UNIX command to find all directories (even subdirectories)
-  3. Write a UNIX command to change file permissions on all files to 600
-  4. Write a UNIX command to change all file permissions on all directories to 755
+
+  * Write a UNIX command to find all files that are files (that is, not directories -- and even files that are in subdirectories)
+  * Write a UNIX command to find all directories (even subdirectories)
+  * Write a UNIX command to change file permissions on all files to 600
+  * Write a UNIX command to change all file permissions on all directories to 755
 
 3. Write a UNIX command to replace all instances of the word "foo" in a file with "bar"
 
