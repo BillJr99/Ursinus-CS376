@@ -281,7 +281,7 @@ schedule:
       - rtitle: "pthreads Tutorial from the LLNL"
         rlink: "https://computing.llnl.gov/tutorials/pthreads/"
       - rtitle: "Eliminate False Sharing"
-        rlink: "https://www.drdobbs.com/parallel/eliminate-false-sharing/217500206"
+        rlink: "https://web.archive.org/web/20130608192907/https://www.drdobbs.com/parallel/eliminate-false-sharing/217500206"
       - rtitle: "OS Concepts Chapter 4, 6.1-6.2"
         rlink: false
       - rtitle: "Little Book of Semaphores Chapter 3.7"
