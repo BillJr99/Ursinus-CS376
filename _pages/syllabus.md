@@ -401,7 +401,7 @@ schedule:
   - week: "11"
     date: "1"
     title: "Process Scheduling Algorithms in Linux"
-    link: "./files/lectures/linuxscheduling.ppts"
+    link: "./files/lectures/linuxscheduling.pptx"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
