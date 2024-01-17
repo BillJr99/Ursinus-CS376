@@ -14,7 +14,6 @@ info:
     -  Utilize file input/output operations in a networked environment, such as reading and serving files from a server, reinforcing understanding of file handling in conjunction with network programming.
     
   rubric:
-rubric:
   - weight: 15
     description: Correct Use of Sockets
     preemerging: Unable to establish socket connections.

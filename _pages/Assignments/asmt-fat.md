@@ -17,54 +17,34 @@ info:
   rubric:
     - weight: 30
       description: Program Correctness
-      preemerging:
-        - Code does not compile or execute, or produces critical errors.
-      beginning:
-        - Code compiles and executes but contains significant logic errors, leading to incorrect results.
-      progressing:
-        - Code compiles, executes, and produces correct results in most cases but may have minor issues.
-      proficient:
-        - Code is correct, produces accurate results, and handles edge cases effectively.
+      preemerging: Code does not compile or execute, or produces critical errors.
+      beginning: Code compiles and executes but contains significant logic errors, leading to incorrect results.
+      progressing: Code compiles, executes, and produces correct results in most cases but may have minor issues.
+      proficient: Code is correct, produces accurate results, and handles edge cases effectively.
     - weight: 20
       description: Listing the FAT File Entries
-      preemerging:
-        - No evidence of listing FAT file entries.
-      beginning:
-        - Partial listing of FAT file entries with major issues or inaccuracies.
-      progressing:
-        - Successfully lists FAT file entries with minor issues or improvements needed.
-      proficient:
-        - Accurately lists all FAT file entries with clear and well-organized output.
+      preemerging: No evidence of listing FAT file entries.
+      beginning: Partial listing of FAT file entries with major issues or inaccuracies.
+      progressing: Successfully lists FAT file entries with minor issues or improvements needed.
+      proficient: Accurately lists all FAT file entries with clear and well-organized output.
     - weight: 20
       description: Extracting Files
-      preemerging:
-        - No evidence of file extraction.
-      beginning:
-        - Partial file extraction with major issues or inaccuracies.
-      progressing:
-        - Successfully extracts files with minor issues or improvements needed.
-      proficient:
-        - Accurately extracts all files with proper handling of file data and formats.
+      preemerging: No evidence of file extraction.
+      beginning: Partial file extraction with major issues or inaccuracies.
+      progressing: Successfully extracts files with minor issues or improvements needed.
+      proficient: Accurately extracts all files with proper handling of file data and formats.
     - weight: 15
       description: Makefile
-      preemerging:
-        - Absence of a Makefile or Makefile does not compile or execute both programs.
-      beginning:
-        - Partially functional Makefile with significant gaps in compiling or testing both programs.
-      progressing:
-        - Functional Makefile that compiles and tests both programs but may lack automation or efficiency.
-      proficient:
-        - A complete and efficient Makefile that automates compilation, testing, and cleanup effectively.
+      preemerging: Absence of a Makefile or Makefile does not compile or execute both programs.
+      beginning: Partially functional Makefile with significant gaps in compiling or testing both programs.
+      progressing: Functional Makefile that compiles and tests both programs but may lack automation or efficiency.
+      proficient: A complete and efficient Makefile that automates compilation, testing, and cleanup effectively.
     - weight: 15
       description: README
-      preemerging:
-        - Absence of a README or README lacks essential information.
-      beginning:
-        - Partial README with significant gaps in explaining how to run the software and its development.
-      progressing:
-        - Complete README with clear instructions on running the software and its development process.
-      proficient:
-        - An exemplary README that provides comprehensive guidance on software execution, development, and design decisions.
+      preemerging: Absence of a README or README lacks essential information.
+      beginning: Partial README with significant gaps in explaining how to run the software and its development.
+      progressing: Complete README with clear instructions on running the software and its development process.
+      proficient: An exemplary README that provides comprehensive guidance on software execution, development, and design decisions.
 
   readings:
     - rlink: https://web.archive.org/web/20070524053621/https://alumnus.caltech.edu/~pje/dosfiles.html
