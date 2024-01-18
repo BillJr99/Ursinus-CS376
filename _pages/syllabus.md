@@ -134,7 +134,7 @@ goals:
 - goal: "To design and implement core operating system functionality"
 
 grade_breakdown:
-- category: "Assignments"
+- category: "Homework Assignments"
   weight: "35%"
 - category: "Labs"
   weight: "40%"
@@ -177,7 +177,7 @@ schedule:
     title: "Course Overview"
     link: "../Ursinus-CS376-Overview"
     deliverables:
-      - dtitle: "Assignment: Warmup Handed Out"
+      - dtitle: "Homework Assignment: Warmup Handed Out"
         dlink: "Assignments/Written/Warmup"
         points: 15
         submission_types: "onpaper"
@@ -186,11 +186,11 @@ schedule:
     title: "Introduction to C Programming, gdb, and Valgrind"
     link: "./files/lectures/introc.pptx"
     deliverables:
-      - dtitle: "Assignment: Warmup Due"
+      - dtitle: "Homework Assignment: Warmup Due"
         dlink: "Assignments/Written/Warmup"
         points: 15
         submission_types: "onpaper"
-      - dtitle: "Assignment: Shell Scripting Handed Out"
+      - dtitle: "Homework Assignment: Shell Scripting Handed Out"
         dlink: "Assignments/ShellScripting"
         points: 100
         rubricpath: "_pages/Assignments/asmt-shellscripting.md"
@@ -212,7 +212,7 @@ schedule:
     title: "Compilers, Linkers, and Loaders"
     link: "./files/lectures/compilerlinker.pptx"
     deliverables:
-      - dtitle: "Assignment: Shell Scripting Due"
+      - dtitle: "Homework Assignment: Shell Scripting Due"
         dlink: "Assignments/ShellScripting"
         points: 100
         rubricpath: "_pages/Assignments/asmt-shellscripting.md"
@@ -225,7 +225,7 @@ schedule:
         dlink: "Labs/MemoryDebugC"
         points: 100
         rubricpath: "_pages/Labs/lab-memorydebugc.md"
-      - dtitle: "Assignment: File I/O Handed Out"
+      - dtitle: "Homework Assignment: File I/O Handed Out"
         dlink: "Assignments/FileIO"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fileio.md"
@@ -246,11 +246,11 @@ schedule:
     date: "0"
     title: "Network Programming"
     deliverables:
-      - dtitle: "Assignment: File I/O Due"
+      - dtitle: "Homework Assignment: File I/O Due"
         dlink: "Assignments/FileIO"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fileio.md"
-      - dtitle: "Assignment: Web Client and Server Handed Out"
+      - dtitle: "Homework Assignment: Web Client and Server Handed Out"
         dlink: "Assignments/WebClientServer"
         points: 100
         rubricpath: "_pages/Assignments/asmt-webclientserver.md"
@@ -269,7 +269,7 @@ schedule:
     title: "Multithreading and Cache Considerations"
     link: "./files/lectures/threading.pptx"
     deliverables:
-      - dtitle: "Assignment: Web Client and Server Due"
+      - dtitle: "Homework Assignment: Web Client and Server Due"
         dlink: "Assignments/WebClientServer"
         points: 100
         rubricpath: "_pages/Assignments/asmt-webclientserver.md"
@@ -318,7 +318,7 @@ schedule:
     title: "Semaphores"
     link: "./files/lectures/semaphores.pptx"
     deliverables:
-      - dtitle: "Assignment: Threaded Programming Handed Out"
+      - dtitle: "Homework Assignment: Threaded Programming Handed Out"
         dlink: "Assignments/Threads"
         points: 100
         rubricpath: "_pages/Assignments/asmt-threads.md"
@@ -339,7 +339,7 @@ schedule:
     title: "Process Management"
     link: "./files/lectures/processes.pptx"
     deliverables:
-      - dtitle: "Assignment: Threaded Programming Due"
+      - dtitle: "Homework Assignment: Threaded Programming Due"
         dlink: "Assignments/Threads"
         points: 100
         rubricpath: "_pages/Assignments/asmt-threads.md"
@@ -414,7 +414,7 @@ schedule:
     title: "Filesystem Interface and Implementation"
     link: "./files/lectures/filesystems.pptx"
     deliverables:
-      - dtitle: "Assignment: FAT File System Handed Out"
+      - dtitle: "Homework Assignment: FAT File System Handed Out"
         dlink: "Assignments/FAT"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fat.md"
@@ -475,7 +475,7 @@ schedule:
     date: "0"
     title: "Virtual Memory"
     deliverables:
-      - dtitle: "Assignment: FAT File System Due"
+      - dtitle: "Homework Assignment: FAT File System Due"
         dlink: "Assignments/FAT"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fat.md"
