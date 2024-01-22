@@ -30,7 +30,12 @@ info:
       beginning: The program is submitted, but not according to the directions in one or more ways (for example, because it is lacking a readme writeup or missing answers to written questions)
       progressing: The program is submitted according to the directions with a minor omission or correction needed, including a readme writeup describing the solution and answering nearly all questions posed in the instructions
       proficient: The program is submitted according to the directions, including a readme writeup describing the solution and answering all questions posed in the instructions
-
+  readings:
+    - rlink: https://linuxconfig.org/bash-scripting-tutorial
+      rtitle: "Bash Scripting Tutorial"
+    - rlink: https://learn.microsoft.com/en-us/windows/wsl/install
+      rtitle: "How to install Linux on Windows with WSL"
+      
 tags:
   - shellscripting
 
@@ -39,8 +44,8 @@ tags:
 In this tutorial, we'll create a Bash script to monitor and alert about increases in CPU usage on a Linux system. We'll break down the process into simple steps, making it easy to understand even for beginners in Bash scripting.   You will write a script that calculates the average CPU usage over all cores and checks if there's an increase beyond a predefined threshold compared to the previous minute.
 
 ## Prerequisites
-1. Access to a Linux system with standard command-line tools installed.
-2. Basic familiarity with the Linux command line and Bash scripting.
+1. Access to a Linux system with standard command-line tools installed (Windows users can install the [Windows Subsystem for Linux (WSL)](https://learn.microsoft.com/en-us/windows/wsl/install) for access to these tools).
+2. Basic familiarity with the Linux command line and Bash scripting, or completion of [this Bash Scripting tutorial](https://linuxconfig.org/bash-scripting-tutorial).
 
 ## Step 1: Creating a Shell Script
 
