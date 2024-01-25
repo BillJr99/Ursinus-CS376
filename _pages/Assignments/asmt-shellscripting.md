@@ -85,7 +85,9 @@ done
 
 Now, let's write the inside body of the loop above.  **These commands go inside the while loop we've just made.**
 
-We'll use the `top` command to get CPU usage data and `awk` for processing:
+We'll use the `top` command to get CPU usage data and `awk` for processing.  This sequence of commands is slightly different for Windows/Linux and Mac Users.
+
+### Windows and Linux Users
 
 ```
 current_cpu_usage=$(top -bn1 | grep '^%Cpu' | awk '{total += $2 + $4} END {print total/NR}')
@@ -97,13 +99,27 @@ This command does the following:
 * `grep '^%Cpu'`: Filters lines starting with %Cpu.
 * `awk '{total += $2 + $4} END {print total/NR}'`: Sums the user and system usage for each CPU and calculates the average.
 
+### Mac Users
+
+```
+current_cpu_usage=$(top -l 1 -n 0 | awk '/CPU usage/ {user+=$3; sys+=$5} END {print (user+sys)/2}' | sed 's/%//g')
+```
+
+This command does the following:
+
+* `top -l 1 -n 0`: Runs top in one iteration to get the latest CPU data.
+* `awk '/CPU usage/ {user+=$3; sys+=$5} END {print (user+sys)/2}'`: Sums the user and system usage for each CPU and calculates the average. 
+* `sed 's/%//g'`: Removes the percentage sign from the output
+  
 ## Step 5: Comparing CPU Usage and Alerting
 
-Add an `if` statement to compare the current CPU usage with the previous and alert if the increase is beyond the threshold:
+Add an `if` statement to compare the current CPU usage with the previous and alert if the increase is beyond the threshold (we'll print the CPU usage otherwise):
 
 ```
 if [ $(echo "$current_cpu_usage > $previous_cpu_usage + $threshold" | bc) -eq 1 ]; then
     echo "Warning: Average CPU usage increased by more than $threshold% in the last minute!"
+else
+    echo "Average CPU Usage of ${current_cpu_usage} is below the threshold"
 fi
 
 previous_cpu_usage=$current_cpu_usage
