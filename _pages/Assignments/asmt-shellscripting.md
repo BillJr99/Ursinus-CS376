@@ -109,7 +109,7 @@ This command does the following:
 
 * `top -l 1 -n 0`: Runs top in one iteration to get the latest CPU data.
 * `awk '/CPU usage/ {user+=$3; sys+=$5} END {print (user+sys)/2}'`: Sums the user and system usage for each CPU and calculates the average. 
-* `sed 's/%//g'`: Removes the percentage sign from the output
+* `sed 's/%//g'`: Removes the percentage sign from the output.
   
 ## Step 5: Comparing CPU Usage and Alerting
 
