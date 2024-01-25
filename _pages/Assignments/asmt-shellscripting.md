@@ -83,6 +83,8 @@ done
 
 ## Step 4: Fetching CPU Usage Data
 
+Now, let's write the inside body of the loop above.  **These commands go inside the while loop we've just made.**
+
 We'll use the `top` command to get CPU usage data and `awk` for processing:
 
 ```
@@ -108,6 +110,8 @@ previous_cpu_usage=$current_cpu_usage
 ```
 
 ## Step 6: Running the Script
+
+To quit nano, press Control-X on your keyboard.  You'll be prompted to save the file you're working on, and you can say yes and hit enter to keep the same filename.  Alternatively, you can press Control-O anytime to save your file.
 
 To run the script, first make it executable:
 
