@@ -125,6 +125,8 @@ fi
 previous_cpu_usage=$current_cpu_usage
 ```
 
+Here, the `echo` command outputs the variable `current_cpu_usage > previous_cpu_usage + threshold` and pipes that string to the `bc` tool.  `bc` is a command line calculator, so it adds the variables together, and does a greater than comparison on the result.  It outputs `1` if it is true.  By putting these in single quotes, we convert the output to a string, and do a string comparison to compare the result to `1`.
+
 ## Step 6: Running the Script
 
 To quit nano, press Control-X on your keyboard.  You'll be prompted to save the file you're working on, and you can say yes and hit enter to keep the same filename.  Alternatively, you can press Control-O anytime to save your file.
