@@ -142,3 +142,7 @@ Then, execute it:
 ```
 ./cpu_monitor.sh
 ```
+
+## Submitting Your Work
+
+You can zip up your file(s) to submit them using a zip program of your choice.
