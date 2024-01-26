@@ -116,7 +116,7 @@ This command does the following:
 Add an `if` statement to compare the current CPU usage with the previous and alert if the increase is beyond the threshold (we'll print the CPU usage otherwise):
 
 ```
-if [ $(echo "${current_cpu_usage} > ${previous_cpu_usage} + ${threshold}" | bc) -eq "1" ]; then
+if [ $(echo "${current_cpu_usage} > ${previous_cpu_usage} + ${threshold}" | bc) -eq 1 ]; then
     echo "Warning: Average CPU usage of ${current_cpu_usage} increased by more than $threshold% in the last minute!"
 else
     echo "Average CPU Usage of ${current_cpu_usage} is below the threshold"
