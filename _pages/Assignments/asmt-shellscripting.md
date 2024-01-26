@@ -116,7 +116,7 @@ This command does the following:
 Add an `if` statement to compare the current CPU usage with the previous and alert if the increase is beyond the threshold (we'll print the CPU usage otherwise):
 
 ```
-if [ "$(echo "${current_cpu_usage} > ${previous_cpu_usage} + ${threshold}" | bc)" -eq 1 ]; then
+if [ $(echo "${current_cpu_usage} > ${previous_cpu_usage} + ${threshold}" | bc) -eq "1" ]; then
     echo "Warning: Average CPU usage of ${current_cpu_usage} increased by more than $threshold% in the last minute!"
 else
     echo "Average CPU Usage of ${current_cpu_usage} is below the threshold"
@@ -125,7 +125,7 @@ fi
 previous_cpu_usage=${current_cpu_usage}
 ```
 
-Here, the `echo` command outputs the variable `current_cpu_usage > previous_cpu_usage + threshold` and pipes that string to the `bc` tool.  To get the value of a variable (rather than using the name of the variable in the string), we enclose the variable name in the `${}` operator.  `bc` is a command line calculator, so it adds the variables together, and does a greater than comparison on the result.  It outputs `1` if it is true.  By putting these in quotes, we convert the output to a string, and by putting the expression inside the `$()` operator, we treat the result of the command as a value.  With that value, we do a string comparison to compare the result to `1`.
+Here, the `echo` command outputs the variable `current_cpu_usage > previous_cpu_usage + threshold` and pipes that string to the `bc` tool.  To get the value of a variable (rather than using the name of the variable in the string), we enclose the variable name in the `${}` operator.  `bc` is a command line calculator, so it adds the variables together, and does a greater than comparison on the result.  It outputs `1` if it is true.  By putting the expression inside the `$()` operator, we treat the result of the command as a value.  With that value, we do an integer comparison to compare the result to `1` using the `-eq` operator.
 
 ## Step 6: Running the Script
 
