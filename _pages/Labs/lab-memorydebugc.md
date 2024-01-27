@@ -63,7 +63,7 @@ tags:
 
 ## Part 2: Implementing the `ArrayList` Structure
 
-Write a program that, using `malloc()` and `realloc()`, creates an array of initial size `n`.  Write `add()`, `remove()` and `get()` functions for your array.  When adding beyond the end of the array, reallocate space such that the array contains one more element.  
+Write a program that, using `malloc()` and `realloc()`, creates an array of initial size `n`.  Write `add()`, `remove()` and `get()` functions for your array.  When adding beyond the end of the array, reallocate space such that the array contains one more element.  Note that the `add` function might call `realloc`, and if so, you'll update the parameter for your array.  C uses pass-by-value, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  Therefore, you'll pass the array as an `int**` -- a pointer to the variable that contains the pointer to your array.  This way, you can modify the parameter as if it was passed by reference.
 
 Time your program (using the command `time ./a.out ...`) for adding `100000` elements (or more).  
 
