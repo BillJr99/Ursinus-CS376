@@ -68,3 +68,15 @@ Write a program that, using `malloc()` and `realloc()`, creates an array of init
 Time your program (using the command `time ./a.out ...`) for adding `100000` elements (or more).  
 
 Next, modify the program such that it increases in size by a factor of `2` times the previous size.  Time it again.  What do you observe?
+
+### Extra Credit (15%): Adding Items to and Removing Items from the Middle of an Array
+
+It is fine to simply add and remove from the end of the array for this assignment.  If you are adding or removing to the middle of an array, you'll need to shift the remaining elements right or left to make room for the newly added element, or to remove the outgoing one.  The `memcpy` function can help you to shift the array elements around.  Consider the function prototype:
+
+```c
+#include <stdlib.h>
+void *memcpy(void *dest, const void *src, size_t n);
+```
+
+You could pass an element index like `arr+n` as the `dest`, and `arr+n+1` as the src, and set n to `sizeof(int) * (size-n-1)` to move the rightmost `n-1` integers to the left.  Don't forget to update the number of elements in the array to `num_elements-1` to reflect that an item has been removed.  Similarly, to add an item to the middle, you could shift those `n-1` elements to the right by one position (again, updating the number of elements, and possibly resizing the entire array as needed).
+
