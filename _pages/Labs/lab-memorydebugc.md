@@ -84,7 +84,7 @@ It is not guaranteed to be safe to copy from one region of memory into another o
 
 Similarly, to add an item to the middle, you could shift those `size-n` elements to the right by one position by following the same general steps above (again, updating the number of elements, and possibly resizing the entire array as needed).
 
-## Debugging
+## Optional: Helpful Debugging Tools: gdb and Valgrind
 
 ### Using gdb to Step Through your Code
 
@@ -259,7 +259,3 @@ Step 3: Analyze the Valgrind report.
 After running your program, Valgrind will generate a report detailing any memory errors or leaks it found. It will provide information about the source code location where the error occurred, including the file name and line number.
 
 Valgrind's `--leak-check=full` flag enables detailed memory leak reporting, highlighting any memory blocks that were not freed. This can help identify memory leaks caused by failing to call `free` or other memory management errors.
-
-Make sure to carefully review the Valgrind report and address any reported issues.
-
-By following these steps, you can utilize Valgrind's powerful memory analysis capabilities to check for memory leaks, buffer overflows, and other memory errors in your program. Remember to compile your program with `-g` to ensure that Valgrind provides detailed line information in the report.
