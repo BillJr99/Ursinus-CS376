@@ -103,7 +103,7 @@ Write a program that, using `malloc()` and `realloc()`, creates an empty array o
 
 Note that the `add` function might call `realloc`, and if so, you'll update the parameter for your maximum array size.  For now, increase the maximum size by `1` every time you need to `realloc`.
 
-### Being Careful about Modifying Function Parameters
+#### Being Careful about Modifying Function Parameters
 
 C uses pass-by-value semantics, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  So, if you are using a `struct` to represent your `ArrayList`, you can simply pass a pointer to that structure, and you can freely update the fields inside that `struct`.  You can, for example, set `myArrayList->array = realloc...` assuming `myArrayList` is a `struct ArrayList *`, and those changes will persist when your function returns.
 
