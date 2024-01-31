@@ -41,11 +41,15 @@ info:
       progressing: Correct implementation of one version of the arraylist structure, or partial implementation of both versions.
       proficient: Correct and efficient implementation of both versions of the arraylist structure.
 
-  readings:
+  readings:  
     - rlink: http://www.tutorialspoint.com/cprogramming/index.htm
       rtitle: C Programming Tutorial
     - rlink: ../GDBValgrind
-      rtitle: GDB and Valgrind
+      rtitle: "Helpful Debugging Tools: GDB and Valgrind"
+    - rlink: https://valgrind.org/docs/manual/quick-start.html
+      rtitle: Valgrind
+    - rlink: https://www.geeksforgeeks.org/gdb-step-by-step-introduction/
+      rtitle: GDB Step by Step Introduction
 
 tags:
   - c
