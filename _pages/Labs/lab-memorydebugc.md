@@ -123,9 +123,9 @@ It is fine to simply add and remove from the end of the array for this assignmen
 
 ```c
 #include <stdlib.h>
-void *memcpy(void *dest, const void *src, size_t n);
+void *memmove(void *dest, const void *src, size_t size);
 ```
 
-It is not guaranteed to be safe to copy from one region of memory into another overapping region, but we can `malloc` a temporary buffer of size `sizeof(int) * (size-n)` to hold the elements to be moved.  You could then copy from `arr+n+1` to this buffer, and copy `sizeof(int) * (size-n)` bytes to that buffer (the rightmost `size-n` elements of the array.  Then, `memcpy` to the original array at address `arr+n` as the `dest`, from this temporary buffer as the source (and the same number of bytes as before), to copy the rightmost `size-n` integers into the original array, effectively shifting those elements to the left by one element.  Don't forget to update the number of elements in the array to `num_elements-1` to reflect that an item has been removed.  
+Be sure your `dest` address and `size` parameters reflect the size of the type you are moving.  That is, if you are moving an `int`, then you will want to multiply the offset shift amount by `sizeof(int)`.
 
-Similarly, to add an item to the middle, you could shift those `size-n` elements to the right by one position by following the same general steps above (again, updating the number of elements, and possibly resizing the entire array as needed).
+To remove an item from the middle (say, from index `n`), you can shift the array starting at the address of `src[n]` to the left by 1.  You'll need to calculate these addresses like you did in Part 1, Problem 3 above.  Similarly, to add an item to the middle, you could shift from address `src[n+1]` to the right by one element.  Don't forget to update the number of elements in the array in both the `add` and `remove` cases, and be sure to resize the array if needed when adding.
