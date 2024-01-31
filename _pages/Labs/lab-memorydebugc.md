@@ -105,14 +105,9 @@ Note that the `add` function might call `realloc`, and if so, you'll update the 
 
 ### Being Careful about Modifying Function Parameters
 
-C uses pass-by-value semantics, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  So, if you are using a `struct` to represent your `ArrayList`, you can simply pass a pointer to that structure, since you can freely update the fields inside that `struct`.  Since you aren't modifying the pointer to the `struct` itself (the actual parameter to the function), you're all set.  However, if you pass the array directly, you'll need pass the array as an `int**` -- a pointer to the variable that contains the pointer to your array.  This way, you can modify the parameter as if it was passed by reference.  A good rule of thumb is that if you ever have a statement like this:
+C uses pass-by-value semantics, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  So, if you are using a `struct` to represent your `ArrayList`, you can simply pass a pointer to that structure, and you can freely update the fields inside that `struct`.  You can, for example, set `myArrayList->array = realloc...` assuming `myArrayList` is a `struct ArrayList *`, and those changes will persist when your function returns.
 
-`x = something;`
-
-where `x` is a local parameter, you'll want to dereference it so that the modification persists beyond the function call.  That means passing a pointer to the parameter, even if the parameter itself is already a pointer. 
- So, if `x` is an `int`, pass an `int *`, and if `x` is an `int *`, pass an `int**`.  Then, update your statement to:
-
-`*x = something;`
+However, if you pass the array directly, you'll need pass the array as an `int**` -- a pointer to the variable that contains the pointer to your array.  This way, you can modify the parameter as if it was passed by reference.  Although you can pass an `int *` array parameter to a function and make statements like `a[i] = 0;`, this is because this statement is equivalent to `*(a+i) = 0;`, which does indeed dereference the pointer to the address!  A good rule of thumb is that if you ever have a statement like `x = something;` where `x` is a local parameter, you'll want to dereference it so that the modification persists beyond the function call.  That means passing a pointer to the parameter, even if the parameter itself is already a pointer.  So, if `x` is an `int`, pass an `int *`, and if `x` is an `int *`, pass an `int**`.  Then, update your statement to `*x = something;`.
 
 ### Experimenting with the Program's Performance
 
