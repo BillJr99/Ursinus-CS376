@@ -1,6 +1,6 @@
 ---
 layout: default
-permalink: GDBValgrind
+permalink: /GDBValgrind
 title: "CS376: Operating Systems - Debugging and Memory Management in C with GDB and Valgrind"
 excerpt: "CS376: Operating Systems - Debugging and Memory Management in C with GDB and Valgrind"
 
