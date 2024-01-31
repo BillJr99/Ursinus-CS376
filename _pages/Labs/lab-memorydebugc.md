@@ -95,13 +95,30 @@ tags:
 
 ## Part 2: Implementing the `ArrayList` Structure
 
-Write a program that, using `malloc()` and `realloc()`, creates an array of initial size `n`.  Write `add()`, `remove()` and `get()` functions for your array.  When adding beyond the end of the array, reallocate space such that the array contains one more element.  
+I recommend creating a `struct` to represent your `ArrayList`, which contains a pointer to the array, the current size of the array (for example, large enough to hold 10 `int`s), and the number of elements currently stored in the array (initially `0`).
 
-Note that the `add` function might call `realloc`, and if so, you'll update the parameter for your array.  C uses pass-by-value semantics, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  Therefore, you'll pass the array as an `int**` -- a pointer to the variable that contains the pointer to your array.  This way, you can modify the parameter as if it was passed by reference.  
+Write a program that, using `malloc()` and `realloc()`, creates an empty array of initial size `n=10`.  Write `add()`, `remove()` and `get()` functions for your structure which manipulate the array accordingly.  When adding beyond the end of the array, reallocate space such that the array contains one more element.  
+
+### Reallocating the Array Size Dynamically
+
+Note that the `add` function might call `realloc`, and if so, you'll update the parameter for your maximum array size.  For now, increase the maximum size by `1` every time you need to `realloc`.
+
+### Being Careful about Modifying Function Parameters
+
+C uses pass-by-value semantics, so modifications to local parameters are made to local copies of those parameter values; they do not update the variable in the calling function.  So, if you are using a `struct` to represent your `ArrayList`, you can simply pass a pointer to that structure, since you can freely update the fields inside that `struct`.  Since you aren't modifying the pointer to the `struct` itself (the actual parameter to the function), you're all set.  However, if you pass the array directly, you'll need pass the array as an `int**` -- a pointer to the variable that contains the pointer to your array.  This way, you can modify the parameter as if it was passed by reference.  A good rule of thumb is that if you ever have a statement like this:
+
+`x = something;`
+
+where `x` is a local parameter, you'll want to dereference it so that the modification persists beyond the function call.  That means passing a pointer to the parameter, even if the parameter itself is already a pointer. 
+ So, if `x` is an `int`, pass an `int *`, and if `x` is an `int *`, pass an `int**`.  Then, update your statement to:
+
+`*x = something;`
+
+### Experimenting with the Program's Performance
 
 Time your program (using the command `time ./a.out ...`) for adding `100000` elements (or more).  
 
-Next, modify the program such that it increases in size by a factor of `2` times the previous size.  Time it again.  What do you observe?
+Then, modify the program such that it increases in size by a factor of `2` times the previous size.  Time it again.  What do you observe?
 
 ### Extra Credit (15%): Adding Items to and Removing Items from the Middle of an Array
 
