@@ -62,20 +62,30 @@ tags:
 4. Write another function to take in a linked list of `struct`s that you create (with an `int` data element, and a `struct ListNode*`), and sort the linked list. Note that you should swap the actual nodes and not just the values within those nodes.  Consider the following scenario using a doubly linked list (a linked list with both `prev` and `next` pointers so that you can point to both your previous and next neighbors).  Keep in mind, however, that in the general case, some of these nodes may be NULL (for example, if the node you are swapping is at the beginning or end of the list), and you'll want to check for and test these boundary cases.  Draw yourself a diagram of this scenario, showing each step, and draw diagrams for the boundary cases to see how they differ.
 
     * The initial doubly linked List is: `A->B->C->D->E`, and we wish to swap nodes B and D.
+        - A: next = B
+        - B: prev = A, next = C
+        - C: prev = B, next = D
+        - D: prev = C, next = E
+        - E: prev = D
 
-    * Update the next and prev pointers of the surrounding nodes.  After this, the list state is `A->D->C->D->E`.
-        - Set B's prev pointer to D's prev pointer.
-        - Set D's prev pointer to B's prev pointer.
-        - Set B's next pointer to D's next pointer.
-        - Set D's next pointer to B's next pointer.
-
-    * Update the next and prev pointers of the adjacent nodes.  After this, the list state is `A->D->C->B->E`.
-        - Set C's next pointer to D.
-        - Set E's prev pointer to B.
-
-    * Update the next and prev pointers of the swapped nodes.  Then, final list state is `A->D->C->B->E`.
-        - Set B's next pointer to D.
-        - Set D's prev pointer to B.
+    * Update the neighbors of B and D:
+        - A's next should point to D, since D will follow A after the swap (where B used to be)
+        - E's prev should point to B, since B will come before E after the swap (where D used to be)
+        - C's prev should point to D, since D will come before C after the swap (where B used to be)
+        - C's next should point to B, since B will come after C after the swap (where D used to be)
+        
+    * Update the pointers from B and D:
+        - B's prev should become D's current prev, which is C
+        - B's next should be D's current next, which is E
+        - D's prev should beocme B's current prev, which is A
+        - D's next should be B's current next, which is C
+     
+    * The final list structure is: `A->D->C->B->E`, with the following pointers:
+        - A: next = D
+        - D: prev = A, next = C
+        - C: prev = D, next = B
+        - B: prev = C, next = E
+        - E: prev = B 
 
 ## Part 2: Implementing the `ArrayList` Structure
 
