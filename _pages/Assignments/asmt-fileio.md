@@ -52,6 +52,10 @@ info:
       rtitle: "csapp.c"
     - rlink: https://condor.depaul.edu/glancast/374class/docs/csapp_compile_guide.html
       rtitle: "Compiling with the CSAPP Library"
+    - rlink: "https://makefiletutorial.com/"
+      rtitle: "Makefile Tutorial"
+    - rlink: "https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/"
+      rtitle: "A Simple Makefile Tutorial"
 
 tags:
   - minidb
