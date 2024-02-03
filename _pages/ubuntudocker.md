@@ -71,21 +71,18 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
     echo "root:$USER_PASSWORD" | chpasswd
 
 # Set up configuration for SSH
-RUN mkdir /var/run/sshd && \
+RUN mkdir -p /var/run/sshd && \
     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config && \
     sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
     echo "export VISIBLE=now" >> /etc/profile
 
 # Copy the SSH public key to the authorized_keys file of the ubuntu user
-RUN mkdir /home/ubuntu/.ssh && \
+RUN mkdir -p /home/ubuntu/.ssh && \
     echo "$SSH_PUBLIC_KEY" >> /home/ubuntu/.ssh/authorized_keys && \
     chown -R ubuntu:root /home/ubuntu/.ssh && \
     chmod 700 /home/ubuntu/.ssh && \
     chmod 600 /home/ubuntu/.ssh/authorized_keys
-
-# Create a directory for the SSH key and set permissions
-RUN mkdir /home/ubuntu/.ssh && chmod 700 /home/ubuntu/.ssh
 
 # Generate an SSH key pair during image build for the ubuntu user
 RUN ssh-keygen -t rsa -b 2048 -f /home/ubuntu/.ssh/id_rsa -N "" && \
@@ -131,7 +128,7 @@ A password is not required, since we provided our ssh key.
 
 ### Enabling Access to GitHub
 
-Log into GitHub, and copy both your local computer `id_rsa.pub` and the contents of your guest `id_rsa.pub` to the SSH Keys section of GitHub's settings.  To list the contents of your virtual image public key file, type the following command while logged into the virtual machine:
+Log into GitHub, and copy both the contents of your local computer `id_rsa.pub` and the contents of your guest `id_rsa.pub` to the SSH Keys section of GitHub's settings.  To list the contents of your virtual image public key file, type the following command while logged into the virtual machine:
 
 ```
 cat ~/.ssh/id_rsa.pub
