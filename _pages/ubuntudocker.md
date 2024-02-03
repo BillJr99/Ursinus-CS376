@@ -62,7 +62,8 @@ ENV USER_PASSWORD="<put a good password that you'll remember here>"
 
 # Update the system, install OpenSSH Server, and set up users
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y openssh-server openssh-client aptitude sudo
+    apt-get install -y openssh-server openssh-client aptitude sudo && \
+    apt-get install git build-essential libc6-dbg gdb valgrind vim
 
 # Create user and set password for user and root user
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
@@ -82,6 +83,13 @@ RUN mkdir /home/ubuntu/.ssh && \
     chown -R ubuntu:root /home/ubuntu/.ssh && \
     chmod 700 /home/ubuntu/.ssh && \
     chmod 600 /home/ubuntu/.ssh/authorized_keys
+
+# Create a directory for the SSH key and set permissions
+RUN mkdir /home/ubuntu/.ssh && chmod 700 /home/ubuntu/.ssh
+
+# Generate an SSH key pair during image build for the ubuntu user
+RUN ssh-keygen -t rsa -b 2048 -f /home/ubuntu/.ssh/id_rsa -N "" && \
+    chown -R ubuntu:ubuntu /home/ubuntu/.ssh
 
 # Create a volume at the SHARE_PATH
 VOLUME ["/home/ubuntu/shared"]
@@ -111,7 +119,7 @@ docker run -d -v /c/Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -
 
 The path including `<your user name>` allows you to share a local directory within your virtual image home directory!  This example will mount your local `Desktop` directory at `/home/ubuntu/shared/desktop`, but you can select other possibilities here.  Feel free to specify this or omit the entire `-v` parameter to skip it.
 
-## Logging into the Image
+### Logging into the Image
 
 You can log into the image using `ssh`:
 
@@ -120,15 +128,6 @@ ssh ubuntu@localhost -p 2222
 ```
 
 A password is not required, since we provided our ssh key.
-
-## After Log In
-
-Once you're logged into the image, run the following commands to set up some useful software:
-
-```
-ssh-keygen -t rsa
-sudo apt install git build-essential libc6-dbg gdb valgrind vim
-```
 
 ### Enabling Access to GitHub
 
