@@ -86,7 +86,7 @@ RUN mkdir -p /home/ubuntu/.ssh && \
 
 # Generate an SSH key pair during image build for the ubuntu user
 RUN ssh-keygen -t rsa -b 2048 -f /home/ubuntu/.ssh/id_rsa -N "" && \
-    chown -R ubuntu:ubuntu /home/ubuntu/.ssh
+    chown -R ubuntu:root /home/ubuntu/.ssh
 
 # Create a volume at the SHARE_PATH
 VOLUME ["/home/ubuntu/shared"]
