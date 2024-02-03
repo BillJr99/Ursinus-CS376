@@ -22,7 +22,9 @@ First, install the following tools on your computer:
       
 2. Git
     * [Windows](https://git-scm.com/downloads)
-    * [Mac](https://git-scm.com/download/mac): Open a terminal and execute `sudo port install git` if you have [MacPorts](https://www.macports.org/) installed, or `brew install git` if you have [Homebrew](https://brew.sh/) installed.  If you don't have either, run the command `sudo xcode-select –install` in your terminal, and then download and install either [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/) before completing this step.
+    * [Mac](https://git-scm.com/download/mac)
+        * Open a terminal and execute `sudo port install git` if you have [MacPorts](https://www.macports.org/) installed, or `brew install git` if you have [Homebrew](https://brew.sh/) installed.  
+        *  If you don't have either MacPorts or Homebrew installed (or if the command above fails), run the command `sudo xcode-select –install` in your terminal, and then download and install either [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/), and then re-run the appropriate install command above.
     
 ## Creating an SSH Key to Log Into Your Virtual Machine
 
@@ -117,7 +119,7 @@ You can log into the image using `ssh`:
 ssh ubuntu@localhost -p 2222 
 ```
 
-A password is not required, since we provided our ssh key
+A password is not required, since we provided our ssh key.
 
 ## After Log In
 
