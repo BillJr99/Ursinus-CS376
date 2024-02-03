@@ -60,7 +60,7 @@ ENV USER_PASSWORD="<put a good password that you'll remember here>"
 
 # Update the system, install OpenSSH Server, and set up users
 RUN apt-get update && apt-get upgrade -y && \
-    apt-get install -y openssh-server aptitude sudo
+    apt-get install -y openssh-server openssh-client aptitude sudo
 
 # Create user and set password for user and root user
 RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
