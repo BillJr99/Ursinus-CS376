@@ -226,10 +226,6 @@ schedule:
   - week: "3"
     date: "0"
     title: "File I/O"
-  - week: "3"
-    date: "1"
-    title: "Network Programming"
-    link: "./files/lectures/networkprogramming.pptx"
     deliverables:
       - dtitle: "Lab: Debugging and Memory Management in C Due"
         dlink: "Labs/MemoryDebugC"
@@ -238,7 +234,11 @@ schedule:
       - dtitle: "Homework Assignment: File I/O Handed Out"
         dlink: "Assignments/FileIO"
         points: 100
-        rubricpath: "_pages/Assignments/asmt-fileio.md"
+        rubricpath: "_pages/Assignments/asmt-fileio.md"    
+  - week: "3"
+    date: "1"
+    title: "Network Programming"
+    link: "./files/lectures/networkprogramming.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 19, 20.10"
         rlink: false
