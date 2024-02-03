@@ -67,7 +67,7 @@ tags:
 
 3. Write a function `sort()` that takes in an `int* a` and `int size`, and sorts the array using pointer arithmetic.  That is, you should not use array notation `a[n]` to refer to elements in your array, but rather direct pointer addressing `*(a+n)`
 
-4. Write another function to take in a linked list of `struct`s that you create (with an `int` data element, and a `struct ListNode*`), and sort the linked list. Note that you should swap the actual nodes and not just the values within those nodes.  Consider the following scenario using a doubly linked list (a linked list with both `prev` and `next` pointers so that you can point to both your previous and next neighbors).  If you turned this logic into a subroutine called, say, `swap`, then you could pass nodes `B` and `D` to this function and update the entire list.  Keep in mind, however, that in the general case, some of the neighbors of these nodes may be `NULL` (for example, if the node you are swapping is at the beginning or end of the list), and you'll want to check for and test these boundary cases.  Draw yourself a diagram of this scenario, showing each step, and draw diagrams for the boundary cases to see how they differ.
+4. Write another function to take in a linked list of `struct`s that you create (with an `int` data element, and a `struct ListNode*`), and sort the linked list. Note that you should swap the actual nodes and not just the values within those nodes.  Consider the following scenario using a doubly linked list (a linked list with both `prev` and `next` pointers so that you can point to both your previous and next neighbors).  If you turned this logic into a subroutine called, say, `swap`, then you could pass nodes `B` and `D` to this function and update the entire list.  
 
     * The initial doubly linked List is: `A->B->C->D->E`, and we wish to swap nodes B and D.
         - A: next = B
@@ -94,6 +94,14 @@ tags:
         - C: prev = D, next = B
         - B: prev = C, next = E
         - E: prev = B 
+
+Keep in mind, however, that in the general case, there may be some additional considerations, such as:
+
+    * Some of the neighbors of these nodes may be `NULL` (for example, if the node you are swapping is at the beginning or end of the list)
+    * The nodes being swapped may be adjacent (so the `next` and `prev` pointers are shared)
+    * The nodes being swapped do not share a common neighbor (`C` in this example)
+    
+You'll want to check for and test these boundary cases.  Draw yourself a diagram of this scenario, showing each step, and draw diagrams for the boundary cases to see how they differ.
 
 ## Part 2: Implementing the `ArrayList` Structure
 
