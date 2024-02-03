@@ -34,7 +34,11 @@ Next, open a terminal and run the following command, if you don't already have a
 ssh-keygen -t rsa
 ```
 
-Follow the prompts and it will create a public key file within your home directory called `~/.ssh/id_rsa.pub` (as well as another file in that same directory called `id_rsa`, which is your associated private key; don't share that file with anyone!).
+Follow the prompts and it will create a public key file within your home directory called `~/.ssh/id_rsa.pub` (as well as another file in that same directory called `id_rsa`, which is your associated private key; don't share that file with anyone!).  You will use the contents of this file later; to copy these contents, type the following command, and copy the output to your clipboard:
+
+```
+cat ~/.ssh/id_rsa.pub
+```
 
 ## Using Docker
 
@@ -48,7 +52,7 @@ docker pull ubuntu
 
 ### Creating a Dockerfile
 
-Create a file named `Dockerfile` with the following contents, making sure to set the `ENV` variables at the beginning of the file:
+Create a file named `Dockerfile` with the following contents, making sure to set the `ENV` variables at the beginning of the file with your host SSH public key `id_rsa.pub` file contents, and a password for the default account on the guest:
 
 ```
 # Use the official image as a parent image
@@ -129,7 +133,7 @@ A password is not required, since we provided our ssh key.
 
 ### Enabling Access to GitHub
 
-Log into GitHub, and copy both the contents of your local computer `id_rsa.pub` and the contents of your guest `id_rsa.pub` to the SSH Keys section of GitHub's settings.  To list the contents of your virtual image public key file, type the following command while logged into the virtual machine:
+[Log into GitHub, and copy](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) both the contents of your local computer `id_rsa.pub` and the contents of your guest `id_rsa.pub` to the SSH Keys section of GitHub's settings.  To list the contents of your virtual image public key file, type the following command while logged into the virtual machine (just like you did earlier on the host), and copy the resulting output:
 
 ```
 cat ~/.ssh/id_rsa.pub
