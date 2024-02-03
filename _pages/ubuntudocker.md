@@ -53,7 +53,7 @@ Create a file named `Dockerfile` with the following contents, making sure to set
 FROM ubuntu
 
 # Specify the SSH public key as a string variable (replace with your public key)
-ENV SSH_PUBLIC_KEY="<paste the contents of your id_rsa.pub file here"
+ENV SSH_PUBLIC_KEY="<paste the contents of your id_rsa.pub file here>"
 
 # Specify the password for user and root user as a string variable (replace with your desired password)
 ENV USER_PASSWORD="<put a good password that you'll remember here>"
