@@ -46,6 +46,8 @@ info:
       rtitle: C Programming Tutorial
     - rlink: ../GDBValgrind
       rtitle: "Helpful Debugging Tools: GDB and Valgrind"
+    - rlink: ../UbuntuDocker
+      rtitle: "Launching an Ubuntu virtual machine with Docker"      
     - rlink: https://valgrind.org/docs/manual/quick-start.html
       rtitle: Valgrind
     - rlink: https://www.geeksforgeeks.org/gdb-step-by-step-introduction/
