@@ -54,6 +54,8 @@ We have installed Debian Linux onto a virtual machine disk image that contains t
 ### Step 1 - Installing QEMU
 Begin by installing QEMU on your local computer, following the instructions for your operating system found [on this page](https://www.qemu.org/download/).  Windows users can install a pre-built binary installation of QEMU [from here](https://qemu.weilnetz.de/w64/); however, installations that include a hypervisor such as [kvm](https://www.tecmint.com/install-qemu-kvm-ubuntu-create-virtual-machines/) will run faster.  
 
+Windows users may find it more convenient to add their qemu installation directory (likely `C:\Program Files\qemu`) to their system path.  You can do so by following [these instructions](https://www.c-sharpcorner.com/article/how-to-addedit-path-environment-variable-in-windows-11/).
+
 ### Step 2 - Downloading the Disk Image
 
 You can download the base installation image from the multi-part zip file below.  Download each of the 6 image parts, and open and extract the `001` file in the zip program of your choice.  This will extract the `base.qcow` file.
