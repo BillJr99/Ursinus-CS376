@@ -52,7 +52,7 @@ docker pull ubuntu
 
 ### Creating a Dockerfile
 
-Create a file named `Dockerfile` with the following contents, making sure to set the `ENV` variables at the beginning of the file with your host SSH public key `id_rsa.pub` file contents, and a password for the default account on the guest:
+Create a file named `Dockerfile` with the following contents, **making sure to set the `ENV` variables at the beginning of the file with your host SSH public key `id_rsa.pub` file contents, and a password for the default account on the guest**:
 
 ```
 # Use the official image as a parent image
