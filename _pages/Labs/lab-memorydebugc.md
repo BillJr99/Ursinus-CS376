@@ -63,7 +63,7 @@ tags:
 
 1. Define an `int*` pointer variable, and create an array of 10 integers using `malloc()`.  Then, assign values to that array, print their values, and `free()` the integers.  Verify that your program does not leak memory by running it against `valgrind` (and include the report you get from `valgrind` in your submission).
 
-2. Using `malloc()`, create a `char**` pointer that contains 10 `char*`'s, then in a loop, initialize each of the 10 `char*`'s to a `char` array of size 15, and initialize each to a word of your choice (don't forget the null terminator `\0`) -- and print them to screen.  Again, free all your `malloc`'s, and verify the result with `valgrind`.
+2. Using `malloc()`, create a `char**` pointer that contains 10 `char*`'s, then in a loop, initialize each of the 10 `char*`'s to a `char` array of size 15, and initialize each to a word of your choice (don't forget the null terminator `\0`) -- and print them to screen.  Again, free all your `malloc`'s, and verify the result with `valgrind`.  Use `strcpy` to copy a string into a `char*`, or, to create more interesting strings, you can use `sprintf` like this: `sprintf(a[i], "%s %d", "Bill", i);` creates the string `Bill` with the counter `i` appended to it after a space.
 
 3. Write a function `sort()` that takes in an `int* a` and `int size`, and sorts the array using pointer arithmetic.  That is, you should not use array notation `a[n]` to refer to elements in your array, but rather direct pointer addressing `*(a+n)`
 
@@ -97,7 +97,7 @@ tags:
 
 Keep in mind, however, that in the general case, there may be some additional considerations, such as:
 
-    * Some of the neighbors of these nodes may be `NULL` (for example, if the node you are swapping is at the beginning or end of the list)
+    * Some of the neighbors of these nodes may be `NULL` (for example, if the node you are swapping is at the beginning or end of the list).  Any time you perform an operation that dereferences a pointer (that is, `*a`, `a->x`, or `a[i]`), make sure the pointer `a` is not `NULL` with an `if` statement.  Otherwise, you'll get a segmentation fault.
     * The nodes being swapped may be adjacent (so the `next` and `prev` pointers are shared)
     * The nodes being swapped do not share a common neighbor (`C` in this example)
     
