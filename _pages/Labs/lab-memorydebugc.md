@@ -67,7 +67,11 @@ tags:
 
 3. Write a function `sort()` that takes in an `int* a` and `int size`, and sorts the array using pointer arithmetic.  That is, you should not use array notation `a[n]` to refer to elements in your array, but rather direct pointer addressing `*(a+n)`
 
-4. Write another function to take in a linked list of `struct`s that you create (with an `int` data element, and a `struct ListNode*`), and sort the linked list. Note that you should swap the actual nodes and not just the values within those nodes.  Consider the following scenario using a doubly linked list (a linked list with both `prev` and `next` pointers so that you can point to both your previous and next neighbors).  If you turned this logic into a subroutine called, say, `swap`, then you could pass nodes `B` and `D` to this function and update the entire list.  
+4. Write another function to take in a linked list of `struct`s that you create (with an `int` data element, and a `struct ListNode*`), and sort the linked list. Note that you should swap the actual nodes and not just the values within those nodes.  More Details about the `swap` routine are given below.
+
+### Swapping Linked List Nodes
+
+Consider the following scenario using a doubly linked list (a linked list with both `prev` and `next` pointers so that you can point to both your previous and next neighbors).  If you turned this logic into a subroutine called, say, `swap`, then you could pass nodes `B` and `D` to this function and update the entire list.  
 
     * The initial doubly linked List is: `A->B->C->D->E`, and we wish to swap nodes B and D.
         - A: next = B
@@ -102,6 +106,81 @@ Keep in mind, however, that in the general case, there may be some additional co
     * The nodes being swapped do not share a common neighbor (`C` in this example)
     
 You'll want to check for and test these boundary cases.  Draw yourself a diagram of this scenario, showing each step, and draw diagrams for the boundary cases to see how they differ.
+
+### Linked List Node Swapping Implementation Strategy
+
+The goal of our `swap` function is to interchange two nodes (`node1` and `node2`) within the list without altering the actual data contained within any node. This function needs to handle two primary scenarios:
+
+1. Swapping adjacent nodes.
+2. Swapping non-adjacent nodes.
+
+Additionally, the function must correctly update the head of the list if either of the nodes being swapped is the first node in the list.
+
+To do this, the prototype of your swap function will look like this, where `struct ListNode` is a doubly-linked list with `prev` and `next` pointers:
+
+```c
+void swap(struct ListNode **head, struct ListNode *node1, struct ListNode *node2);
+```
+
+`head` is passed as a `struct ListNode **` because it is a pointer to a `struct ListNode`, but itself must be passed as a pointer so that it can be dereferenced for assignment (i.e., `*head = something`).
+
+Check if the nodes are adjacent (by asking if `node1->next` is `node2` or vice-versa), and perform the following steps depending on what you find.  To simplify our logic, if the nodes are adjacent and `node2` points to `node1`, perform a standard swap so that we always swap adjacent nodes left to right:
+
+```c
+struct ListNode* tmp;
+tmp = node1;
+node1 = node2;
+node2 = tmp;
+```
+
+#### Adjacent Nodes
+
+When `node1` and `node2` are adjacent, the function must carefully update the pointers to maintain the integrity of the list. This involves:
+
+* Ensuring `node1` is always to the left of `node2` to simplify logic.
+* Correctly updating the prev and next pointers of `node1`, `node2`, and their neighboring nodes.
+* Updating the head pointer if `node1` was the head of the list at the start of the function (now it is `node2`); since we ensured that `node1` comes first in the adjacent scenario, we don't have to check `node2`.
+
+To update the pointers, let's assume `node1` and `node2` are the nodes to be swapped, and `node1` is directly before `node2` in the list. The pointers to be updated include `node1->prev`, `node1->next`, `node2->prev`, `node2->next`, and potentially the `head` of the list if `node1` is the first node.  Then:
+
+* If `node1->prev` exists (meaning `node1` is not the head), set `node1->prev->next` to `node2` to link the previous node to `node2`.
+* If `node2->next` exists, set `node2->next->prev` to node1 to ensure the node after `node2` now points back to `node1`.
+* Set `node2->prev` to `node1->prev` to link `node2` to the previous node of `node1`.
+* Set `node1->next` to `node2->next` to link `node1` to the next node of `node2`.
+* Set `node1->prev` to `node2` and `node2->next` to `node1` to complete the swap by directly linking `node1` and `node2`.
+
+#### Non-Adjacent Nodes
+
+For non-adjacent nodes, the function performs a more generalized swap. It involves:
+
+* Storing the prev and next pointers of both nodes to temporary variables.
+* Updating the pointers of the nodes surrounding `node1` and `node2` to point to the correct nodes after the swap.
+* Updating the head pointer if `node1` or `node2` was the head of the list at the start of the function (now it is the other node).  If `node1` was the head (`node1->prev` is NULL), update `head` to `node2`, and vice-versa for `node2`.
+
+Updating the individual node pointers in the case of non-adjacent nodes, you have to deal with more pointers since the nodes are not directly linked to each other. You must update the pointers of `node1` and `node2`, as well as those of their previous and next nodes.
+
+Make temporary variables to hold the original node neighbors, since we'll be changing them (but also revising these later):
+
+* `temp1` stores `node1->prev`
+* `temp2` stores `node1->next`
+* `temp3` stores `node2->prev`
+* `temp4` stores `node2->next`
+
+Then, update `node1` as shown below, and also update `node2` in a similar way:
+
+* If `node1->prev` is not NULL, set `node1->prev->next` to `node2` to link the previous node of `node1` to `node2`.
+* Similarly, if `node1->next` exists, set `node1->next->prev` to `node2`.
+
+Finally, update the immediate node neighbors to the temporaries we stored earlier:
+
+* Set `node1->prev` to `temp3` (the original `prev` of `node2`).
+* Set `node1->next` to `temp4` (the original `next` of `node2`).
+* Set `node2->prev` to `temp1` (the original `prev` of `node1`).
+* Set `node2->next` to `temp2` (the original `next` of `node1`).
+
+#### Testing
+
+Be sure to test your `swap` function with a linked list, by swapping adjacent nodes, non-adjacent nodes, the head of the list, and other test cases.  Do this **before** attempting to use it in your `sort` function.
 
 ## Part 2: Implementing the `ArrayList` Structure
 
