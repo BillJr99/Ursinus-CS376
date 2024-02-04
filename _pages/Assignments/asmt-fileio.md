@@ -80,6 +80,160 @@ In addition, your program must be able to select a database, creating one if it 
 
 You must use only the standard library file operations (no CSV or json libraries, etc.).  You may use the CSAPP file I/O libraries.
 
+## Tokenizing a String
+
+You can use the `strtok` function to tokenize a string.  Here is a function that dynamically allocates (and re-allocates) an array of tokens given an input string, a string of possible delimiters, and an integer representing the number of tokens found (passed as a pointer so that updates are seen in the `main` function).
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+char** tokenize(char* input, const char* delimiter, int* tokenCount) {
+    char** tokens = NULL;
+    int capacity = 10; // Initial capacity for the array of tokens
+    *tokenCount = 0; // Initialize the token count
+
+    // Allocate initial memory for tokens
+    tokens = (char**)malloc(capacity * sizeof(char*));
+    if (tokens == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    // Duplicate the input string to avoid modifying the original string
+    char* inputDup = strdup(input);
+    if (inputDup == NULL) {
+        free(tokens);
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    // Tokenize the input string
+    char* token = strtok(inputDup, delimiter);
+    while (token != NULL) {
+        if (*tokenCount >= capacity) {
+            // Increase capacity
+            capacity *= 2;
+            char** temp = (char**)realloc(tokens, capacity * sizeof(char*));
+            if (temp == NULL) {
+                // Cleanup and error handling
+                for (int i = 0; i < *tokenCount; ++i) {
+                    free(tokens[i]);
+                }
+                free(tokens);
+                free(inputDup);
+                fprintf(stderr, "Memory allocation failed\n");
+                return NULL;
+            }
+            tokens = temp;
+        }
+
+        // Duplicate token and add to the array
+        tokens[*tokenCount] = strdup(token);
+        if (tokens[*tokenCount] == NULL) {
+            // Cleanup and error handling
+            for (int i = 0; i < *tokenCount; ++i) {
+                free(tokens[i]);
+            }
+            free(tokens);
+            free(inputDup);
+            fprintf(stderr, "Memory allocation failed\n");
+            return NULL;
+        }
+
+        (*tokenCount)++;
+        token = strtok(NULL, delimiter);
+    }
+
+    free(inputDup); // Cleanup the duplicated string
+    return tokens;
+}
+
+int main() {
+    char input[] = "This is a test string, with several delimiters.";
+    const char* delimiter = " ,."; // Tokenize based on space, comma, and period
+    int tokenCount = 0;
+
+    char** tokens = tokenize(input, delimiter, &tokenCount);
+    if (tokens != NULL) {
+        for (int i = 0; i < tokenCount; i++) {
+            printf("%d: %s\n", i + 1, tokens[i]);
+            free(tokens[i]); // Free each token
+        }
+        free(tokens); // Free the array of tokens
+    }
+
+    return 0;
+}
+```
+
+## Comparing Two Strings
+
+You can compare two strings using the `strcmp` function, which returns `0` when the strings are equal.  Here is an example:
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main() {
+    // Define pairs of strings to compare
+    char* pairs[][2] = {
+        {"apple", "apple"}, // Equal strings
+        {"apple", "banana"}, // Lexicographically less
+        {"banana", "apple"}, // Lexicographically greater
+        {"apple", "Apple"}, // Case sensitivity, 'a' > 'A' in ASCII
+        {"", ""}, // Both strings are empty
+        {"apple", ""}, // Non-empty string compared with an empty string
+        {"apple", "apple"} // The strings are equal
+    };
+
+    // Calculate the number of pairs
+    int numPairs = sizeof(pairs) / sizeof(pairs[0]);
+
+    for (int i = 0; i < numPairs; i++) {
+        // Compare the strings
+        int result = strcmp(pairs[i][0], pairs[i][1]);
+
+        // Print the result of the comparison
+        printf("Comparing \"%s\" and \"%s\": ", pairs[i][0], pairs[i][1]);
+        if (result < 0) {
+            printf("The first string is less than the second string.\n");
+        } else if (result > 0) {
+            printf("The first string is greater than the second string.\n");
+        } else {
+            printf("The strings are equal; result == 0.\n");
+        }
+    }
+
+    return 0;
+}
+```
+
+### Converting a String to Lowercase
+
+`strcmp` is a case-sensitive comparison, which is fine for this assignment.  If you like, you can convert your `char*` variables to lowercase so that these comparisons are effectively case-insensitive.  You can convert an individual `char` to lowercase using the `tolower(char)` function, which returns a new `char` and can be accessed by including `ctype.h`.  Using a loop, you could convert an entire string to lowercase.  Here is an example:
+
+```c
+#include <stdio.h>
+#include <ctype.h>
+
+void toLowerCase(char* s) {
+    if (s == NULL) return; // Handle null pointer
+    for (int i = 0; s[i] != '\0'; i++) {
+        s[i] = tolower((unsigned char)s[i]);
+    }
+}
+
+int main() {
+    char str[] = "Hello, World!";
+    printf("Original: %s\n", str);
+    toLowerCase(str);
+    printf("Lowercase: %s\n", str);
+    return 0;
+}
+```
+
 ## Makefile
 
 Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
