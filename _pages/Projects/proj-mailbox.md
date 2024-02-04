@@ -96,13 +96,21 @@ To test, implement a thread barrier using `fork`'ed children that communicate th
 
 You can make modifications directly to `sched.c` and `sched.h` to add the logic for `mysend` and `myreceive` system calls, including any necessary data structures for message queuing.  I suggest the following workflow:
 
-1. **Add a `message` data structure in `sched.h`:** Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.
+### Add a `message` data structure in `sched.h` 
 
-2. **Create a Kernel Linked List of these `message` structures**: Don't forget to add a `struct list_head` to the `message` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
+Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.
 
-3. **Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure.**
+### Create a Kernel Linked List of these `message` structures
 
-4. **Create System Calls for `mysend` and `myreceive` in `sched.c`:** These will contain the logic to append a message to a destination task's message queue (denoted by the `pid`), and to receive a message from your own current message queue from a particular specified `pid` (or from any process if the `pid` parameter is `-1`).  Note that the `__user` tag indicates that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory for this purpose, and then put that pointer onto the message queue. 
+Don't forget to add a `struct list_head` to the `message` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
+
+### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
+
+You can add this pointer anywhere within the `struct`.
+
+### Create System Calls for `mysend` and `myreceive` in `sched.c` 
+
+These will contain the logic to append a message to a destination task's message queue (denoted by the `pid`), and to receive a message from your own current message queue from a particular specified `pid` (or from any process if the `pid` parameter is `-1`).  Note that the `__user` tag indicates that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory for this purpose, and then put that pointer onto the message queue. 
 
 Here are the function prototypes for `mysend` and `myreceive`:
 
@@ -111,7 +119,9 @@ asmlinkage long sys_mysend(pid_t pid, int n, const char __user *buf);
 asmlinkage long sys_myreceive(pid_t pid, int n, char __user *buf);
 ```
 
-5. **Register your System Calls**: Add entries for your two system calls to the syscall table, as before.  As usual, copy your function prototypes to `include/linux/syscalls.h`, and add an entry to `arch/i386/kernel/syscall_table.S` with an entry `.long sys_mysyscall` with the name of each of your syscalls.  To call these syscalls by name, add the following snippet to `include/asm-x86_64/unistd.h` for each syscall:
+### Register your System Calls
+
+Add entries for your two system calls to the syscall table, as before.  As usual, copy your function prototypes to `include/linux/syscalls.h`, and add an entry to `arch/i386/kernel/syscall_table.S` with an entry `.long sys_mysyscall` with the name of each of your syscalls.  To call these syscalls by name, add the following snippet to `include/asm-x86_64/unistd.h` for each syscall:
 
 ```c
 #define __NR_mysyscall ^^^ //(where ^^^ is one more than the highest number in the list).
@@ -120,17 +130,49 @@ __SYSCALL(__NR_mysyscall, sys_mysyscall)
 
 Alternatively, you can plan to call your syscalls by number (for example, `syscall(123, param1, param2);`), and omit the `__SYSCALL` macro above.
 
-6. **Implement the System Calls**:  The default logic for `myreceive` is to block until a message is received.  You can add the task to the message queue wait list on `myreceive` if no message is available, and release a waiting process (if there is one) when calling `mysend`.
+### Implement the System Calls 
 
-    * **`mysend`**: `kmalloc` a message structure to be added to some process' task_struct.  This is kernel memory, so you will pass `GFP_KERNEL` as the second parameter to `kmalloc`.  Don't roget to malloc enough room to fill the `char* msg` inside the message struct as well.  Set the other fields of the message.  Find the `task_struct` corresponding to your target `pid`, and use `list_add_tail` to pass the address of the `list_head` in your struct and the address of the `list_head` in the target process message queue (in their `task_struct`).  Finally, use `wake_up_interruptible` with the address of the `wait_queue_head_t` from the target process' message queue (in their `task_struct`) to wake up a process (if one exists) that may be waiting on your message.
-    
-    * **`myreceive`**: Begin by waiting for a message using `wait_event_interruptible`.  This function takes a `wait_queue_head_t`, and a condition to wait upon.  In this case, the condition is to wait until the list is not empty.  You can use the `!list_empty` function, which takes a `list_head`.  Take these from the current process.  Iterate over the list using `list_for_each_entry_safe`, which is a macro that expands to a `for` loop, and takes as parameters two pointers to your `message` struct (the first one is the one you will use, and the second one is for temporary use by the macro), the address of your `list_head` message queue, and the word `list`.  Check if the pid in each message matches the pid you are searching for from your syscall parameter.  If it is, copy it to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  Finally, use `list_del` to remove the item from the list (this takes the address of the `list_head` of the message structure you're removing).  Once a message is found, your syscall has finished.  If you find that the `pid` parameter is `-1`, you can modify this logic to return the first entry in the list.
-    
-    * **Thread-safe linked list operations**: Manipulating kernel linked lists may not be thread-safe.  You can use `rcu_read_lock()` and `rcu_read_unlock()` to get atomic access to those structures.  Try to use these only when necessary (i.e., not for the entie function!).  `list_for_each_safe` is thread-safe by itself.
-    
-    * **Don't forget to be robust**: If you call `kmalloc`, check that the return value is not `NULL`.  If any call returns an error state like `0` or `-1` as appropriate for the call, clean up your memory with `kfree` and exit gracefully by returning a negative number as well.  Either way, be sure to `kfree` everything you `kmalloc` when you are able to do so.
+The default logic for `myreceive` is to block until a message is received.  You can add the task to the message queue wait list on `myreceive` if no message is available, and release a waiting process (if there is one) when calling `mysend`.  Here, we describe the implementation of your new syscalls in detail:
 
-7. **Test Your Program from User Space**:  Write a user program that `fork`s a child.  The child should create a buffer and call `myreceive` with that buffer.  The parent should call `mysend` and send a message to the child by its `pid`.  The child can print the message it receives and `exit`; the parent can `wait` for the child after calling `mysend` (and then terminate itself). Test this program by receiving from "any" pid by passing `-1` for the pid to `myreceive`, and by passing `getppid()` as the pid in `myreceive` which will provide the `pid` of the child's sending parent.  If you called your syscalls by name (rather than by number), compile your program with access to the include files you've modified in this project by adding the `-I` flag to `gcc` as follows:
+#### Implementing `mysend`
+
+1. `kmalloc` a message structure to be added to some process' task_struct.  This is kernel memory, so you will pass `GFP_KERNEL` as the second parameter to `kmalloc`.  Don't roget to malloc enough room to fill the `char* msg` inside the message struct as well.  Set the other fields of the message.  
+
+2. Find the `task_struct` corresponding to your target `pid`, and use `list_add_tail` to pass the address of the `list_head` in your struct and the address of the `list_head` in the target process message queue (in their `task_struct`).  
+
+3. Finally, use `wake_up_interruptible` with the address of the `wait_queue_head_t` from the target process' message queue (in their `task_struct`) to wake up a process (if one exists) that may be waiting on your message.
+
+#### Implementing `myreceive`
+
+1. Begin by waiting for a message using `wait_event_interruptible`.  This function takes a `wait_queue_head_t`, and a condition to wait upon.  In this case, the condition is to wait until the list is not empty.  You can use the `!list_empty` function, which takes a `list_head`.  Take these from the current process.  
+
+2. Iterate over the list using `list_for_each_entry_safe`, which is a macro that expands to a `for` loop, and takes as parameters two pointers to your `message` struct (the first one is the one you will use, and the second one is for temporary use by the macro), the address of your `list_head` message queue, and the word `list`.  
+
+3. Check if the `pid` in each message matches the `pid` you are searching for from your syscall parameter.  If it is, copy it to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  If you find that the `pid` parameter is `-1`, you can modify this logic to return the first entry in the list regardless of the `pid` that it came from. 
+
+4. Finally, use `list_del` to remove the item from the list (this takes the address of the `list_head` of the message structure you're removing).  
+
+Once a message is found, your syscall has finished.  
+    
+#### Thread-safe linked list operations
+
+Manipulating kernel linked lists may not be thread-safe.  You can use `rcu_read_lock()` and `rcu_read_unlock()` to get atomic access to those structures.  Try to use these only when necessary (i.e., not for the entie function!).  `list_for_each_safe` is thread-safe by itself.
+    
+#### Don't forget to be robust
+
+If you call `kmalloc`, check that the return value is not `NULL`.  If any call returns an error state like `0` or `-1` as appropriate for the call, clean up your memory with `kfree` and exit gracefully by returning a negative number as well.  Either way, be sure to `kfree` everything you `kmalloc` when you are able to do so.
+
+### Test Your Program from User Space
+
+1. Write a user program that `fork`s a child.  
+
+2. The child should create a buffer and call `myreceive` with that buffer.  The child can print the message it receives and `exit`.
+
+3. The parent should call `mysend` and send a message to the child by its `pid`.  The parent can `wait` for the child after calling `mysend` (and then terminate itself).
+
+4. Test this program by receiving from "any" pid by passing `-1` for the pid to `myreceive`, and by passing `getppid()` as the pid in `myreceive` which will provide the `pid` of the child's sending parent.  
+
+If you called your syscalls by name (rather than by number), compile your program with access to the include files you've modified in this project by adding the `-I` flag to `gcc` as follows:
 
 ```
 gcc -I/The/location/of/your/kernel/linux/include testSysCall.c
