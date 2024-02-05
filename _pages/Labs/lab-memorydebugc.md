@@ -122,16 +122,11 @@ To do this, the prototype of your swap function will look like this, where `stru
 void swap(struct ListNode **head, struct ListNode *node1, struct ListNode *node2);
 ```
 
-`head` is passed as a `struct ListNode **` because it is a pointer to a `struct ListNode`, but itself must be passed as a pointer so that it can be dereferenced for assignment (i.e., `*head = something`).
+`head` is passed as a `struct ListNode **` because it is a pointer to a `struct ListNode`, but itself must be passed as a pointer so that it can be dereferenced for assignment (i.e., `*head = something`).  
 
-Check if the nodes are adjacent (by asking if `node1->next` is `node2` or vice-versa), and perform the following steps depending on what you find.  To simplify our logic, if the nodes are adjacent and `node2` points to `node1`, perform a standard swap so that we always swap adjacent nodes left to right:
+First, check if `*head` is equal to `node1` or `node2`.  If so, you'll want to set `*head` to the other node, since we're swapping with that node.  That way, the `head` will still point to the beginning of the list.
 
-```c
-struct ListNode* tmp;
-tmp = node1;
-node1 = node2;
-node2 = tmp;
-```
+Next, check if the nodes are adjacent (by asking if `node1->next` is `node2` or vice-versa), and execute either the adjacent nodes algorithm or the non-adjacent nodes algorithm below depending on what you find.  
 
 #### Adjacent Nodes
 
@@ -140,6 +135,15 @@ When `node1` and `node2` are adjacent, the function must carefully update the po
 * Ensuring `node1` is always to the left of `node2` to simplify logic.
 * Correctly updating the prev and next pointers of `node1`, `node2`, and their neighboring nodes.
 * Updating the head pointer if `node1` was the head of the list at the start of the function (now it is `node2`); since we ensured that `node1` comes first in the adjacent scenario, we don't have to check `node2`.
+
+To simplify our logic, let's ensure that `node1` points to `node2` in the case where they're adjacent.  if the nodes are adjacent and `node2` points to `node1`, perform a standard swap so that we always swap adjacent nodes left to right:
+
+```c
+struct ListNode* tmp;
+tmp = node1;
+node1 = node2;
+node2 = tmp;
+```
 
 To update the pointers, let's assume `node1` and `node2` are the nodes to be swapped, and `node1` is directly before `node2` in the list. The pointers to be updated include `node1->prev`, `node1->next`, `node2->prev`, `node2->next`, and potentially the `head` of the list if `node1` is the first node.  Then:
 
