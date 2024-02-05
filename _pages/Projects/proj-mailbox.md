@@ -14,18 +14,60 @@ info:
     - To implement kernel linked lists and dynamic memory allocation
 
   rubric:
-  - weight: 80
-    description: Code Functionality
-    preemerging: Test cases or reproduction steps are not given or are not appropriate
-    beginning: A reasonable attempt is made with feasible test cases documented in the README
-    progressing: Code works and appropriate test cases given in the README pass with minor adjustments 
-    proficient: Code works when the patch or source files are applied, and testing succeeds with the appropriate steps given in the README, along with my own test cases
-  - weight: 20
-    description: Code Documentation and README
-    preemerging: Both the README and documentation are lacking
-    beginning: Either the README or documentation are lacking
-    progressing: A README and code documentation are provided 
-    proficient: A README and code documentation are provided and appropriate  
+    - weight: 10
+      description: Modifications to the Kernel Data Structure
+      preemerging: No modifications made or modifications completely break the system functionality.
+      beginning: Incomplete or incorrect modifications to the kernel data structure, with major issues.
+      progressing: Adequate kernel data structure modifications with minor issues or missing documentation.
+      proficient: Comprehensive and correct modifications with clear documentation and rationale for changes.
+    - weight: 10
+      description: Copying Data Between Kernel and User Space
+      preemerging: No data copying between kernel and user space is present or it completely fails.
+      beginning: Copying of data is error-prone, with potential security or stability risks.
+      progressing: Data copying is functional but may have minor inefficiencies or lack some safety checks.
+      proficient: Efficient and error-free copying of data, with safety checks and validation.
+    - weight: 10
+      description: Data-level Thread Safety and Atomic Instruction Code Blocks with Locking Techniques
+      preemerging: No consideration for thread safety, leading to severe system instability.
+      beginning: Insufficient thread safety measures, with a high risk of race conditions or deadlocks.
+      progressing: Most operations are thread-safe, with some potential for race conditions or deadlocks.
+      proficient: Thread safety ensured with atomic operations and appropriate use of locking mechanisms.
+    - weight: 15
+      description: System Call Implementation
+      preemerging: System calls are not implemented or are completely non-functional.
+      beginning: System calls are implemented with significant flaws or misunderstanding of requirements.
+      progressing: System calls are mostly correct but may have minor issues with edge cases or error handling.
+      proficient: System calls are implemented correctly with proper parameter handling and error checking.
+    - weight: 10
+      description: System Call Integration with the Operating System
+      preemerging: System calls are not integrated, rendering the system calls unusable within the OS.
+      beginning: Poor integration of system calls, causing instability or incorrect behavior in the OS.
+      progressing: System call integration works, with some minor inconsistencies or deviations from standards.
+      proficient: Seamless integration, with system calls functioning as expected within the OS environment.
+    - weight: 10
+      description: User Space Test Program
+      preemerging: No user space test program is provided, or it fails to execute any meaningful tests.
+      beginning: Test program is inadequate, with unclear output and failure to cover necessary scenarios.
+      progressing: Test program covers most scenarios but may miss some edge cases or lack detailed output.
+      proficient: Comprehensive test program covering all cases, with documentation and clear output.
+    - weight: 10
+      description: Robust and Defensive Code Implementation
+      preemerging: Code is not robust, with no attempt to handle errors or edge cases.
+      beginning: Code lacks robustness, with frequent errors or crashes under edge cases.
+      progressing: Code is generally robust but may not handle all edge cases or lacks some defensive measures.
+      proficient: Code is robust, handles all edge cases, and includes defensive programming practices.
+    - weight: 15
+      description: Condition Variable Implementation
+      preemerging: No implementation of condition variables, or implementation causes system failure.
+      beginning: Condition variables are implemented incorrectly, leading to inefficient or incorrect operations.
+      progressing: Condition variables are used appropriately, but there may be minor inefficiencies or delays.
+      proficient: Correct use of condition variables, with efficient handling of wait and signal operations.
+    - weight: 10
+      description: Code Documentation and README
+      preemerging: Both the README and documentation are lacking.
+      beginning: Either the README or documentation are lacking.
+      progressing: A README and code documentation are provided.
+      proficient: A README and code documentation are provided and appropriate.
 
   readings:
     - rlink: "https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8"
