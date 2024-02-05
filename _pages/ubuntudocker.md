@@ -75,6 +75,10 @@ RUN useradd -rm -d /home/ubuntu -s /bin/bash -g root -G sudo -u 1000 ubuntu && \
     echo "ubuntu:$USER_PASSWORD" | chpasswd && \
     echo "root:$USER_PASSWORD" | chpasswd
 
+# Set up the ubuntu user's environment to generate core files in the current directory
+RUN echo "ulimit -c unlimited" >> /home/ubuntu/.bashrc
+RUN sysctl -w kernel.core_pattern=core.%u.%p.%t
+
 # Set up configuration for SSH
 RUN mkdir -p /var/run/sshd && \
     sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \

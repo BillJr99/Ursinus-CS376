@@ -124,9 +124,78 @@ After printing the new value of `result`, you can tell GDB to continue executing
 continue
 ```
 
+## Generating a Stacktrace for a NULL Pointer Dereference
+
+A null pointer dereference occurs when a program attempts to read or write to memory location 0, which is reserved and signals an uninitialized or invalid pointer. This mistake often leads to a segmentation fault, abruptly terminating the program. Below is a simple C program designed to intentionally cause a null pointer dereference, followed by steps to debug this issue using GDB.  Any time you perform a dereference operator (such as `*`, `[]`, `->`), you have to check to make sure the variable pointer is not `NULL`, otherwise you will segfault with a memory error.  Consider the following faulty code example:
+
+```c
+#include <stdio.h>
+
+void cause_crash() {
+    int *ptr = NULL; // Intentionally set pointer to NULL
+    *ptr = 10;       // Attempt to write to a null pointer, causing a segmentation fault
+}
+
+int main() {
+    cause_crash(); // Call function that causes null pointer dereference
+    return 0;
+}
+```
+
+### Step 1: Compile with Debugging Symbols
+
+Like before, compile the program with the `-g` option to include debugging information, which GDB can utilize to provide detailed information about the source code during debugging.  
+
+```
+gcc -g -o null_pointer null_pointer.c
+```
+
+### Step 2: Launch GDB
+Start GDB with the compiled program as the argument.
+
+```
+gdb ./null_pointer
+```
+
+### Step 3: Run the Program
+
+Use the `run` command within GDB to start the execution of your program. If a segmentation fault occurs, GDB will halt execution and report the crash.
+
+```
+run
+```
+
+### Step 4: Diagnose the Segmentation Fault
+
+If the program crashes, GDB will halt at the point of failure, often indicating a segmentation fault. To find out where the issue occurred, use the `backtrace` command (or `bt` for short), which displays the call stack at the moment of the crash.
+
+```
+bt
+```
+
+The backtrace will show you the exact line in your code where the null pointer was dereferenced, highlighting the function call path that led to the error.
+
+### Step 5: Examine Variables
+
+To further investigate, examine the variables near the point of the crash. Use the `print` command to display the value of variables. For instance, if bt showed that the crash occurred within `cause_crash()`, you could examine `ptr`.
+
+```
+print ptr
+```
+
+This command should confirm that ptr is indeed NULL at the time of the dereference.
+
+### Step 6: Identify and Fix the Bug
+
+Armed with the knowledge of where and why the crash occurred, you can now navigate to the source code to correct the error. In this example, the fix would involve ensuring `ptr` is pointed to a valid memory location before dereferencing it.
+
+### Step 7: Re-compile and Test
+
+After making the necessary corrections in the code, re-compile the program with debugging symbols and run it again under GDB to verify that the issue has been resolved.
+
 ## Using gdb to Print a Stack Trace from a Segmentation Fault
 
-To enable core dumping and analyze the core file using GDB, follow these steps:
+Using the example above, running the program without gdb will result in a segmentation fault and a core file to be dumped with memory and backtrace information.  To enable this core dumping and to analyze the core file using GDB, follow these steps:
 
 ### Step 1: Set unlimited core file size and core file location.
 On Unix-like systems, you can use the `ulimit` command to set the maximum size of the core file. To allow an unlimited core file size, run the following command:
@@ -152,13 +221,14 @@ Execute your program as you normally would. If it crashes, it will generate a co
 ### Step 4: Load the core file into GDB.
 To analyze the core dump with GDB, use the following command:
 ```
-gdb program core
+gdb program core-file-location
 ```
 
 Note that if you're using the Windows Subsystem for Linux (WSL), the core file is typically stored at `/mnt/wslg/dumps` on the Windows file system. On most systems, it will appear in the current directory or some other pre-defined location.  Following the instructions above, they should appear in your current directory.
 
-### Step 5: Obtain a backtrace.
-Once GDB is loaded with the core file, you can obtain a backtrace of the program's execution at the time of the crash using the `bt` command:
+### Step 5: Obtain a backtrace / stacktrace.
+Once GDB is loaded with the core file, you can obtain a backtrace of the program's execution at the time of the crash using the `bt` command, like you did in real time earlier:
+
 ```
 bt
 ```
