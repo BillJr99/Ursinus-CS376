@@ -53,33 +53,13 @@ tags:
 You will write a kernel module or component that enables us, via syscalls, signals, or other mechanism, to communicate between two processes.  You will implement a mailbox with `send` and `receive` capabilities.  `receive` shall be a blocking call, which blocks until a message is received.
 
 Implement the following functions:
-* `mysend(pid_t pid, int n, char* buf)`
-* `int myreceive(pid_t pid, int n, char* buf)`
+* `void mysend(pid_t pid, size_t n, __user char* buf)`
+* `long myreceive(pid_t pid, size_t n, __user char* buf)`
 
 In these functions, `pid` is the pid you wish to send to/receive from.  
 
 ## Receive Syscall
 When receiving, if `pid` is set to a negative number, `myreceive` shall receive from any process.  `n` specifices the number of bytes to send, and the maximum number of bytes to read.  `buf` is the buffer to send, and is a pointer to a char buffer that `myreceive` will assume has been properly `malloc`'ed.  
-
-But, these pointers are addresses that exist in user-space, not in kernel space!  You'll need to use `copy_from_user`, `copy_to_user` and `strlen_user`, to help you (after all, these addresses are virtual user-space addresses, not the physical addresses we need).  Read [this article](https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8) for details on how to use these functions, or see the example below taken from that article.  `myreceive` returns the number of bytes read, or -1 on error. 
-
-```c
-// From: https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8
-// GNU Free Documentation License
-
-#include <linux/linkage.h>
-#include <asm/uaccess.h>
-asmlinkage long sys_mysyscall(char __user *buf, int len)
-{
-    char msg [200];
-    if(strlen_user(buf) > 200)
-        return -EINVAL;
-    copy_from_user(msg, buf, strlen_user(buf));
-    printk("mysyscall: %s\n", msg);
-    copy_to_user(buf, "hello world", strlen("hello world")+1);
-    return strlen("hello world")+1;
-}      
-```
 
 ## Send Syscall
 
@@ -102,7 +82,7 @@ Define a structure to represent a message and a queue to hold messages for a pro
 
 ### Create a Kernel Linked List of these `message` structures
 
-Don't forget to add a `struct list_head` to the `message` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
+Add a `struct list_head` to the `message` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
 
 ### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
 
@@ -110,12 +90,12 @@ You can add this pointer anywhere within the `struct`.
 
 ### Create System Calls for `mysend` and `myreceive` in `sched.c` 
 
-These will contain the logic to append a message to a destination task's message queue (denoted by the `pid`), and to receive a message from your own current message queue from a particular specified `pid` (or from any process if the `pid` parameter is `-1`).  Note that the `__user` tag indicates that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory for this purpose, and then put that pointer onto the message queue. 
+These will contain the logic to append a message to a destination task's message queue (denoted by the `pid`), and to receive a message from your own current message queue from a particular specified `pid` (or from any process if the `pid` parameter is `-1`).  `myreceive` returns the number of bytes read, or `-1` on error.  
 
 Here are the function prototypes for `mysend` and `myreceive`:
 
 ```c
-asmlinkage long sys_mysend(pid_t pid, int n, const char __user *buf);
+asmlinkage void sys_mysend(pid_t pid, int n, const char __user *buf);
 asmlinkage long sys_myreceive(pid_t pid, int n, char __user *buf);
 ```
 
@@ -132,7 +112,29 @@ Alternatively, you can plan to call your syscalls by number (for example, `sysca
 
 ### Implement the System Calls 
 
-The default logic for `myreceive` is to block until a message is received.  You can add the task to the message queue wait list on `myreceive` if no message is available, and release a waiting process (if there is one) when calling `mysend`.  Here, we describe the implementation of your new syscalls in detail:
+The default logic for `myreceive` is to block until a message is received.  You can add the task to the message queue wait list on `myreceive` if no message is available, and release a waiting process (if there is one) when calling `mysend`.  Here, we describe the implementation of your new syscalls in detail.
+
+#### Copying Between Userspace and Kernel Space
+
+Before we begin, note that the `mysend` and `myreceive` `buf` pointers are addresses that exist in user-space, not in kernel space!  The `__user` tags in the function prototypes indicate that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory to copy data between userspace virtual addresses and physical addresses for access by the kernel.  You can then put that kernel physical pointer onto the message queue when you send, and move that data from this kernel message queue back to user space on receive.  Read [this article](https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8) for details on how to use these functions, or see the example below taken from that article.  
+
+```c
+// From: https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8
+// GNU Free Documentation License
+
+#include <linux/linkage.h>
+#include <asm/uaccess.h>
+asmlinkage long sys_mysyscall(char __user *buf, int len)
+{
+    char msg [200];
+    if(strlen_user(buf) > 200)
+        return -EINVAL;
+    copy_from_user(msg, buf, strlen_user(buf));
+    printk("mysyscall: %s\n", msg);
+    copy_to_user(buf, "hello world", strlen("hello world")+1);
+    return strlen("hello world")+1;
+}      
+```
 
 #### Implementing `mysend`
 
