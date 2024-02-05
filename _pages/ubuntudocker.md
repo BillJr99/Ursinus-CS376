@@ -6,7 +6,7 @@ excerpt: "CS376: Operating Systems - Launching an Ubuntu virtual machine with Do
 
 ---
 
-# Launching an Ubuntu virtual machine with Docker
+# Launching an Ubuntu Environment with Docker
 
 If standard development tools like `gdb` and `valgrind` are not available on your computer, you can create a virtual machine from which to access them.  
 
@@ -139,7 +139,18 @@ A password is not required, since we provided our ssh key.
 cat ~/.ssh/id_rsa.pub
 ```
 
-## References
+# Quickstart: Launching a Vanilla Ubuntu Image
+
+You can quickly spin up an Ubuntu instance by typing:
+
+```
+docker pull ubuntu
+docker run -it ubuntu
+```
+
+However, this will not have incoming SSH access or any of the software packages we use.  You'll have to install those manually.
+
+# References
 
 * [https://tecadmin.net/setting-up-ubuntu-docker-container-with-ssh-access/](https://tecadmin.net/setting-up-ubuntu-docker-container-with-ssh-access/)
 * [https://www.digitalocean.com/community/tutorials/how-to-share-data-between-the-docker-container-and-the-host](https://www.digitalocean.com/community/tutorials/how-to-share-data-between-the-docker-container-and-the-host)
