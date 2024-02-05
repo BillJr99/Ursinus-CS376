@@ -128,10 +128,16 @@ continue
 
 To enable core dumping and analyze the core file using GDB, follow these steps:
 
-### Step 1: Set unlimited core file size.
+### Step 1: Set unlimited core file size and core file location.
 On Unix-like systems, you can use the `ulimit` command to set the maximum size of the core file. To allow an unlimited core file size, run the following command:
 ```
 ulimit -c unlimited
+```
+
+This command will force core files to be created in your local directory, so you can more easily find them:
+
+```
+sudo sysctl -w kernel.core_pattern=core.%u.%p.%t 
 ```
 
 ### Step 2: Compile your program with debugging symbols.
@@ -149,7 +155,7 @@ To analyze the core dump with GDB, use the following command:
 gdb program core
 ```
 
-Note that if you're using the Windows Subsystem for Linux (WSL), the core file is typically stored at `/mnt/wslg/dumps` on the Windows file system. On most systems, it will appear in the current directory.
+Note that if you're using the Windows Subsystem for Linux (WSL), the core file is typically stored at `/mnt/wslg/dumps` on the Windows file system. On most systems, it will appear in the current directory or some other pre-defined location.  Following the instructions above, they should appear in your current directory.
 
 ### Step 5: Obtain a backtrace.
 Once GDB is loaded with the core file, you can obtain a backtrace of the program's execution at the time of the crash using the `bt` command:
