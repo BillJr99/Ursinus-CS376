@@ -126,12 +126,12 @@ Before we begin, note that the `mysend` and `myreceive` `buf` pointers are addre
 #include <asm/uaccess.h>
 asmlinkage long sys_mysyscall(char __user *buf, int len)
 {
-    char msg [200];
+    char msg [200]; // I'd malloc this and put the pointer in a task_struct queue for persistence!
     if(strlen_user(buf) > 200)
         return -EINVAL;
-    copy_from_user(msg, buf, strlen_user(buf));
+    copy_from_user(msg, buf, strlen_user(buf)); // copy the data to a kernel buffer
     printk("mysyscall: %s\n", msg);
-    copy_to_user(buf, "hello world", strlen("hello world")+1);
+    copy_to_user(buf, "hello world", strlen("hello world")+1); // put "hello world" back into their user buffer
     return strlen("hello world")+1;
 }      
 ```
