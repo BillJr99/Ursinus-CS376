@@ -79,7 +79,80 @@ In addition, your program must be able to select a database, creating one if it 
 
 You must use only the standard library file operations (no CSV or json libraries, etc.).  You may use the CSAPP file I/O libraries.
 
-## Tokenizing a String
+
+## Makefile
+
+Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
+
+## Getting Started
+
+This section will guide you through the development of a mini-database system in C, first by directly manipulating comma-separated value (CSV) files, and then by using data structures to represent and manipulate records more efficiently. You may choose either approach (or something different!)
+
+### Part 1: Using CSV Files for Data Storage and Manipulation
+
+**Step 1: Understanding the CSV Format**
+
+- CSV files are simple text files where each line represents a record and each field within a record is separated by a comma.
+- The first line often serves as a header, listing field names.
+
+**Step 2: Opening and Reading CSV Files**
+
+- Use file I/O operations to open and read CSV files line by line, utilizing the standard I/O library functions.
+- Be sure to handle file read errors and end-of-file (EOF) conditions gracefully by checking the return value of your system calls.
+
+**Step 3: Parsing CSV Lines**
+
+- Tokenize your file first by newline to get each line of the file.
+- Tokenize each line using commas as delimiters to separate fields within a record.
+
+**Step 4: Identifying the Field Index**
+
+- Before manipulating data, you must find the index of the field (column) you wish to operate on, based on the header line.
+- Loop through the line tokens (the words) until the word matches the field you're looking for.  Keep track of a counter as you iterate through the loop.
+- That counter represents the field number for that column!  If you tokenize each subsequent line of the file, you can iterate to that index number and retrieve the value.
+- Make this a helper function that returns the index of a field in the file given its column name in the header line.
+
+**Step 5: Implementing SQL-like Operations**
+
+- **SELECT Operation**: To perform a SELECT operation on a CSV file, you would read the file line by line, parse each line to tokenize the fields, and compare the relevant field's value against the criteria specified in the SELECT query. If a match is found, you would output or store the corresponding line.
+- **INSERT Operation**: To INSERT a new record into a CSV file, you would append a new line to the end of the file. This involves converting the record's fields into a comma-separated string and writing this string, followed by a newline character, to the file.
+- **UPDATE Operation**: Updating records in a CSV file requires reading the entire file, modifying the lines that meet the update criteria, and writing the updated content back to the file. This often means storing the modified file content in memory before rewriting it to the file.
+- **DELETE Operation**: Similar to UPDATE, the DELETE operation involves reading the entire file, identifying the records that match the delete criteria, removing these records from the in-memory representation of the file, and then writing the modified content back to the file.
+
+**Step 6: Closing Files and Memory Management**
+
+- Close your file and `free` any `malloc`s when done.
+
+### Part 2: Using Data Structures for Efficient Data Representation and Manipulation
+
+**Step 1: Defining Data Structures**
+
+- Begin by defining a `struct` in C to represent a record, with fields corresponding to columns you want to store.
+- Consider dynamic memory allocation for storing an array of these structs, to accommodate a variable number of records.
+
+**Step 2: Loading Data into Structures**
+
+- For each record you intend to read from the file, allocate memory dynamically using `malloc()`. This allocation should be for a single instance of your struct.
+- Keep a linked list of these structures, which represent your rows.
+
+**Step 3: Implementing SQL-like Operations with Structures**
+
+- **SELECT Operation**: To perform a SELECT operation on a linked list of record structs, iterate through the list, comparing the specified field in each struct against the selection criteria. For each struct that matches the criteria, you could perform an action such as displaying the record or adding it to a results list.
+- **INSERT Operation**: To INSERT a new record into a linked list, create a new struct instance with the provided record data, allocate memory for it, and appropriately adjust the pointers in the list to include the new node. This might involve appending the new node at the end of the list or inserting it in a specific position based on some criteria.
+- **UPDATE Operation**: For an UPDATE operation, traverse the linked list to find nodes (records) that match the update criteria. For each matching node, update the relevant fields with the new values. This operation requires no restructuring of the list itself, only modification of the selected nodes' data.
+- **DELETE Operation**: To DELETE records from a linked list, iterate through the list, identifying nodes that match the delete criteria. For each node that matches, remove it from the list by adjusting the pointers of the adjacent nodes and then free the memory allocated for the removed node to avoid memory leaks.
+
+**Step 4: Writing Data Back to the file**
+
+- Save each data structure in your array back to the file.  You might find it helpful to delete the entire file and re-write everything, but you could also seek to the position of the record you're editing, and do a write of just that structure (which automatically overwrites the structure that was there before).
+
+**Step 5: Closing Files and Memory Management**
+
+- Close your file and `free` any `malloc`s when done.
+
+## Helpful Utility Functions
+
+### Tokenizing a String
 
 You can use the `strtok` function to tokenize a string.  Here is a function that dynamically allocates (and re-allocates) an array of tokens given an input string, a string of possible delimiters, and an integer representing the number of tokens found (passed as a pointer so that updates are seen in the `main` function).
 
@@ -167,7 +240,7 @@ int main() {
 }
 ```
 
-## Comparing Two Strings
+### Comparing Two Strings
 
 You can compare two strings using the `strcmp` function, which returns `0` when the strings are equal.  Here is an example:
 
@@ -209,7 +282,7 @@ int main() {
 }
 ```
 
-### Converting a String to Lowercase
+#### Converting a String to Lowercase
 
 `strcmp` is a case-sensitive comparison, which is fine for this assignment.  If you like, you can convert your `char*` variables to lowercase so that these comparisons are effectively case-insensitive.  You can convert an individual `char` to lowercase using the `tolower(char)` function, which returns a new `char` and can be accessed by including `ctype.h`.  Using a loop, you could convert an entire string to lowercase.  Here is an example:
 
@@ -232,7 +305,3 @@ int main() {
     return 0;
 }
 ```
-
-## Makefile
-
-Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
