@@ -69,7 +69,6 @@ In this assignment, you will write a mini-database program in the C language tha
   * `SELECT * FROM TableName WHERE Field1="value"`
   * `DELETE FROM TableName WHERE Field1="value"`
   * `UPDATE TableName SET Field1="new value" WHERE Field2="value"`
-  * `SELECT * FROM TableName JOIN TableName2 ON TableName.Field1 = TableName2.Field2`
   * `INSERT INTO TableName (Field1="value", Field2="value", ...)`
   
 * Creation and deletion of multiple tables per database:
