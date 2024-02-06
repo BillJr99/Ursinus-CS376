@@ -121,7 +121,7 @@ textbooks:
 
 objectives:
 - objective: "To write thread-safe multithreaded programs"
-- objective: "To utilize the programming facilities of modern operating systems for interprocess communication, including file system structures, sockets, shared memory, and I/O"
+- objective: "To utilize the programming facilities of modern operating systems for interprocess communication, including structures such as the file system, shared memory, and message passing"
 - objective: "To explain the structure and organization of a modern file system"
 - objective: "To explain the principles of abstraction as they pertain to running processes on modern computing hardware"
 - objective: "To utilize system calls to manage processes, memory, and file systems"
