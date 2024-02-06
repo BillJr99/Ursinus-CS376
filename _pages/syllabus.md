@@ -237,23 +237,10 @@ schedule:
         rubricpath: "_pages/Assignments/asmt-fileio.md"    
   - week: "3"
     date: "1"
-    title: "Network Programming"
-    link: "./files/lectures/networkprogramming.pptx"
-    readings:
-      - rtitle: "OS Concepts Chapter 19, 20.10"
-        rlink: false
+    title: "File I/O"
   - week: "4"
     date: "0"
-    title: "Network Programming"
-    deliverables:
-      - dtitle: "Homework Assignment: File I/O Due"
-        dlink: "Assignments/FileIO"
-        points: 100
-        rubricpath: "_pages/Assignments/asmt-fileio.md"
-      - dtitle: "Homework Assignment: Web Client and Server Handed Out"
-        dlink: "Assignments/WebClientServer"
-        points: 100
-        rubricpath: "_pages/Assignments/asmt-webclientserver.md"
+    title: "File I/O"
   - week: "4"
     date: "1"
     title: "Interprocess Communication and The Shell"
@@ -269,10 +256,10 @@ schedule:
     title: "Multithreading and Cache Considerations"
     link: "./files/lectures/threading.pptx"
     deliverables:
-      - dtitle: "Homework Assignment: Web Client and Server Due"
-        dlink: "Assignments/WebClientServer"
+      - dtitle: "Homework Assignment: File I/O Due"
+        dlink: "Assignments/FileIO"
         points: 100
-        rubricpath: "_pages/Assignments/asmt-webclientserver.md"
+        rubricpath: "_pages/Assignments/asmt-fileio.md"
       - dtitle: "Lab: Shell Handed Out"
         dlink: "Labs/Shell"
         points: 100
