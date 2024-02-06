@@ -120,7 +120,7 @@ docker build -t ubuntu-ssh .
 To start the image, run the following command (which you can skip to once you've built the image above):
 
 ```
-docker run -d -v /c/Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 ubuntu-ssh 
+docker run -d -v /c/Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 --privileged ubuntu-ssh 
 ```
 
 The path including `<your user name>` allows you to share a local directory within your virtual image home directory!  This example will mount your local `Desktop` directory at `/home/ubuntu/shared/desktop`, but you can select other possibilities here.  Feel free to specify this or omit the entire `-v` parameter to skip it.
