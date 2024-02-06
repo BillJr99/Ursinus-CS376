@@ -282,7 +282,7 @@ int main() {
 }
 ```
 
-#### Converting a String to Lowercase
+#### Optional: Converting a String to Lowercase
 
 `strcmp` is a case-sensitive comparison, which is fine for this assignment.  If you like, you can convert your `char*` variables to lowercase so that these comparisons are effectively case-insensitive.  You can convert an individual `char` to lowercase using the `tolower(char)` function, which returns a new `char` and can be accessed by including `ctype.h`.  Using a loop, you could convert an entire string to lowercase.  Here is an example:
 
