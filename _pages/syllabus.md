@@ -42,10 +42,10 @@ info:
       mendtime: "TBD"
       mroom: "TBD"       
   finalexam: 
-    - fdate: "TBD"
-      fstarttime: "TBD"
-      fendtime: "TBD"
-      froom: "TBD"  
+    - fdate: "2024/05/04"
+      fstarttime: "1:00 PM"
+      fendtime: "4:00 PM"
+      froom: "PFA 007"  
   flexible_submission_policy: "In the absence of <a href=\"#accommodations\">accommodations</a> arranged in advance with the instructor or college, all assignments are due at 10:59PM Eastern Time on the date(s) stated on the schedule.  Assignments will be accepted without prior permission following this time with a points deduction of 5% per day if submitted before 10:59 PM Eastern Time on the day submitted.<br><br>Students may request, in writing, up to three extensions during the semester, each lasting up to 7 days in duration.  This request should motivate the need, including the number of days requested, the reason for the request, and a day-by-day plan of one's time and energy; in addition, the request must include a report on progress to-date, including a copy of the deliverable in its current form, and documentation of at least one visit to the instructor's student hours or to the help room.  Each request will be granted only if such sufficient motivation is given, and only if the progress demonstrated merits a passing grade.  The request must be made at least 24 hours prior to the initial submission deadline.<br><br>Extra credit will not be awarded for assignments submitted under the flexible submission policy.  Students with accommodations will receive additional &quot;slack days&quot; as specified within the accommodations letter; however, some deliverables cannot be subject to accommodations due to the time-sensitive nature of the assignment (for example, group assignments, presentations, and course surveys).  Students who add the class late shall receive additional slack days equal to the number of days between the start of classes and the first date that approval is given or that class is attended (whichever occurs first).  Under no circumstances (including accommodations) can late work be accepted after the final class meeting, nor during final exams week, nor after the exam." 
   late_penalty_per_period: 5
   late_penalty_period: "day"
