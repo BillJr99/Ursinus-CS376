@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Labs/MemoryDebugC
 title: "CS376: Operating Systems - Debugging and Memory Management in C"
-excerpt: "CS376: Operating Systems - Debugging and Memory Management in C"
 
 info:
   coursenum: CS376

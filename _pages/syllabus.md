@@ -2,7 +2,6 @@
 layout: syllabus
 permalink: /
 title: "CS376: Operating Systems"
-excerpt: "CS376: Operating Systems"
     
 info:
   course_number: CS376

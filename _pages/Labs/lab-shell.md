@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Labs/Shell
 title: "CS376: Operating Systems - Shell"
-excerpt: "CS376: Operating Systems - Shell"
 
 info:
   coursenum: CS376

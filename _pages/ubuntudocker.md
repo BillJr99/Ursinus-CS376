@@ -2,7 +2,6 @@
 layout: default
 permalink: /UbuntuDocker
 title: "CS376: Operating Systems - Launching an Ubuntu virtual machine with Docker"
-excerpt: "CS376: Operating Systems - Launching an Ubuntu virtual machine with Docker"
 
 ---
 

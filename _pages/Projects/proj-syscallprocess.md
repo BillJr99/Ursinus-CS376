@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Projects/SyscallProcess
 title: "CS376: Operating Systems - System Calls and Processes in the Linux Kernel"
-excerpt: "CS376: Operating Systems - System Calls and Processes in the Linux Kernel"
 
 info:
   coursenum: CS376

@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Projects/BootingCustomKernel
 title: "CS376: Operating Systems - Booting a Custom Linux Kernel"
-excerpt: "CS376: Operating Systems - Booting a Custom Linux Kernel"
 
 info:
   coursenum: CS376

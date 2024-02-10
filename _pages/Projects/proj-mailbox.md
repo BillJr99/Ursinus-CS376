@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Projects/Mailbox
 title: "CS376: Operating Systems - Interprocess Communication via a Mailbox"
-excerpt: "CS376: Operating Systems - Interprocess Communication via a Mailbox"
 
 info:
   coursenum: CS376
