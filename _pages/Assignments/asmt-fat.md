@@ -2,8 +2,6 @@
 layout: assignment
 permalink: Assignments/FAT
 title: "CS376: Operating Systems - FAT File System"
-excerpt: "CS376: Operating Systems - FAT File System"
-excerpt_separator: <!--more-->
 
 info:
   coursenum: CS376
