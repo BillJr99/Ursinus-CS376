@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Assignments/WebClientServer
 title: "CS376: Operating Systems - Web Client and Server"
-excerpt: "CS376: Operating Systems - Web Client and Server"
 
 info:
   coursenum: CS376

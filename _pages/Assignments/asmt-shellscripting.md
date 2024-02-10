@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Assignments/ShellScripting
 title: "CS376: Operating Systems - Shell Scripting"
-excerpt: "CS376: Operating Systems - Shell Scripting"
 
 info:
   coursenum: CS376

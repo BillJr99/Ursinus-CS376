@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Assignments/FileIO
 title: "CS376: Operating Systems - File I/O"
-excerpt: "CS376: Operating Systems - File I/O"
 
 info:
   coursenum: CS376

@@ -2,7 +2,6 @@
 layout: assignment
 permalink: /Assignments/Written/Warmup
 title: "CS376: Operating Systems - Warmup"
-excerpt: "CS376: Operating Systems - Warmup"
 
 info:
   coursenum: CS376

@@ -2,7 +2,6 @@
 layout: assignment
 permalink: Assignments/Threads
 title: "CS376: Operating Systems - Threaded Programming"
-excerpt: "CS376: Operating Systems - Threaded Programming"
 
 info:
   coursenum: CS376
