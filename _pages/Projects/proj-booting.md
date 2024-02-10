@@ -112,7 +112,7 @@ First, we'll download a custom Makefile and build configuration file.  Normally,
 cd linux-2.6.22.19
 make clean; make mrproper; make clean
 wget --no-check-certificate www.billmongan.com/Ursinus-CS376/files/proj-booting/config-2.6.22.19-debian -O .config
-wget --no-check-certificate www.billmongan.com/Ursinus-CS376/files/proj-booting/Makefile -O Makefile`
+wget --no-check-certificate www.billmongan.com/Ursinus-CS376/files/proj-booting/Makefile -O Makefile
 make oldconfig
 ```
 
