@@ -213,7 +213,7 @@ If you have kvm installed, you can replace this command:
 
 with this one:
 
-`kvm -curses -drive file=local.qcow2`
+`kvm -display curses -drive file=local.qcow2`
 
 ### Building and Booting a Kernel From your Local Computer
 
@@ -231,7 +231,27 @@ Clone that forked repository on your computer with the following command:
 
 Now, you can work entirely from your local computer and verify the results on your virtual machine!
 
-#### Step 2 - Booting the Kernel from Your Local Computer
+#### Step 2 - Downloading a Compatible Version of Make
+
+This is a rather old Makefile, and so an older verison of Make is needed to build it.  If you are compiling locally, you can download a compatible version of Make for Linux operating systems by downloading [make3.tar.bz2](../files/proj-booting/make3.tar.bz2), and extracting it with:
+
+```
+tar xvjpf make3.tar.bz2
+```
+
+You can run this version of make by running `./home/wmm24/public/make3/bin/make` wherever you would run make, or run the command:
+
+```
+alias make="~/home/wmm24/public/make3/bin/make"
+```
+
+to use this version of make every time.  Alternatively, you can add this path to your `PATH` environment variable:
+
+```
+export PATH=$PATH:~/home/wmm24/public/make3/bin/make
+```
+
+#### Step 3 - Booting the Kernel from Your Local Computer
 
 Once you have configured the kernel by downloading the `Makefile` and `.config` file using the same steps above, and compiled the kernel by running `make` as before, you can add these two parameters to the `kvm` or `qemu-system-x86_64` command you ran earlier to boot your virtual machine:
 
@@ -239,7 +259,7 @@ Once you have configured the kernel by downloading the `Makefile` and `.config` 
 
 You can also add the `printme` parameter right after `root=/dev/hda1 ro'` to add that kernel parameter at boot time as well.
 
-#### Step 3 - Creating a diff Patch File for Submission
+#### Step 4 - Creating a diff Patch File for Submission
 
 One advantage of using git is that you can automatically create a patch file from your commit history.
 
