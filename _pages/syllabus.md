@@ -12,7 +12,7 @@ info:
   course_homepage: "https://www.billmongan.com/Ursinus-CS376-Spring2024/"
   class_notebook: https://ursinuscollege365-my.sharepoint.com/personal/wmongan_ursinus_edu/Documents/Class%20Notebooks/CS376%20Spring%202024
   ical: files/CS376.ics
-  teamshelproom: "https://teams.microsoft.com/l/team/19%3AlSQxlh9Y7-EePPKNY_fwzuSLcFlGfJxSRhuUQA3qaVg1%40thread.tacv2/conversations?groupId=5246563a-3082-48e9-be4e-ce4a06a16ad9&tenantId=921f1c03-8689-4e60-a722-f5ea581e00fe"
+  teamshelproom: "https://teams.microsoft.com/l/team/19%3A-VHyn6O2G6VnIfcM9tVFRxJvPDXTW8BJ0Dwgw4te7Hw1%40thread.tacv2/conversations?groupId=bddc5e35-58b6-44ec-a9a0-963c03f26de2&tenantId=921f1c03-8689-4e60-a722-f5ea581e00fe"
   course_prerequisites: "CS274 Computer Architecture"
   course_start_date: "2024/01/15"
   course_end_date: "2024/05/01"
