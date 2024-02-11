@@ -66,6 +66,12 @@ If the image is not already downloaded in your environment, you can download the
 * [base.zip.005](../files/proj-booting/base.zip.005)
 * [base.zip.006](../files/proj-booting/base.zip.006)
 
+On Linux or mac, here is a one-liner that accomplishes all of this:
+
+```
+for i in {1..6}; do wget "https://www.billmongan.com/Ursinus-CS376/files/proj-booting/base.zip.00$i"; done; cat base.zip.00{1..6} >base.zip; unzip base.zip
+```
+
 ### Step 3 - Creating Your Own Disk Image
 
 You could work directly with this disk image.  However, if you make a mistake, it would be helpful to return to that image without re-downloading it.  Therefore, I recommend creating a snapshot from this image, which will create a much smaller second disk image connected to the first that contains only your revisions.
@@ -117,7 +123,7 @@ Begin by downloading the kernel source code from git.  Navigate to [https://gith
 git clone git@github.com:<your git username>/linux-2.6.22.19.git
 ```
 
-This kernel uses a rather old Makefile, and so an older verison of Make is needed to build it.  If you are compiling locally, you can download a compatible version of Make for Linux operating systems by downloading [make3.tar.bz2](../files/proj-booting/make3.tar.bz2), and extracting it with:
+This kernel uses a rather old Makefile, and so an older verison of Make is needed to build it.  If you are compiling locally, you can download a compatible and prebuilt version of Make for Linux operating systems by downloading [make3.tar.bz2](../files/proj-booting/make3.tar.bz2), and extracting it with:
 
 ```
 tar xvjpf make3.tar.bz2
@@ -129,7 +135,11 @@ You can run this version of make by running `./home/wmm24/public/make3/bin/make`
 alias make3="~/home/wmm24/public/make3/bin/make"
 ```
 
-This command allows you to use this version of make every time by entering the command `make3` whenever you are asked to run `make` below.  If this version of make is preinstalled on your environment (for example, at `/opt/make3`), you can execute this command as `alias make3="/opt/make3/bin/make"`.  Now, you can work entirely from your local computer and verify the results on your virtual machine! 
+This command allows you to use this version of make every time by entering the command `make3` whenever you are asked to run `make` below.  If this version of make is preinstalled on your environment (for example, at `/opt/make3`), you can execute this command as `alias make3="/opt/make3/bin/make"`.  
+
+Alternatively, you can download a 3.x version of make from the [make website](https://ftp.gnu.org/gnu/make/) and build the software yourself on your local computer architecture.
+
+Now, you can work entirely from your local computer and verify the results on your virtual machine! 
 
 ### Step 1 - Building the Kernel
 
