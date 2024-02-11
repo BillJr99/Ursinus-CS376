@@ -117,6 +117,16 @@ You can work directly in the `linux-2.6.22.19` directory; however, it is somewha
 
 Some versions of `qemu` and `kvm` enable passing the compiled kernel file from outside of the virtual machine.  This is very convenient because you can develop and compile on your local computer, and that compilation is typically much faster than what it would be on the virtual machine itself.  Because of the way we'll use these tools, it is necessary to work within a Linux environment to do this.  In addition, we'll download the kernel source code from a git repository so that you can commit your changes and share your work more easily.
 
+If you are setting up your own Linux-based computer, you can install the following software packages, and run the following configuration commands:
+
+```
+sudo apt install qemu-system qemu-kvm virt-manager virtinst libvirt-clients bridge-utils libvirt-daemon-system build-essential gcc gdb valgrind vim git unzip
+sudo systemctl enable --now libvirtd
+sudo systemctl start libvirtd
+sudo usermod -aG kvm $USER
+sudo usermod -aG libvirt $USER
+```
+
 Begin by downloading the kernel source code from git.  Navigate to [https://github.com/BillJr99/linux-2.6.22.19](https://github.com/BillJr99/linux-2.6.22.19) and click the `Fork` button to copy the repository into your own account.  Next, clone that forked repository on your computer with the following command:
 
 ```
