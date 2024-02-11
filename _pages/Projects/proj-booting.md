@@ -238,7 +238,7 @@ When the virtual machine boots, log in and run the following command to see if y
 
 `dmesg | grep "Hello World from Me"`
 
-Then, boot normally without adding this `printme` parameter (by hitting enter in GRUB when you select your kernel), and re-run this `dmesg | grep "Hello World from Me"`.  The message should only appear when you include the `printme` parameter!  If you are passing the `kernel` parameter to your `qemu` command, you can also add the `printme` parameter right after `root=/dev/hda1 ro'` to add that kernel parameter at boot time as well.
+Then, boot normally without adding this `printme` parameter (by hitting enter in GRUB when you select your kernel), and re-run this `dmesg | grep "Hello World from Me"`.  The message should only appear when you include the `printme` parameter!
 
 ## Create a diff Patch File for Submission
 
