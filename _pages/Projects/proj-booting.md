@@ -57,7 +57,7 @@ Windows users may find it more convenient to add their qemu installation directo
 
 ### Step 2 - Downloading the Disk Image
 
-You can download the base installation image from the multi-part zip file below.  Download each of the 6 image parts, and open and extract the `001` file in the zip program of your choice.  This will extract the `base.qcow` file.
+If the image is not already downloaded in your environment, you can download the base installation image from the multi-part zip file below.  Download each of the 6 image parts, and open and extract the `001` file in the zip program of your choice, or concatenate the files together into a single `base.zip` file with a command like `cat base.zip.00? > base.zip`, and extract the resulting file.  This will extract the `base.qcow` file.
 
 * [base.zip.001](../files/proj-booting/base.zip.001)
 * [base.zip.002](../files/proj-booting/base.zip.002)
@@ -218,15 +218,19 @@ Build and boot the kernel as before:
 * `cd ~/linux-2.6.22.19`
 * `make EXTRAVERSION='.19-LASTNAME' -j8`
 
+### Working within the Virtual Machine
+
 If you are working within the virtual machine, install your kernel like this:
 * `su`
 * `make install`
 * `update-grub`
 * `reboot`
 
-If you are passing the `kernel` parameter from outside the virtual machine, you can do so now.
+From within the virtual machine, when the kernel reboots, arrow down to your kernel but don't press enter just yet.  Press `e` instead to edit the boot parameters.  Arrow down to the bottom line and to the far right of that line.  Insert the word `printme` there (with a space after whatever came before).  Continue booting by pressing `Control-X`.  Note that you'll normally be able to simply press enter to boot your kernel, since we won't do much with boot parameters from here on out.
 
-When the kernel reboots, arrow down to your kernel but don't press enter just yet.  Press `e` instead to edit the boot parameters.  Arrow down to the bottom line and to the far right of that line.  Insert the word `printme` there (with a space after whatever came before).  Continue booting by pressing `Control-X`.  Note that you'll normally be able to simply press enter to boot your kernel, since we won't do much with boot parameters from here on out.
+### Working outside the Virtual Machine
+
+If you are passing the `kernel` parameter from outside the virtual machine, you can do so now, and you can set the `printme` parameter by adding it inside the quotes of the `append` parameter you pass to `qemu` or `kvm`.
 
 ### Step 3 - Verifying the Results
 
