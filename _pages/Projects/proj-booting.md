@@ -80,23 +80,15 @@ You can include the full path to `base.qcow2` in this command.  For example, you
 
 To boot your image, run the following command:
 
-`qemu-system-x86_64 -drive file=local.qcow2 -m 1024M -smp 8 -accel tcg`
+`qemu-system-x86_64 -display curses -drive file=local.qcow2 -m 1024M -smp 8 -accel tcg`
 
 There are several parts here:
 
-* `qemu-system-x86_64`: This is the qemu client in which your virtual machine will boot.  We are booting a 64-bit virtual machine, so we run the client for `x86_64` architectures.
+* `qemu-system-x86_64`: This is the qemu client in which your virtual machine will boot.  We are booting a 64-bit virtual machine, so we run the client for `x86_64` architectures.  
+    * **Note**: If you have access to `kvm`, you can replace this word with `kvm` any time it is used.
+* `-display curses`: This causes the machine to boot in text mode, which can be a bit faster and more convenient than popping up a window.  It is optional and can be removed if your installation does not support it. 
 * `-drive file=local.qcow2`: This points to the virtual disk you just created (which is automatically linked to `base.qcow2` from earlier).
-* `-m 1024M -smp 8 -accel tcg`: These specify how much memory, how many CPU cores, and the underlying virtualization accelerator to use, respectively.
-
-#### Optional: Using kvm
-
-If you are using `kvm`, you can simplify this command to:
-
-```
-`kvm -display curses -drive file=local.qcow2`
-```
-
-The `-display curses` parameter causes the machine to boot in text mode, rather than popping up a separate window.  It can be used with the `qemu-system-x86_64` command above as well, but it is shown here since it is more likely that you are using `kvm` over `ssh`, in which case a text-based execution is more convenient.
+* `-m 1024M -smp 8 -accel tcg`: These specify how much memory, how many CPU cores, and the underlying virtualization accelerator to use, respectively.  These are also optional and may be removed selectively as needed.
 
 ### Step 5 - Logging In
 
@@ -107,11 +99,7 @@ Your virtual machine should boot and allow you to log in.  There are two options
 
 Please log into each of these accounts and change the password to better ones that you will remember right away.  You can run the `passwd` command to change your password.  
 
-When you are done, you can quit the virtual machine by becoming the root user (either by logging in as root or by typing `su`, pressing enter, and entering the root password), and typing this command:
-
-```
-halt
-```
+When you are done, you can quit the virtual machine by becoming the root user (either by logging in as root or by typing `su`, pressing enter, and entering the root password), and typing the `halt` command.
 
 ## Compiling Your Custom Kernel
 
@@ -171,6 +159,8 @@ This will build a file called `arch/x86_64/boot/bzImage`.
 
 There is a bootloader program called GRUB that lists and boots the kernel of your choice, which is useful if you have more than one kernel or more than one Operating System installed.  **If you are working outside of the virtual machine, you can skip this step!**
 
+#### Working within the Virtual Machine
+
 If you are working within your virtual machine, you can add this new image file to your `/boot` directory and to GRUB, execute the following commands (starting with `su`, which gives you supervisor / root privileges to make these changes):
 
 ```
@@ -198,7 +188,7 @@ In the boot menu, choose the kernel with your name on it!  Welcome to your custo
 
 ### Working outside Your Virtual Machine
 
-If you are working outside of your virtual machine, it is easy to boot the virtual machine with a custom kernel!  Once you have configured the kernel by downloading the `Makefile` and `.config` file using the same steps above, and compiled the kernel by running `make`, you can add these two parameters to the `kvm` command you ran earlier to boot your virtual machine: 
+If you are working outside of your virtual machine, it is easy to boot the virtual machine with a custom kernel!  Once you have configured and compiled the kernel using the steps above, you can add these two parameters to the `kvm` command you ran earlier to boot your virtual machine: 
 
 ```
 -kernel linux-2.6.22-19/arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'
