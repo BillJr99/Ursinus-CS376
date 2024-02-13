@@ -46,11 +46,11 @@ tags:
 
 ---
 
-In this assignment, you will open a text file, read each line of the file, and add it to a linked list of `char*`.  
+In this assignment, you will open a text file, get its size, `malloc` a buffer, and read the contents of the file into that buffer.  
 
-To read a string from the console, you can use the line `fgets(buf, 1024, stdin);` from `stdio.h`, assuming that `buf` is `malloc`'ed to `1024` bytes.  Using this, prompt the user to enter a word to search the text file for.  
+To read a string from the console, you can use the line `fgets(buf, 1024, stdin);` from `stdio.h`, assuming that `buf` is `malloc`'ed to at least `1025` bytes (I am leaving room for a null terminator in case you wish to print the buffer!).  Using this, prompt the user to enter a word to search the text file for.  
 
-Loop over each line of the linked list, and tokenize the line by spaces.  Then, loop over this list of tokens and check if the token matches that line.  If it does, print the line to the screen.
+Loop over each line of the file contents by tokenizing it by the newline `\n` character.  For each line, tokenize that line by spaces.  Then, loop over this list of tokens and check if the token matches that line.  If it does, print the entire line to the screen.
 
 Lastly, create a new file using `O_CREAT` and write these matching lines to the new text file (so that lines that do not match are skipped).  Be sure to open the file with `0666` permissions and with `O_RDWR` so that you can both read and write to the file.  
 
