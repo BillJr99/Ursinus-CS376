@@ -1,6 +1,6 @@
 ---
 layout: assignment
-permalink: Labs/GdbValgrind
+permalink: Labs/GDBValgrind
 title: "CS376: Operating Systems - Using gdb and Valgrind"
 
 info:
