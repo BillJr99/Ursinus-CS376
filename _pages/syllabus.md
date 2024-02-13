@@ -135,11 +135,9 @@ goals:
 
 grade_breakdown:
 - category: "Homework Assignments"
-  weight: "35%"
-- category: "Labs"
   weight: "40%"
-- category: "Midterm Exam"
-  weight: "10%"
+- category: "Labs"
+  weight: "45%"
 - category: "Final Exam"
   weight: "15%"  
 
@@ -330,10 +328,10 @@ schedule:
         dlink: "Assignments/Threads"
         points: 100
         rubricpath: "_pages/Assignments/asmt-threads.md"
-      - dtitle: "Midterm: Midterm Exam Handed Out"
-        dlink: false
+      - dtitle: "Lab: I/O with Data Structures Handed Out"
+        dlink: "Labs/FileIO"
         points: 100
-        submission_types: "onpaper"
+        rubricpath: "_pages/Labs/lab-fileio.md"  
     readings:
       - rtitle: "OS Concepts Chapter 3"
         rlink: false
@@ -348,10 +346,10 @@ schedule:
     title: "Representing Processes and Threads in Linux"
     link: "./files/lectures/linuxprocesses.pptx"
     deliverables:
-      - dtitle: "Midterm: Midterm Exam Due"
-        dlink: false
+      - dtitle: "Lab: I/O with Data Structures"
+        dlink: "Labs/FileIO"
         points: 100
-        submission_types: "onpaper"
+        rubricpath: "_pages/Labs/lab-fileio.md"  
       - dtitle: "Lab: Booting a Custom Linux Kernel Handed Out"
         dlink: "Projects/BootingCustomKernel"
         points: 100
