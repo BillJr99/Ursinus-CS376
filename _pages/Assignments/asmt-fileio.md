@@ -74,10 +74,16 @@ In this assignment, you will write a mini-database program in the C language tha
   * `CREATE TABLE TableName FIELDS [Field1, Field2, ...]`
   * `DROP TABLE TableName`
   
-In addition, your program must be able to select a database, creating one if it does not exist, via a command-line parameter.
+In addition, your program must be able to select a database, creating one if it does not exist, via a command-line parameter using the `argv` array in `main`:
 
-You must use only the standard library file operations (no CSV or json libraries, etc.).  You may use the CSAPP file I/O libraries.
+```c
+int main(int argc, char** argv) {
+  // argv[0] is the name of your program
+  // argv[1] up to argv[argc-1] contain your arguments
+}
+```
 
+You must use only the standard library file operations (no CSV or json libraries, etc.).  You may use the CSAPP file I/O libraries.  To read a string from the console, you can use the line `fgets(buf, 1024, stdin);` from `stdio.h`, assuming that `buf` is `malloc`'ed to 1024 bytes. 
 
 ## Makefile
 
