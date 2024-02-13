@@ -190,6 +190,74 @@ int main() {
 }
 ```
 
+## Using the CSAPP Reliable I/O Functions
+
+To deal with short counts, you can use the built-in loops of `rio_readn` and `rio_writen` in the `csapp.c` and `csapp.h` file.  The `rio_readn` and `rio_writen` functions are part of the Robust I/O (RIO) package provided by the "Computer Systems: A Programmer's Perspective" (CS:APP) textbook. These functions are designed to handle the complexities and potential partial read/write issues associated with Unix I/O operations known as **short counts**. They provide a more reliable way to perform reading and writing operations on files, network sockets, and other I/O channels.  They are designed to mirror the standard `read` and `write` functions, and work as follows:
+
+* `rio_readn`: This function attempts to read n bytes from a file descriptor into a user buffer. It deals with the partial read problem by continuing to read until all n bytes have been read or an end-of-file (EOF) is reached.
+* `rio_writen`: Conversely, this function writes n bytes from a user buffer to a file descriptor. It addresses the partial write issue by continuing to write until all n bytes have been written.
+
+### Using `rio_readn`
+
+```c
+#include "rio.h"
+
+int main() {
+    int fd = open("myfile.txt", O_RDONLY);
+    if (fd < 0) {
+        perror("open");
+        return 1;
+    }
+
+    ssize_t n;
+    char buf[1024];
+    n = rio_readn(fd, buf, sizeof(buf));
+    if (n < 0) {
+        perror("read");
+        return 1;
+    }
+
+    printf("Read %zd bytes\n", n);
+    close(fd);
+    return 0;
+}
+```
+
+### Using `rio_writen`
+
+```c
+#include "rio.h"
+
+int main() {
+    int fd = open("myfile.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
+    if (fd < 0) {
+        perror("open");
+        return 1;
+    }
+
+    const char* buf = "Hello, world!";
+    ssize_t n = rio_writen(fd, (void *)buf, strlen(buf));
+    if (n != strlen(buf)) {
+        perror("write");
+        return 1;
+    }
+
+    printf("Wrote %zd bytes\n", n);
+    close(fd);
+    return 0;
+}
+```
+
+### Compiling the Program
+
+Save the `csapp.c` and `csapp.h` files into your project directory and compile them with the following command (assuming your program is called `myprogram.c` and consists of only that single file otherwise):
+
+```
+gcc -lpthread -o myprogram myprogram.c csapp.c
+```
+
+On some systems, the correct parameter is `-pthread` instead of `-lpthread`.
+
 ## Makefile
 
 Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
