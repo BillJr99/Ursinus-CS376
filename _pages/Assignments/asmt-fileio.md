@@ -52,7 +52,7 @@ To read a string from the console, you can use the line `fgets(buf, 1024, stdin)
 
 Loop over each line of the linked list, and tokenize the line by spaces.  Then, loop over this list of tokens and check if the token matches that line.  If it does, print the line to the screen.
 
-Lastly, create a new file using `O_CREAT` and write these matching lines to the new text file (so that lines that do not match are skipped).  Be sure to open the file with 0666 permissions and with `O_RDWR` so that you can both read and write to the file.  
+Lastly, create a new file using `O_CREAT` and write these matching lines to the new text file (so that lines that do not match are skipped).  Be sure to open the file with `0666` permissions and with `O_RDWR` so that you can both read and write to the file.  
 
 The filename should be given via `argv` command line parameters.  The filename to read will be in `argv[1]` and the filename to write will be in `argv[2]` (recall that the program name is `argv[0]`).  Be careful to check `argc` before accessing these values.  If `argc` is not at least 3, print an error message to the screen and `exit` or `return` a nonzero token value to indicate that an error has occurred.
 
