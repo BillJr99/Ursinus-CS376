@@ -15,7 +15,7 @@ info:
     - Demonstrate that arrays cannot grow on their own because they are fixed in memory
 
   rubric:
-    - weight: 50
+    - weight: 40
       description: Program Correctness
       preemerging: Program does not compile or runs with critical errors that prevent functionality testing.
       beginning: Program compiles but has major functional errors or missing key components.
@@ -39,7 +39,13 @@ info:
       beginning: Basic implementation of one version of the arraylist structure, but with significant errors or omissions.
       progressing: Correct implementation of one version of the arraylist structure, or partial implementation of both versions.
       proficient: Correct and efficient implementation of both versions of the arraylist structure.
-
+    - weight: 10
+      description: Writeup and Submission
+      preemerging: An incomplete submission is provided
+      beginning: The program is submitted, but not according to the directions in one or more ways (for example, because it is lacking a readme writeup or missing answers to written questions)
+      progressing: The program is submitted according to the directions with a minor omission or correction needed, including a readme writeup describing the solution and answering nearly all questions posed in the instructions
+      proficient: The program is submitted according to the directions, including a readme writeup describing the solution and answering all questions posed in the instructions
+      
   readings:  
     - rlink: http://www.tutorialspoint.com/cprogramming/index.htm
       rtitle: C Programming Tutorial
