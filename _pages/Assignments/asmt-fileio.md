@@ -58,6 +58,20 @@ The filename should be given via `argv` command line parameters.  The filename t
 
 `close` the file and `free` any memory when done.
 
+## What to Do
+
+1. Begin by `open`ing the file given by `argv[1]`.  Use `fstat` to get the size of the file, and `malloc` a buffer equal to that size plus `1`.  This buffer will hold the contents of your file.  Set the last index of this buffer to `\0` for the null terminator.
+
+2. Now, `read` this file contents into your buffer.  You'll read a number of bytes equal to the size of the file, from the file descriptor you got when you called `open`, and into the buffer you just created.
+
+3. Next, tokenize the buffer by newline.  This will return a `char**` that represents an array of lines of text in your file.  A tokenize function that uses `strtok` is given below.
+
+4. Now, loop over that array.  My `tokenize` function accepts a `count` paramter by reference that will contain the size of the array, so you know how far to loop!  You want to check if your `argv[2]` search string is in this line, so you will want to tokenize each line by space.  Do that now, and created a nested loop that iterates over the words that you get back.  
+
+5. Using `strcmp`, check if each word matches your search string.  If it does, print the line, and break out of this inner loop (since you don't need to print it twice).  
+
+6. Finally, instead of printing to the screen, modify this program to open another file, and write the matching lines to the file.
+
 ## Helpful Utility Functions
 
 ### Tokenizing a String
