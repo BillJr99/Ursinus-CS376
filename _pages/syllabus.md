@@ -207,8 +207,7 @@ schedule:
         rubricpath: "_pages/Labs/lab-memorydebugc.md"
   - week: "2"
     date: "0"
-    title: "Compilers, Linkers, and Loaders"
-    link: "./files/lectures/compilerlinker.pptx"
+    title: "Introduction to C Programming, gdb, and Valgrind"
     deliverables:
       - dtitle: "Homework Assignment: Shell Scripting Due"
         dlink: "Assignments/ShellScripting"
@@ -458,7 +457,8 @@ schedule:
         rubricpath: "_pages/Projects/proj-mailbox.md"
   - week: "15"
     date: "0"
-    title: "Virtual Memory"
+    title: "Compilers, Linkers, and Loaders"
+    link: "./files/lectures/compilerlinker.pptx"
     deliverables:
       - dtitle: "Homework Assignment: FAT File System Due"
         dlink: "Assignments/FAT"
