@@ -200,7 +200,7 @@ To deal with short counts, you can use the built-in loops of `rio_readn` and `ri
 ### Using `rio_readn`
 
 ```c
-#include "rio.h"
+#include "csapp.h"
 
 int main() {
     int fd = open("myfile.txt", O_RDONLY);
@@ -226,7 +226,7 @@ int main() {
 ### Using `rio_writen`
 
 ```c
-#include "rio.h"
+#include "csapp.h"
 
 int main() {
     int fd = open("myfile.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR);
