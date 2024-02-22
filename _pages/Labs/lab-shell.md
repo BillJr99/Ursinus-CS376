@@ -62,24 +62,24 @@ tags:
 
 ## Part 1: Exploring the UNIX Shell
 
-1. Create a subfolder in your home directory and populate it with a number of files (their names and contents do not matter).  Give them different file permissions (they don't matter -- just mix them up).  Make some directories as well.  
+* Create a subfolder in your home directory and populate it with a number of files (their names and contents do not matter).  Give them different file permissions (they don't matter -- just mix them up).  Make some directories as well.  
 
-2. Within this subdirectory:
+* Within this subdirectory:
 
   * Write a UNIX command to find all files that are files (that is, not directories -- and even files that are in subdirectories)
   * Write a UNIX command to find all directories (even subdirectories)
   * Write a UNIX command to change file permissions on all files to 600
   * Write a UNIX command to change all file permissions on all directories to 755
 
-3. Write a UNIX command to replace all instances of the word "foo" in a file with "bar"
+* Write a UNIX command to replace all instances of the word "foo" in a file with "bar"
 
-4. Use the UNIX pipe to connect the ls command and the sort command to print all of your files in alphabetical order.
+* Use the UNIX pipe to connect the ls command and the sort command to print all of your files in alphabetical order.
 
-5. Use the UNIX pipe with the du and sort commands to list all files in your home directory, sorted from smallest file to largest file.  Be careful not to sort the sizes "alphabetically" but rather "numerically."
+* Use the UNIX pipe with the du and sort commands to list all files in your home directory, sorted from smallest file to largest file.  Be careful not to sort the sizes "alphabetically" but rather "numerically."
 
-6. Use the UNIX pipe with the ls and wc commands to print the number of files in your current working directory.
+* Use the UNIX pipe with the ls and wc commands to print the number of files in your current working directory.
 
-7. The command `ps -auxw` prints all processes being executed by all users.  Use the `grep` and `cut` commands in conjunction with the `ps` command to print the `pid` number of all processes being executed by your user ID.
+* The command `ps -auxw` prints all processes being executed by all users.  Use the `grep` and `cut` commands in conjunction with the `ps` command to print the `pid` number of all processes being executed by your user ID.
 
 ## Part 2: The vim Editor
 
