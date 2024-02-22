@@ -204,6 +204,22 @@ int main() {
 }
 ```
 
+### Trimming Whitespace from a String
+
+Sometimes, tokenizing a string will leave the newline character or a stray space at the end of your string.  You can remove these using a loop over the array:
+
+```c
+#include <string.h>
+
+void trim(char* s) {
+  for(int i = 0; i < strlen(s); i++) { 
+      if(isspace(s[i])) { // this is equivalent to checking if s[i] == ' ' || s[i] == '\n' ... (and other blank characters)
+          s[i] = '\0';
+       }
+  }
+}
+```
+
 ## Using the CSAPP Reliable I/O Functions
 
 To deal with short counts, you can use the built-in loops of `rio_readn` and `rio_writen` in the `csapp.c` and `csapp.h` file.  The `rio_readn` and `rio_writen` functions are part of the Robust I/O (RIO) package provided by the "Computer Systems: A Programmer's Perspective" (CS:APP) textbook. These functions are designed to handle the complexities and potential partial read/write issues associated with Unix I/O operations known as **short counts**. They provide a more reliable way to perform reading and writing operations on files, network sockets, and other I/O channels.  They are designed to mirror the standard `read` and `write` functions, and work as follows:
