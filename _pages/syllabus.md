@@ -256,7 +256,7 @@ schedule:
         dlink: "Assignments/FileIO"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fileio.md"
-      - dtitle: "Homework Assignment: Web Client and Server Handed Out"
+      - dtitle: "Lab: Shell Handed Out"
         dlink: "Labs/Shell"
         points: 100
         rubricpath: "_pages/Labs/lab-shell.md"
@@ -288,6 +288,10 @@ schedule:
         dlink: "Labs/Shell"
         points: 100
         rubricpath: "_pages/Labs/lab-shell.md"
+      - dtitle: "Homework Assignment: Threaded Programming Handed Out"
+        dlink: "Assignments/Threads"
+        points: 100
+        rubricpath: "_pages/Assignments/asmt-threads.md"        
     readings:
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 1"
         rlink: "http://www.cs.utexas.edu/users/EWD/transcriptions/EWD01xx/EWD123.html"
@@ -301,11 +305,6 @@ schedule:
     date: "0"
     title: "Semaphores"
     link: "./files/lectures/semaphores.pptx"
-    deliverables:
-      - dtitle: "Homework Assignment: Threaded Programming Handed Out"
-        dlink: "Assignments/Threads"
-        points: 100
-        rubricpath: "_pages/Assignments/asmt-threads.md"
     readings:
       - rtitle: "OS Concepts Chapter 6.6"
         rlink: false
