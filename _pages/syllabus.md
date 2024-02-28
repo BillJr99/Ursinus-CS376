@@ -231,7 +231,7 @@ schedule:
       - dtitle: "Homework Assignment: File I/O Handed Out"
         dlink: "Assignments/FileIO"
         points: 100
-        rubricpath: "_pages/Assignments/asmt-fileio.md"    
+        rubricpath: "_pages/Assignments/asmt-fileio.md"
   - week: "3"
     date: "1"
     title: "File I/O"
@@ -250,17 +250,26 @@ schedule:
     title: "Interprocess Communication and The Shell"
   - week: "5"
     date: "1"
-    title: "Multithreading and Cache Considerations"
-    link: "./files/lectures/threading.pptx"
+    title: "Interprocess Communication and The Shell"
     deliverables:
       - dtitle: "Homework Assignment: File I/O Due"
         dlink: "Assignments/FileIO"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fileio.md"
-      - dtitle: "Lab: Shell Handed Out"
+      - dtitle: "Homework Assignment: Web Client and Server Handed Out"
         dlink: "Labs/Shell"
         points: 100
         rubricpath: "_pages/Labs/lab-shell.md"
+  - week: "6"
+    date: "0"
+    title: "Interprocess Communication and The Shell"
+  - week: "6"
+    date: "1"
+    title: "Interprocess Communication and The Shell"
+  - week: "8"
+    date: "0"
+    title: "Multithreading and Cache Considerations"
+    link: "./files/lectures/threading.pptx"
     readings:
       - rtitle: "pthreads Tutorial from the LLNL"
         rlink: "https://computing.llnl.gov/tutorials/pthreads/"
@@ -270,10 +279,15 @@ schedule:
         rlink: false
       - rtitle: "Little Book of Semaphores Chapter 3.7"
         rlink: false
-  - week: "6"
-    date: "0"
+  - week: "8"
+    date: "1"
     title: "Mutual Exclusion"
     link: "./files/lectures/mutex.pptx"
+    deliverables:
+      - dtitle: "Lab: Shell Due"
+        dlink: "Labs/Shell"
+        points: 100
+        rubricpath: "_pages/Labs/lab-shell.md"
     readings:
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 1"
         rlink: "http://www.cs.utexas.edu/users/EWD/transcriptions/EWD01xx/EWD123.html"
@@ -283,21 +297,7 @@ schedule:
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 8-9"
         rlink: false
-  - week: "6"
-    date: "1"
-    title: "Thread Correctness Proofs"
-    link: "./files/lectures/mutexcorrectness.pptx"
-    deliverables:
-      - dtitle: "Lab: Shell Due"
-        dlink: "Labs/Shell"
-        points: 100
-        rubricpath: "_pages/Labs/lab-shell.md"
-    readings:
-      - rtitle: "OS Concepts Chapter 6.3-6.5"
-        rlink: false
-      - rtitle: "Livelock"
-        rlink: "http://queue.acm.org/detail.cfm?id=1365494"
-  - week: "8"
+  - week: "9"
     date: "0"
     title: "Semaphores"
     link: "./files/lectures/semaphores.pptx"
@@ -311,14 +311,14 @@ schedule:
         rlink: false
       - rtitle: "Little Book of Semaphores Chapter 4, Appendix A-B"
         rlink: false
-  - week: "8"
+  - week: "9"
     date: "1"
     title: "Condition Variables and Monitors"
     link: "./files/lectures/monitors.pptx"
     readings:
       - rtitle: "OS Concepts Chapter 6.7"
         rlink: false
-  - week: "9"
+  - week: "10"
     date: "0"
     title: "Process Management"
     link: "./files/lectures/processes.pptx"
@@ -327,48 +327,23 @@ schedule:
         dlink: "Assignments/Threads"
         points: 100
         rubricpath: "_pages/Assignments/asmt-threads.md"
-      - dtitle: "Lab: I/O with Data Structures Handed Out"
-        dlink: "Labs/FileIO"
-        points: 100
-        rubricpath: "_pages/Labs/lab-fileio.md"  
-    readings:
-      - rtitle: "OS Concepts Chapter 3"
-        rlink: false
-  - week: "9"
-    date: "1"
-    title: "Process Management"
-    readings:
-      - rtitle: "Linux Kernel Development Chapter 2"
-        rlink: false
-  - week: "10"
-    date: "0"
-    title: "Representing Processes and Threads in Linux"
-    link: "./files/lectures/linuxprocesses.pptx"
-    deliverables:
-      - dtitle: "Lab: I/O with Data Structures"
-        dlink: "Labs/FileIO"
-        points: 100
-        rubricpath: "_pages/Labs/lab-fileio.md"  
       - dtitle: "Lab: Booting a Custom Linux Kernel Handed Out"
         dlink: "Projects/BootingCustomKernel"
         points: 100
         rubricpath: "_pages/Projects/proj-booting.md"
     readings:
-      - rtitle: "Linux Kernel Internals - Linux Task Management"
-        rlink: "http://tldp.org/LDP/lki/lki-2.html"
-      - rtitle: "Linux Kernel Process Management"
-        rlink: "http://www.informit.com/articles/article.aspx?p=370047"
-      - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
-        rlink: false
-      - rtitle: "Linux Kernel Development Chapter 3"
+      - rtitle: "OS Concepts Chapter 3"
         rlink: false
   - week: "10"
     date: "1"
-    title: "Representing Processes and Threads in Linux"
+    title: "Process Management"
+    readings:
+      - rtitle: "Linux Kernel Development Chapter 2"
+        rlink: false
   - week: "11"
     date: "0"
-    title: "CPU Process Scheduling Algorithms"
-    link: "./files/lectures/scheduling.pptx"
+    title: "Representing Processes and Threads in Linux"
+    link: "./files/lectures/linuxprocesses.pptx"
     deliverables:
       - dtitle: "Lab: Booting a Custom Linux Kernel Due"
         dlink: "Projects/BootingCustomKernel"
@@ -378,14 +353,38 @@ schedule:
         dlink: "Projects/SyscallProcess"
         points: 100
     readings:
+      - rtitle: "Linux Kernel Internals - Linux Task Management"
+        rlink: "http://tldp.org/LDP/lki/lki-2.html"
+      - rtitle: "Linux Kernel Process Management"
+        rlink: "http://www.informit.com/articles/article.aspx?p=370047"
+      - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
+        rlink: false
+      - rtitle: "Linux Kernel Development Chapter 3"
+        rlink: false
+  - week: "11"
+    date: "1"
+    title: "Representing Processes and Threads in Linux"
+  - week: "12"
+    date: "0"
+    title: "CPU Process Scheduling Algorithms"
+    link: "./files/lectures/scheduling.pptx"
+    readings:
       - rtitle: "OS Concepts Chapter 5"
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 5-6"
         rlink: false
-  - week: "11"
+  - week: "12"
     date: "1"
     title: "Process Scheduling Algorithms in Linux"
     link: "./files/lectures/linuxscheduling.pptx"
+    deliverables:
+      - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
+        dlink: "Projects/SyscallProcess"
+        points: 100
+      - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
+        dlink: "Projects/Mailbox"
+        points: 100
+        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
         rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
@@ -393,7 +392,7 @@ schedule:
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 4"
         rlink: false
-  - week: "12"
+  - week: "13"
     date: "0"
     title: "Filesystem Interface and Implementation"
     link: "./files/lectures/filesystems.pptx"
@@ -409,65 +408,45 @@ schedule:
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 12"
         rlink: false
-  - week: "12"
+  - week: "13"
     date: "1"
     title: "Filesystem Interface and Implementation"
-  - week: "13"
+  - week: "14"
     date: "0"
     title: "I/O Systems and Disk Scheduling"
     link: "./files/lectures/diskscheduling.pptx"
-    deliverables:
-      - dtitle: "Lab: System Calls and Processes in the Linux Kernel Due"
-        dlink: "Projects/SyscallProcess"
-        points: 100
-      - dtitle: "Lab: Interprocess Communication via a Mailbox Handed Out"
-        dlink: "Projects/Mailbox"
-        points: 100
-        rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "OS Concepts Chapter 11-12"
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 13"
         rlink: false
-  - week: "13"
+  - week: "14"
     date: "1"
     title: "Disk Scheduling Algorithms in Linux"
     link: "./files/lectures/linuxdiskscheduling.pptx"
-    readings:
-      - rtitle: "OS Concepts Chapter 20.7-8"
-        rlink: false
-  - week: "14"
-    date: "0"
-    title: "Virtual Memory"
-    link: "./files/lectures/virtualmemory.pptx"
-    readings:
-      - rtitle: "Memory Management"
-        rlink: "http://www.informit.com/articles/article.aspx?p=336868"
-      - rtitle: "OS Concepts Chapter 9-10"
-        rlink: false
-      - rtitle: "Linux Kernel Development Chapter 11, 14-15"
-        rlink: false
-  - week: "14"
-    date: "1"
-    title: "Virtual Memory"
     deliverables:
       - dtitle: "Lab: Interprocess Communication via a Mailbox Due"
         dlink: "Projects/Mailbox"
         points: 100
         rubricpath: "_pages/Projects/proj-mailbox.md"
+    readings:
+      - rtitle: "OS Concepts Chapter 20.7-8"
+        rlink: false
   - week: "15"
     date: "0"
-    title: "Compilers, Linkers, and Loaders"
-    link: "./files/lectures/compilerlinker.pptx"
+    title: "Virtual Memory"
+    link: "./files/lectures/virtualmemory.pptx"
     deliverables:
       - dtitle: "Homework Assignment: FAT File System Due"
         dlink: "Assignments/FAT"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fat.md"
     readings:
-      - rtitle: "OS Concepts Chapter 20.6"
+      - rtitle: "Memory Management"
+        rlink: "http://www.informit.com/articles/article.aspx?p=336868"
+      - rtitle: "OS Concepts Chapter 9-10"
         rlink: false
-      - rtitle: "Linux Kernel Development Chapter 18, 20"
+      - rtitle: "Linux Kernel Development Chapter 11, 14-15"
         rlink: false
 
 university:
