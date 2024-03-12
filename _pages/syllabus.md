@@ -118,6 +118,11 @@ textbooks:
   link: https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
   isrequired: false
   freelyavailable: https://greenteapress.com/semaphores/LittleBookOfSemaphores.pdf
+- title: "A Journey in Creating an Operating System"
+  authors: "Md Q Hussain"
+  link: "https://539kernel.com/A_Journey_in_Creating_an_Operating_System_Kernel_The_539kernel_Book.pdf"
+  isrequired: false
+  freelyavailable: "https://539kernel.com/A_Journey_in_Creating_an_Operating_System_Kernel_The_539kernel_Book.pdf"
 
 objectives:
 - objective: "To write thread-safe multithreaded programs"
