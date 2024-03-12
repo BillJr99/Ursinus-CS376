@@ -171,7 +171,8 @@ if (should_run) {
         }
     } else {
         // Parent process
-        wait(NULL);
+        int status;
+        waitpid(pid, &status, 0); // wait on the child we just created
     }
 }
 ```
@@ -200,7 +201,7 @@ int main() {
 
 To actually run a process in the background, we will modify the `main` loop so that the parent does not call `wait` on the child immediately after `fork`ing it (since we will do this with `waitpid` when the child signals that it has terminated with the logic above).  Instead the parent can return to printing its prompt and proceeding as normal.
 
-To do this, check if the last token in your input is the `&` character.  If it is, remove it from the list of tokens, and set a flag variable that indicates that the parent should not `wait` on the child.
+To do this, check if the last token in your input is the `&` character.  If it is, remove it from the list of tokens, and set a flag variable that indicates that the parent should not `waitpid` on the child like we did above.
 
 Finally, in your main loop, when you start a process in the foreground, set `foreground_pid` to the pid of that child.  Be sure to set it back to `0` when that child terminates (which you'll know by checking the pid that is returned from your call to `wait`).  If you start a process in the background, do not set `foreground_pid`.  We will use this later to keep track of which process is the foreground process (because it should receive signals sent to the shell).
 
