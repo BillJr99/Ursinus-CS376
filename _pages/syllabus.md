@@ -296,7 +296,10 @@ schedule:
       - dtitle: "Homework Assignment: Threaded Programming Handed Out"
         dlink: "Assignments/Threads"
         points: 100
-        rubricpath: "_pages/Assignments/asmt-threads.md"        
+        rubricpath: "_pages/Assignments/asmt-threads.md"    
+      - dtitle: "Final Exam: Final Exam Handed Out"
+        dlink: "Projects/FinalExam"
+        points: 100        
     readings:
       - rtitle: "Cooperating Sequential Processes by Dijkstra, Part 1"
         rlink: "http://www.cs.utexas.edu/users/EWD/transcriptions/EWD01xx/EWD123.html"
@@ -445,6 +448,9 @@ schedule:
         dlink: "Assignments/FAT"
         points: 100
         rubricpath: "_pages/Assignments/asmt-fat.md"
+      - dtitle: "Final Exam: Final Exam Due"
+        dlink: "Projects/FinalExam"
+        points: 100                
     readings:
       - rtitle: "Memory Management"
         rlink: "http://www.informit.com/articles/article.aspx?p=336868"
