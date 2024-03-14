@@ -178,6 +178,8 @@ if (should_run) {
 }
 ```
 
+This would be a good time to test your program.  If you compile and run your program, you can enter commands into your shell.  For example, on a Linux computer, you will see a prompt that says `osh>`, at which you can type commands like `/usr/bin/ls`, or commands with arguments like `/usr/bin/ls -lt`.  Note that you'll have to type the full path of your command because your shell doesn't have the functionality to look up your command path like `bash` does (and that's OK!).
+
 #### Step 3: Handling Background Processes and SIGCHLD
 
 To allow executing commands in the background, we modify the shell to handle `SIGCHLD` signals. This involves setting up a signal handler that reaps child processes using `waitpid()`.
