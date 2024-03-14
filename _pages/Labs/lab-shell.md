@@ -121,7 +121,7 @@ The main component of a shell is its loop, where it continuously displays a prom
 
 int main() {
     char cmd[MAX_LINE];
-    char *args[MAX_ARGS]; // Command arguments
+    char *args; // Command arguments
     int should_run = 1; // Flag to determine when to exit the program
 
     while (should_run) {
@@ -135,6 +135,7 @@ int main() {
 
         // Parse the command and its arguments from cmd
         // (Parsing logic / tokenizing goes here)
+        // Hint: call tokenize on cmd so that the args array contains the individual words of the cmd line
 
         if (strcmp(args[0], "exit") == 0) { 
             // If the user typed in a built-in exit command, quit the shell
