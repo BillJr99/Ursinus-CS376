@@ -135,7 +135,9 @@ int main() {
 
         // Parse the command and its arguments from cmd
         // (Parsing logic / tokenizing goes here)
-        // Hint: call tokenize on cmd so that the args array contains the individual words of the cmd line
+        // Hint: create/paste a trim and tokenize
+        // ... and call each on cmd to remove any newline characters
+        // ... and so that the args array contains the individual words of the cmd line
 
         if (strcmp(args[0], "exit") == 0) { 
             // If the user typed in a built-in exit command, quit the shell
