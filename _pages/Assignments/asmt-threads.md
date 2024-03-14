@@ -80,9 +80,15 @@ Now, in a new version of the program, move the locks so that they lock and unloc
 
 Consider the following problem: your professor has a small office that can seat three students simultaneously.  During office hours, students arrive after a random duration (perhaps after "`sleep`ing" for a random amount of time!) to the professor's office to ask questions and have disucssion.  Professors do no other work during their office hours, so they simply block if no students are there and until one arrives.  Once the professor is working with three students simultaneously, additional students will queue up outside by blocking; they are awoken when a student leaves the office.
 
-Implement **two** versions of the office hours problem, first using semaphores, and then using condition variables.  Use print statements to show the behavior of the threads as they execute.
+Using mutex locks, implement a solution to this problem.  To do this, create a shared `int` variable representing a counter of the number of students waiting for office hours.  This variable is initially `0` and should be protected by a mutex lock (also accessible to all threads, just like the shared counter).
 
-Run your program using the `valgrind` thread checker, and provide the report.
+The threaded function should check the value of this counter.  If it is less than `3`, increment the variable and enter the office (by proceeding through the function).  Decrement the variable right before you return, simulating leaving the office.  Don't forget to lock your mutex when accessing this variable!
+
+If the shared counter is greater than or equal to 3, `malloc` a new lock and insert it at the head of a linked list.  Increment a new shared variable representing the number of students in the waiting room (also known as the size of the linked list!).  Again, don't forget to protect this access with a mutex!  Lock the lock twice (once to lock it, and once more to block on it -- since you want to wait outside the office for a seat to open up!).  Hint: protect adding the node to the linked list with your mutex, but be sure to unlock the mutex right before locking your new waiting room lock the second time (why?).
+
+When a student leaves the office, check the size of the waiting room queue.  If it is greater than `0`, remove the tail of the linked list (the student who was waiting the longest), and decrement the waiting room size (again, all protected by a mutex!).  Unlock the lock you just popped off of the linked list to "wake up" the student in the waiting room.  Be sure to destroy this lock so that you free the resources it was using.
+
+Run your program using the [`valgrind` thread checker](https://valgrind.org/docs/manual/hg-manual.html); specifically, by running `valgrind --tool=helgrind ./a.out`, and provide the report.  Be sure to destroy all your mutexes at the end of your program and free your dynamically allocated memory.  Use the `valgrind` leak check to verify you have no memory leaks, and include this report in your submission. 
 
 ## Part 3: Makefile
 
