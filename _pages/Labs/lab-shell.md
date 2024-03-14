@@ -121,7 +121,7 @@ The main component of a shell is its loop, where it continuously displays a prom
 
 int main() {
     char cmd[MAX_LINE];
-    char *args; // Command arguments
+    char **args; // Command arguments
     int should_run = 1; // Flag to determine when to exit the program
 
     while (should_run) {
