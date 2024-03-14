@@ -119,6 +119,16 @@ The main component of a shell is its loop, where it continuously displays a prom
 #define MAX_LINE 1024 // Maximum length of a command
 #define MAX_ARGS 16 // Maximum number of command line arguments
 
+#include <string.h>
+
+void strip(char* s) {
+  for(int i = 0; i < strlen(s); i++) { 
+      if(s[i] == '\n' || s[i] == '\r') { // end a string when the newline character is found
+          s[i] = '\0';
+       }
+  }
+}
+
 int main() {
     char cmd[MAX_LINE];
     char **args; // Command arguments
@@ -133,11 +143,11 @@ int main() {
             exit(EXIT_FAILURE);
         }
 
+        strip(cmd); // remove the newline character at the end of the command line input
+
         // Parse the command and its arguments from cmd
         // (Parsing logic / tokenizing goes here)
-        // Hint: create/paste a trim and tokenize
-        // ... and call each on cmd to remove any newline characters
-        // ... and so that the args array contains the individual words of the cmd line
+        // Hint: create/paste the tokenize function and call it so that the args array contains the individual words of the cmd line
 
         if (strcmp(args[0], "exit") == 0) { 
             // If the user typed in a built-in exit command, quit the shell
