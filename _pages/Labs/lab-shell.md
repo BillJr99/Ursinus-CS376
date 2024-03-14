@@ -119,8 +119,6 @@ The main component of a shell is its loop, where it continuously displays a prom
 #define MAX_LINE 1024 // Maximum length of a command
 #define MAX_ARGS 16 // Maximum number of command line arguments
 
-#include <string.h>
-
 void strip(char* s) {
   for(int i = 0; i < strlen(s); i++) { 
       if(s[i] == '\n' || s[i] == '\r') { // end a string when the newline character is found
