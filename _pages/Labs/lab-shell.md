@@ -188,7 +188,7 @@ if (should_run) {
 }
 ```
 
-This would be a good time to test your program.  If you compile and run your program, you can enter commands into your shell.  For example, on a Linux computer, you will see a prompt that says `osh>`, at which you can type commands like `/usr/bin/ls`, or commands with arguments like `/usr/bin/ls -lt`.  Note that you'll have to type the full path of your command because your shell doesn't have the functionality to look up your command path like `bash` does (and that's OK!).  On Mac, the `ls` program is located at `/bin/ls` and so you can use that path instead.
+This would be a good time to test your program.  If you compile and run your program, you can enter commands into your shell.  For example, on a Linux computer, you will see a prompt that says `osh>`, at which you can type commands like `/usr/bin/ls`, or commands with arguments like `/usr/bin/ls -lt`.  Note that you'll have to type the full path of your command because your shell doesn't have the functionality to look up your command path like `bash` does (and that's OK!).  On Mac, the `ls` program is located at `/bin/ls` and so you can use that path instead.  Either way, be sure to use the full path when typing out programs to run.
 
 #### Step 3: Handling Background Processes and SIGCHLD
 
@@ -218,6 +218,8 @@ To do this, check if the last token in your input is the `&` character.  If it i
 
 Finally, in your main loop, when you start a process in the foreground, set `foreground_pid` to the pid of that child.  Be sure to set it back to `0` when that child terminates (which you'll know by checking the pid that is returned from your call to `wait`).  If you start a process in the background, do not set `foreground_pid`.  We will use this later to keep track of which process is the foreground process (because it should receive signals sent to the shell).
 
+You can test this functionality with a command such as `ls &`.  When this command finishes, run the `ps` command and verify that you do not have a defunct or zombie `ls` process still running (as your shell should terminate it when it receives the `SIGCHLD` signal by calling `wait`).
+
 #### Step 4: SIGINT Handling
 
 Your shell should catch `SIGINT` signals (`Ctrl+C`) and forward them to the foreground process, if any. This prevents the shell itself from being terminated by `SIGINT`.  Instead, it should forward the signal to the foreground process (if there is one) using the `kill` function.
@@ -238,6 +240,8 @@ int main() {
     return 0;
 }
 ```
+
+Test this step by running a long program such as `find /` and pressing `Control-C` to force it to quit.  Your shell should forward the `SIGINT` signal you sent from the keyboard to the `find` process and terminate it right away.
 
 #### Step 5: Input/Output Redirection
 
@@ -268,3 +272,5 @@ if (need_output_redirection) {
 ```
 
 Remember to check for the need for redirection by checking your tokens for the `<` or `>` character, and parse the input and output file names from the command input. You will remove the `<` or `>` token and the next token from the command line argument list if you encounter them.  This redirection logic should be placed in the child process code, right before the call to `execvp()`.
+
+Test this feature with commands such as `ls > output.txt` (which should create a file called `output.txt` with the contents of the output of the `ls` program), and `wc < output.txt` (which will read the `output.txt` file you just created and count the number of lines, words, and characters in the file).
