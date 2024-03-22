@@ -90,6 +90,17 @@ When a student leaves the office, check the size of the waiting room queue.  If 
 
 Run your program using the [`valgrind` thread checker](https://valgrind.org/docs/manual/hg-manual.html); specifically, by running `valgrind --tool=helgrind ./a.out`, and provide the report.  Be sure to destroy all your mutexes at the end of your program and free your dynamically allocated memory.  Use the `valgrind` leak check to verify you have no memory leaks, and include this report in your submission. 
 
+### What to Do
+
+To solve this problem, it is not necessary to implement a professor thread (only a student thread).  When a student needs to wait for the professor (i.e., `numstudents >= 3`), you can create a lock for the student thread to block on.  To do this, when it is time for a thread to block and wait, you'll:
+
+1. `malloc` a `pthread_mutex_t`
+2. Lock the mutex once (so it's locked)
+3. Add that mutex to the linked list
+4. Lock it again (so your thread blocks on it).  
+
+When a student leaves the office, they can check if the linked list is not `NULL`.  If it's not `NULL`, then remove a lock off of the linked list, and unlock it (which releases the next student waiting outside to come in).
+
 ## Part 3: Makefile
 
 Write a makefile to compile and run your programs.  You may write separate makefiles for each program, if you prefer, but each should have a target to build the program, and one to run/test the program.
