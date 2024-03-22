@@ -75,7 +75,7 @@ However, the data files within each floppy volume are still stored within the Un
 You will read the MSDOS FAT12 file system specification so that you can create programs that will be able to write the following **two** programs:
 
 1. List all the files on the disk image
-2. Extract the contents of those files to your local filesystem.
+2. (Extra Credit) Extract the contents of those files to your local filesystem.
 
 For example, assuming that the floppy image was named [samplefat.bin](../files/asmt-fat/samplefat.bin), we should be able to do the following:
 
