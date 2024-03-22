@@ -62,7 +62,7 @@ tags:
 
 ## Part 1: Introduction to Concurrent Programming
 
-Write a program in C to simulate 100 people (threads) that enter a stadium.  They get up a few times, let's say 1000 times (for food, etc.), and return to their seats.  They pass through a counter each time they return to their seat.  Write a program that consists of one threaded function that you invoke via 100 pthreads.  That threaded function should increment a shared variable (initialized to 0, and declared as a volatile variable), 1000 times each.  Note - if your system does not allow you to spawn so many threads, you may use fewer threads and/or a larger number of "times they get up."
+Write a program in C to simulate 100 people (threads) that enter a stadium.  They get up a few times, let's say 1000 times (for food, etc.), and return to their seats.  They pass through a counter each time they return to their seat.  Write a program that consists of one threaded function that you invoke via 100 pthreads.  That threaded function should increment a shared variable (initialized to 0, and declared as a `volatile` variable), 1000 times each.  Note - if your system does not allow you to spawn so many threads, you may use fewer threads and/or a larger number of "times they get up."
 
 Be sure to declare this variable `volatile`, and describe in your writeup why this is important.
 
@@ -80,26 +80,56 @@ Now, in a new version of the program, move the locks so that they lock and unloc
 
 Consider the following problem: your professor has a small office that can seat three students simultaneously.  During office hours, students arrive after a random duration (perhaps after "`sleep`ing" for a random amount of time!) to the professor's office to ask questions and have disucssion.  Professors do no other work during their office hours, so they simply block if no students are there and until one arrives.  Once the professor is working with three students simultaneously, additional students will queue up outside by blocking; they are awoken when a student leaves the office.
 
-Using mutex locks, implement a solution to this problem.  To do this, create a shared `int` variable representing a counter of the number of students waiting for office hours.  This variable is initially `0` and should be protected by a mutex lock (also accessible to all threads, just like the shared counter).
+Using mutex locks, implement a solution to this problem.  To do this, create a shared `int` variable representing a counter of the number of students waiting for office hours.  This variable is initially 0 and should be protected by a mutex lock (also accessible to all threads, just like the shared counter).
 
-The threaded function should check the value of this counter.  If it is less than `3`, increment the variable and enter the office (by proceeding through the function).  Decrement the variable right before you return, simulating leaving the office.  Don't forget to lock your mutex when accessing this variable!
+The threaded function should check the value of this counter.  If it is less than 3, increment the variable and enter the office (by proceeding through the function).  Decrement the variable right before you return, simulating leaving the office.  Don't forget to lock your mutex when accessing this variable!
 
 If the shared counter is greater than or equal to 3, `malloc` a new lock and insert it at the head of a linked list.  Increment a new shared variable representing the number of students in the waiting room (also known as the size of the linked list!).  Again, don't forget to protect this access with a mutex!  Lock the lock twice (once to lock it, and once more to block on it -- since you want to wait outside the office for a seat to open up!).  Hint: protect adding the node to the linked list with your mutex, but be sure to unlock the mutex right before locking your new waiting room lock the second time (why?).
 
-When a student leaves the office, check the size of the waiting room queue.  If it is greater than `0`, remove the tail of the linked list (the student who was waiting the longest), and decrement the waiting room size (again, all protected by a mutex!).  Unlock the lock you just popped off of the linked list to "wake up" the student in the waiting room.  Be sure to destroy this lock so that you free the resources it was using.
+When a student leaves the office, check the size of the waiting room queue.  If it is greater than 0, remove the tail of the linked list (the student who was waiting the longest), and decrement the waiting room size (again, all protected by a mutex!).  Unlock the lock you just popped off of the linked list to "wake up" the student in the waiting room.  Be sure to destroy this lock so that you free the resources it was using.  If you wake up a student, leave the shared counter at its current value (since you left and another student entered, the count stays the same!).  If the waiting queue is empty and you do not wake up a student, decrement the shared counter (to reflect that you have left).  Be sure to protect this shared counter with a shared mutex lock, and to declare the shared counter as `volatile`!
 
 Run your program using the [`valgrind` thread checker](https://valgrind.org/docs/manual/hg-manual.html); specifically, by running `valgrind --tool=helgrind ./a.out`, and provide the report.  Be sure to destroy all your mutexes at the end of your program and free your dynamically allocated memory.  Use the `valgrind` leak check to verify you have no memory leaks, and include this report in your submission. 
 
 ### What to Do
 
-To solve this problem, it is not necessary to implement a professor thread (only a student thread).  When a student needs to wait for the professor (i.e., `numstudents >= 3`), you can create a lock for the student thread to block on.  To do this, when it is time for a thread to block and wait, you'll:
+To solve this problem, it is not necessary to implement a professor thread (only a student thread).  If a student arrives and sees that `numstudents < 3`, increment `numstudents` and enter the office without blocking (other than to lock the mutex to protect `numstudents`, of course).  When a student needs to wait for the professor (i.e., `numstudents >= 3`), you can create a lock for the student thread to block on.  To do this, when it is time for a thread to block and wait, you'll:
 
 1. `malloc` a `pthread_mutex_t`
 2. Lock the mutex once (so it's locked)
 3. Add that mutex to the linked list
 4. Lock it again (so your thread blocks on it).  
 
-When a student leaves the office, they can check if the linked list is not `NULL`.  If it's not `NULL`, then remove a lock off of the linked list, and unlock it (which releases the next student waiting outside to come in).
+When a student leaves the office, they can check if the linked list is not `NULL`.  If it's not `NULL`, then remove a lock off of the linked list, and unlock it (which releases the next student waiting outside to come in).  If it is `NULL`, decrement the shared counter (again, in a mutex lock to protect the variable).
+
+### Causing a Thread to Sleep
+
+It may be helpful to have your threads sleep occasionally in their loops so that the print statements are easier to read.  You can use the `sleep` and `rand` functions to do this.  An example is given below that will sleep for a minimum period of 1 to 5 seconds.  I recommend incorporating this into a function that you can call on-demand.  
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+
+int main() {
+    // Initialize the random number generator with the current time
+    srand(time(NULL));
+
+    // Generate a random number between 1 and 5
+    int sleepTime = rand() % 5 + 1;
+
+    // Inform the user about the sleep time
+    printf("The program will sleep for %d seconds.\n", sleepTime);
+
+    // Sleep for the determined number of seconds
+    sleep(sleepTime);
+
+    // Inform the user that the program has finished sleeping
+    printf("The program has woken up.\n");
+
+    return 0;
+}
+```
 
 ## Part 3: Makefile
 
