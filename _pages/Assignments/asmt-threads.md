@@ -94,12 +94,14 @@ Run your program using the [`valgrind` thread checker](https://valgrind.org/docs
 
 To solve this problem, it is not necessary to implement a professor thread (only a student thread).  If a student arrives and sees that `numstudents < 3`, increment `numstudents` and enter the office without blocking (other than to lock the mutex to protect `numstudents`, of course).  When a student needs to wait for the professor (i.e., `numstudents >= 3`), you can create a lock for the student thread to block on.  To do this, when it is time for a thread to block and wait, you'll:
 
-1. `malloc` a `pthread_mutex_t`
+1. `malloc` a `pthread_mutex_t` and call `pthread_mutex_init(theMutex, NULL)` to initialize it (assuming you called the `pthread_mutex_t*` variable `theMutex`).
 2. Lock the mutex once (so it's locked)
 3. Add that mutex to the linked list
 4. Lock it again (so your thread blocks on it).  
 
 When a student leaves the office, they can check if the linked list is not `NULL`.  If it's not `NULL`, then remove a lock off of the linked list, and unlock it (which releases the next student waiting outside to come in).  If it is `NULL`, decrement the shared counter (again, in a mutex lock to protect the variable).
+
+By the end of your program, loop over the linked list of mutex locks (or once you unlock the mutex for the final time), and call `pthread_mutex_destroy(theMutex)` followed by a `free` of the linked list item or mutex you `malloc`'ed.
 
 ### Causing a Thread to Sleep
 
