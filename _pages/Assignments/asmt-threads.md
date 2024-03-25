@@ -137,6 +137,10 @@ int main() {
 
 Be sure you lock the shared mutex lock **before** checking the value of things like the number of students waiting outside, or in the office!  If you do not, you might observe a certain value in that variable, and then proceed, but before you finish, that value could change.  This could be problematic if, for example, you observe that 3 students are in the office, and create a mutex to add to the waiting room linked list (to wait on).  But one of the threads "in the office" could finish before you create and add this lock to the linked list!  If that happens, you'll block on it, but that other thread will not unlock you when it leaves (because it will think the linked list is empty, or doesn't have your lock on it).  Acquire that mutex, and be sure to release it just before you block on any other locks.
 
+### Avoiding Race Conditions
+
+Similarly, be sure to lock the mutex any time you update a shared variable.  That includes the linked list!  You can lock and unlock before and after calling `push` or `remove` from your linked list, using the shared mutex you had used previously.
+
 ## Part 3: Makefile
 
 Write a makefile to compile and run your programs.  You may write separate makefiles for each program, if you prefer, but each should have a target to build the program, and one to run/test the program.
