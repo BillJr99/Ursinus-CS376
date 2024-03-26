@@ -30,7 +30,7 @@ First, install the following tools on your computer:
 Next, open a terminal and run the following command, if you don't already have an SSH public key on your system.
 
 ```
-ssh-keygen -t rsa
+ssh-keygen -t ed25519
 ```
 
 Follow the prompts and it will create a public key file within your home directory called `~/.ssh/id_rsa.pub` (as well as another file in that same directory called `id_rsa`, which is your associated private key; don't share that file with anyone!).  You will use the contents of this file later; to copy these contents, type the following command, and copy the output to your clipboard:
