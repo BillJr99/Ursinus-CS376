@@ -141,6 +141,10 @@ Be sure you lock the shared mutex lock **before** checking the value of things l
 
 Similarly, be sure to lock the mutex any time you update a shared variable.  That includes the linked list!  You can lock and unlock before and after calling `push` or `remove` from your linked list, using the shared mutex you had used previously.
 
+### Logging
+
+It's a good idea to put print statements in your program to log what your threads do.  I like to add them before and after my mutex lock and unlock calls.  I suggest adding an `int id` to your `ThreadData` structure, and set `threadData[i].id = i` when you create your threads.  That way, you can `printf` the `data->id` field in your log messages inside your thread function!
+
 ## Part 3: Makefile
 
 Write a makefile to compile and run your programs.  You may write separate makefiles for each program, if you prefer, but each should have a target to build the program, and one to run/test the program.
