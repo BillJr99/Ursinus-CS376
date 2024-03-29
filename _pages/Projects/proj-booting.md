@@ -280,6 +280,30 @@ diff -cruB linux-2.6.22.19 pristine_linux >my.patch
 
 The `make clean` commands are important so that you don't diff the binary object files you built earlier when you create your patch.  Therefore, I suggest creating this only when you are ready to submit your work!
 
+#### Copying Files from within Your Virtual Machine
+
+If you are running Linux (or can otherwise install `libguestfs-tools`), you can run the following command to install a tool that can read your qcow2 disk image from your local computer, allowing you to copy files from your virtual machine!  You can install it and give it permissions to read your kernel modules with the following commands (run from your local machine):
+
+```
+sudo apt install libguestfs-tools
+sudo chmod 644 /boot/vmlinuz-*
+```
+
+To mount the image, you can run the following command from the directory where your qcow2 image is located (that is, the directory from which you run your `qemu` command to boot the virtual machine):
+
+```
+mkdir mnt
+guestmount -r -a local.qcow2 -m /dev/sda1 mnt
+```
+
+This mounts the image as read only (so you can copy from it, but not to it) with the `-r` flag (this is optional), and tells guestmount to mount the first partition `/dev/sda1` to your `mnt` directory on your local system.  Feel free to `cd` into `mnt` and copy files back to your local home directory!
+
+To unmount the image, run
+
+```
+umount mnt
+```
+
 ### Working Outside Your Virtual Machine: Using git
 
 One advantage of using git is that you can automatically create a patch file from your commit history.
