@@ -113,7 +113,7 @@ Within the virtual machine, in the `user` account home directory, you will see a
 
 You can work directly in the `linux-2.6.22.19` directory; however, it is somewhat slower to work directly within the virtual machine.  I discuss later how to clone and build the kernel on your local computer, and then pass the resulting kernel image to kvm, if you are using it.  Feel free to skip below to **Step 1** to build and modify the kernel directly on the virtual machine, or continue on if you are using `kvm` and want to build locally.
 
-### Optional Step 0: Building the Kernel Outside of the Virtual Machine and Using git
+### Optional Step 0 - Building the Kernel Outside of the Virtual Machine and Using git
 
 Some versions of `qemu` and `kvm` enable passing the compiled kernel file from outside of the virtual machine.  This is very convenient because you can develop and compile on your local computer, and that compilation is typically much faster than what it would be on the virtual machine itself.  Because of the way we'll use these tools, it is necessary to work within a Linux environment to do this.  In addition, we'll download the kernel source code from a git repository so that you can commit your changes and share your work more easily.
 
@@ -275,7 +275,7 @@ cd ..
 cd pristine_linux
 make clean
 cd ..
-diff -cruB linux-2.6.22.19 pristine_linux >my.patch
+diff -ruB linux-2.6.22.19 pristine_linux >my.patch
 ```
 
 The `make clean` commands are important so that you don't diff the binary object files you built earlier when you create your patch.  Therefore, I suggest creating this only when you are ready to submit your work!

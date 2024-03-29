@@ -64,7 +64,23 @@ tags:
 
 Write a program in C to simulate 100 people (threads) that enter a stadium.  They get up a few times, let's say 1000 times (for food, etc.), and return to their seats.  They pass through a counter each time they return to their seat.  Write a program that consists of one threaded function that you invoke via 100 pthreads.  That threaded function should increment a shared variable (initialized to 0, and declared as a `volatile` variable), 1000 times each.  Note - if your system does not allow you to spawn so many threads, you may use fewer threads and/or a larger number of "times they get up."
 
-Be sure to declare this variable `volatile`, and describe in your writeup why this is important.
+Be sure to declare this variable `volatile`, and describe in your writeup why this is important.  Also, when you increment a variable that is a pointer to an integer (or a long integer, etc.), do not do:
+
+```c
+*value++; // BROKEN!!
+```
+
+This is because the `++` operator takes precedence over the dereference `*` operator, so it will execute first!  Do one of these instead:
+
+```c
+(*value)++;
+```
+
+or
+
+```c
+*value = *value + 1;
+```
 
 Run this program 10 times, and time the runs.  What is the average runtime of these runs?  Also, record the final output of the counter.  It should be 100000, but it likely will not be.  What was it on each run?
 
@@ -140,6 +156,10 @@ Be sure you lock the shared mutex lock **before** checking the value of things l
 ### Avoiding Race Conditions
 
 Similarly, be sure to lock the mutex any time you update a shared variable.  That includes the linked list!  You can lock and unlock before and after calling `push` or `remove` from your linked list, using the shared mutex you had used previously.
+
+### Logging
+
+It's a good idea to put print statements in your program to log what your threads do.  I like to add them before and after my mutex lock and unlock calls.  I suggest adding an `int id` to your `ThreadData` structure, and set `threadData[i].id = i` when you create your threads.  That way, you can `printf` the `data->id` field in your log messages inside your thread function!
 
 ## Part 3: Makefile
 
