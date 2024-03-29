@@ -275,7 +275,7 @@ cd ..
 cd pristine_linux
 make clean
 cd ..
-diff -cruB linux-2.6.22.19 pristine_linux >my.patch
+diff -ruB linux-2.6.22.19 pristine_linux >my.patch
 ```
 
 The `make clean` commands are important so that you don't diff the binary object files you built earlier when you create your patch.  Therefore, I suggest creating this only when you are ready to submit your work!
