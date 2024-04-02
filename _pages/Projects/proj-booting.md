@@ -170,7 +170,7 @@ Copying my `.config` and `Makefile` files allows us to configure a minimal keren
 To build the kernel, you run `make`.  You should do so within your linux directory (i.e., `linux-2.6.22.19`), and be sure to type `EXTRAVERSION='.19-LASTNAME'` -- substituting your last names for LASTNAME (no spaces!).  This way, your kernel will show up in the boot menu of your virtual machine with your name on it (along with the one that came with the operating system), so you'll know which one is which.  So, you will run this command:
 
 ```
-make EXTRAVERSION='.19-LASTNAME'
+make -j4 EXTRAVERSION='.19-LASTNAME'
 ```
 
 This will build a file called `arch/x86_64/boot/bzImage`.  
@@ -236,7 +236,7 @@ Specifically, if the new printme argument is set, you'll print `"Hello World fro
 Build and boot the kernel as before:
 
 * `cd ~/linux-2.6.22.19`
-* `make EXTRAVERSION='.19-LASTNAME' -j8`
+* `make EXTRAVERSION='.19-LASTNAME' -j4`
 
 ### Working within the Virtual Machine
 
