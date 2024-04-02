@@ -1,4 +1,4 @@
 Emphasize essential topics in notes, reinforced in labs/assignments
 Move extra notes (including from history) to backup section
-Volatile variables wfor threads with exercises that start with non-working code and walk students through fixing i.e. replit examples
+Volatile variables for threads with exercises that start with non-working code and walk students through fixing i.e. replit examples
 Replace PTHREAD_MUTEX_INITIALIZER with pthread_mutex_init everywhere
