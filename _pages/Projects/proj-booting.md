@@ -296,11 +296,23 @@ mkdir mnt
 guestmount -r -a local.qcow2 -m /dev/sda1 mnt
 ```
 
-This mounts the image as read only (so you can copy from it, but not to it) with the `-r` flag (this is optional), and tells guestmount to mount the first partition `/dev/sda1` to your `mnt` directory on your local system.  Feel free to `cd` into `mnt` and copy files back to your local home directory!
-
-To unmount the image, run
+This mounts the image as read only (so you can copy from it, but not to it) with the `-r` flag (this is optional), and tells guestmount to mount the first partition `/dev/sda1` to your `mnt` directory on your local system.  Feel free to `cd` into `mnt` and copy files back to your local home directory!  For example, you might do this to copy your patch file into the home directory of the computer where you ran `qemu` from the virtual machine image:
 
 ```
+cd mnt/home/user
+cp my.patch ~
+```
+
+Then, suppose you are logged into a remote server like `stratus.ursinus.edu`, you could copy this to your local computer by opening a new terminal for your local machine and executing the following to copy the file to your local desktop for submission:
+
+```
+scp <your user name>@stratus.ursinus.edu:my.patch ~/Desktop
+```
+
+To unmount the image when you are done (this is important!), run
+
+```
+cd ~
 umount mnt
 ```
 
