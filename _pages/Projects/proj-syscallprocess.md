@@ -58,7 +58,7 @@ return current->tgid;
 }
 ```
 
-Copy the function header prototype to `include/linux/syscalls.h` so that you can call this by name.
+Copy the function header prototype to `include/linux/syscalls.h` so that you can call this by name.  You can paste it below the other function prototypes, at the bottom of the file (but right before the `#endif`).
 
 Saving this in a file in the `kernel/` source directory (`sched.c` would be fine), we must now open this function up to the user.  To do this, we add it to the list of available system calls.  This list is found in a file called `arch/i386/kernel/syscall_table.S` At the end of this file, add the line
 
