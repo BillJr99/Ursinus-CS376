@@ -145,7 +145,7 @@ You can run this version of make by running `./home/wmm24/public/make3/bin/make`
 alias make3="~/home/wmm24/public/make3/bin/make"
 ```
 
-This command allows you to use this version of make every time by entering the command `make3` whenever you are asked to run `make` below.  If this version of make is preinstalled on your environment (for example, at `/opt/make3`), you can execute this command as `alias make3="/opt/make3/bin/make"`.  
+This command allows you to use this version of make every time by entering the command `make3` whenever you are asked to run `make` below.  If this version of make is preinstalled on your environment (for example, at `/opt/make3`), you can execute this command as `alias make3="/opt/make3/bin/make"`.   Just be sure to replace `make` with `make3` if you do this. 
 
 Alternatively, you can download a 3.x version of make from the [make website](https://ftp.gnu.org/gnu/make/) and build the software yourself on your local computer architecture.
 
@@ -211,7 +211,7 @@ In the boot menu, choose the kernel with your name on it!  Welcome to your custo
 If you are working outside of your virtual machine, it is easy to boot the virtual machine with a custom kernel!  Once you have configured and compiled the kernel using the steps above, you can add these two parameters to the `kvm` command you ran earlier to boot your virtual machine: 
 
 ```
--kernel linux-2.6.22-19/arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'
+-kernel linux-2.6.22.19/arch/x86_64/boot/bzImage -append 'root=/dev/hda1 ro'
 ```
 
   Note that you may need to run `cd ..` to move back to the directory containing your `local.qcow2` file; otherwise, you'll want to change the paths to your `local.qcow2` file and/or to the `bzImage` file in this command.
