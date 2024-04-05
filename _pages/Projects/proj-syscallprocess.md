@@ -91,7 +91,7 @@ int main()
 
 You can write this in your home directory **outside of the linux-2.6.22.19 directory** since this is now a user program that invokes your system call by its system call number.
 
-Compile the user program with `gcc -I/The/location/of/your/kernel/linux/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., syscall(326), you can omit the `-I` flag.
+Compile the user program with `gcc -I/The/location/of/your/kernel/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., syscall(326), you can omit the `-I` flag.  For example, if your linux source code is in your user directory and called `linux-2.6.22.19`, you would compile with `gcc -I~/linux-2.6.22.19/include testSysCall.c`.  This gives your program access to the Linux kernel header files which you edited with your new system call number and function prototype.
 
 ## What to Do
 
