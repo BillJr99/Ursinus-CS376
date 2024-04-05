@@ -107,7 +107,8 @@ Now that you know how to create a syscall in the kernel, you will create a few s
 
 ### Task 1: Elevate a Process to Root Privileges
 
-Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to 0, thus claiming the process by the root user (giving the process root priveleges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
+Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `0`, thus claiming the process by the root user (giving the process root priveleges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
+
 Call your syscall `steal`, and it should take in a single parameter of type `pid_t` (the process ID number to elevate to root).  Write a wrapper user program that takes in a process ID as a command line paramter, and invokes the syscall to elevate it to root.  Your wrapper program will have to refer to pid as a `long` (not an `int`!). To convert `argv[1]` to a long, use the `long atol(char*)` function.
 
 Try running it on your bash shell and then run a new instance of bash; you will see your prompt go from `$` to `#`, indicating you are now root!  No `su` password required.  Your syscall should return `0` on success, and a token number on failure.  You may need to start a new bash task to verify this (i.e., type `bash` again at the prompt to run a new instance of the shell as root).
