@@ -133,6 +133,8 @@ Begin by downloading the kernel source code from git.  Navigate to [https://gith
 git clone git@github.com:<your git username>/linux-2.6.22.19.git
 ```
 
+Be sure you have your ssh key installed on github so that this machine can clone repositories from github!
+
 This kernel uses a rather old Makefile, and so an older verison of Make is needed to build it.  If you are compiling locally, you can download a compatible and prebuilt version of Make for Linux operating systems by downloading [make3.tar.bz2](../files/proj-booting/make3.tar.bz2), and extracting it with:
 
 ```
