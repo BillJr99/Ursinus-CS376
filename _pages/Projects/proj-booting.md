@@ -91,7 +91,7 @@ To boot your image, run the following command:
 There are several parts here:
 
 * `qemu-system-x86_64`: This is the qemu client in which your virtual machine will boot.  We are booting a 64-bit virtual machine, so we run the client for `x86_64` architectures.  
-    * **Note**: If you have access to `kvm`, you can replace this word with `kvm` any time it is used.
+    * **Note**: If you have access to `kvm`, you can replace this word with `kvm` any time it is used.  **It is worth trying this to see if your machine supports it, because it will run much faster this way!**
 * `-display curses`: This causes the machine to boot in text mode, which can be a bit faster and more convenient than popping up a window.  It is optional and can be removed if your installation does not support it. 
 * `-drive file=local.qcow2`: This points to the virtual disk you just created (which is automatically linked to `base.qcow2` from earlier).
 * `-m 1024M -smp 8 -accel tcg`: These specify how much memory, how many CPU cores, and the underlying virtualization accelerator to use, respectively.  These are also optional and may be removed selectively as needed.
@@ -256,9 +256,9 @@ If you are passing the `kernel` parameter from outside the virtual machine, you 
 
 When the virtual machine boots, log in and run the following command to see if your log message was printed:
 
-`dmesg | grep "Hello World from Me"`
+`dmesg | grep -i "Hello World from Me"`
 
-Then, boot normally without adding this `printme` parameter (by hitting enter in GRUB when you select your kernel), and re-run this `dmesg | grep "Hello World from Me"`.  The message should only appear when you include the `printme` parameter!
+Then, boot normally without adding this `printme` parameter (by hitting enter in GRUB when you select your kernel), and re-run this `dmesg | grep -i "Hello World from Me"`.  The message should only appear when you include the `printme` parameter!
 
 ## Create a diff Patch File for Submission
 
