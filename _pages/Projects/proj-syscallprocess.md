@@ -73,7 +73,15 @@ __SYSCALL(__NR_mygetpid, sys_mygetpid)
 
 The syscall number for your first syscall should be 285, since the current "last item" in the list is `sys_eventfd` with number 284.  You'll increment this number each time you make a new syscall.
 
-Build and install your kernel (don't forget to `make install` and `update-grub`!), and reboot, to make your syscall active in the kernel.
+Build and install your kernel (don't forget to `make install` and `update-grub`!), and reboot, to make your syscall active in the kernel.  As a reminder, this is how you build your kernel (from within the `linux-2.6.22.19` directory):
+
+```
+make -j2 EXTRAVERSION='.19-LASTNAME' C=0
+su
+make install
+update-grub
+reboot
+```
 
 We're ready to test the function.  To do this, create a user program, **outside of the kernel source directory** called `testSysCall.c`, in which we call the syscall as follows:
 
