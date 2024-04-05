@@ -64,7 +64,7 @@ Saving this in a file in the `kernel/` source directory (`sched.c` would be fine
 
 `.long sys_mygetpid`
 
-Syscalls are referred to by number rather than by name internally, so we must give this syscall a number.  To do this, edit the file `include/asm-x86_64/unistd.h` and add the following to the blank space near line 633 of the file (which is the end of the rest of this list).  You can get to this line in `vim` by typing 633gg (which means to "go to line 633"), and then open insert mode by pressing the letter `o` to enter the following lines:
+Syscalls are referred to by number rather than by name internally, so we must give this syscall a number.  To do this, edit the file `include/asm-x86_64/unistd.h` and add the following to the blank space near line 633 of the file (which is the end of the rest of this list).  You can get to this line in `vim` by typing `633gg` (which means to "go to line 633"), and then open insert mode by pressing the letter `o` to enter the following lines:
 
 ```c
 #define __NR_mygetpid ^^^ //(where ^^^ is one more than the highest number in the list).
