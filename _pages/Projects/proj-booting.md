@@ -236,7 +236,7 @@ Specifically, if the new printme argument is set, you'll print `"Hello World fro
 Build and boot the kernel as before:
 
 * `cd ~/linux-2.6.22.19`
-* `make EXTRAVERSION='.19-LASTNAME' -j2`
+* `make -j2 EXTRAVERSION='.19-LASTNAME' C=0`
 
 ### Working within the Virtual Machine
 
