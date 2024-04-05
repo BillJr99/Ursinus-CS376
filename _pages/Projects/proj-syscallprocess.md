@@ -71,6 +71,8 @@ Syscalls are referred to by number rather than by name internally, so we must gi
 __SYSCALL(__NR_mygetpid, sys_mygetpid)
 ```
 
+The syscall number for your first syscall should be 285, since the current "last item" in the list is `sys_eventfd` with number 284.  You'll increment this number each time you make a new syscall.
+
 Build and install your kernel (don't forget to `make install` and `update-grub`!), and reboot, to make your syscall active in the kernel.
 
 We're ready to test the function.  To do this, create a user program, **outside of the kernel source directory** called `testSysCall.c`, in which we call the syscall as follows:
