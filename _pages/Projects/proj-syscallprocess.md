@@ -71,6 +71,8 @@ Syscalls are referred to by number rather than by name internally, so we must gi
 __SYSCALL(__NR_mygetpid, sys_mygetpid)
 ```
 
+Build and install your kernel (don't forget to `make install` and `update-grub`!), and reboot, to make your syscall active in the kernel.
+
 We're ready to test the function.  To do this, create a user program, **outside of the kernel source directory** called `testSysCall.c`, in which we call the syscall as follows:
 
 ```c
@@ -85,7 +87,9 @@ int main()
 }
 ```
 
-After building and deploying (and booting) your kernel, compile the user program with `gcc -I/The/location/of/your/kernel/linux/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., syscall(326), you can omit the `-I` flag.
+You can write this in your home directory **outside of the linux-2.6.22.19 directory** since this is now a user program that invokes your system call by its system call number.
+
+Compile the user program with `gcc -I/The/location/of/your/kernel/linux/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., syscall(326), you can omit the `-I` flag.
 
 ## What to Do
 
