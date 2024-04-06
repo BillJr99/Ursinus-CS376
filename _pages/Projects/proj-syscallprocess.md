@@ -54,7 +54,7 @@ To create a system call, you start by simply writing a function in the kernel so
 ```c
 asmlinkage long sys_mygetpid(void)
 {
-return current->tgid;
+  return current->tgid;
 }
 ```
 
