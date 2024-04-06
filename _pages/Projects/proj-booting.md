@@ -105,7 +105,7 @@ Your virtual machine should boot and allow you to log in.  There are two options
 
 Please log into each of these accounts and change the password to better ones that you will remember right away.  You can run the `passwd` command to change your password.  
 
-When you are done, you can quit the virtual machine by becoming the root user (either by logging in as root or by typing `su`, pressing enter, and entering the root password), and typing the `halt` command.
+When you are done, you can quit the virtual machine by becoming the root user (either by logging in as root or by typing `su`, pressing enter, and entering the root password), and typing the `halt` command.  After halting, if you'd like to return to your shell prompt, you can press `Alt-2` on your keyboard, and typing `quit` and pressing enter at the qemu prompt.
 
 ## Compiling Your Custom Kernel
 
