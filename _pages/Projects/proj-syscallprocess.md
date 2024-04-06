@@ -92,15 +92,14 @@ We're ready to test the function.  To do this, create a user program, **outside 
 int main()
 {
    int syscallnum = 285; // use your syscall number from earlier here
-   printf("Process ID: %d\n", syscall(syscallnum)); 
-   /* alternatively: printf("Process ID: %d\n", mygetpid());  */
+   printf("Process ID: %d\n", syscall(syscallnum)); // alternative to mygetpid() if this function is not exposed by the kernel to user-space
    return 0;
 }
 ```
 
 You can write this in your home directory **outside of the linux-2.6.22.19 directory** since this is now a user program that invokes your system call by its system call number.  If you are modifying and compiling the kernel within your virtual machine, you can call `mygetpid()` as your system call; if you compiled your kernel and booted it from outside the virtual machine, then the header files you modified aren't availbale here, so you can use the `syscall(syscallnum)` approach.  Later, if your system call has parameters, you can simply add them like this: `syscall(syscallnum, parameter1, parameter2)` as appropriate. 
 
-Compile the user program with `gcc -I/The/location/of/your/kernel/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., `syscall(285)`, you can omit the `-I` flag.  For example, if your linux source code is in your user directory and called `linux-2.6.22.19`, you would compile with `gcc -I~/linux-2.6.22.19/include testSysCall.c`.  This gives your program access to the Linux kernel header files which you edited with your new system call number and function prototype.
+Compile the user program with `gcc -I/The/location/of/your/kernel/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., `syscall(285)`, you can omit the `-I` flag.  For example, if your linux source code is in your `user` home directory and called `linux-2.6.22.19`, you would compile with `gcc -I/home/user/linux-2.6.22.19/include testSysCall.c`.  This gives your program access to the Linux kernel header files which you edited with your new system call number and function prototype.
 
 ## What to Do
 
