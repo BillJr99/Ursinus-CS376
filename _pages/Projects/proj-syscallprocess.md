@@ -73,7 +73,7 @@ __SYSCALL(__NR_mygetpid, sys_mygetpid)
 
 The syscall number for your first syscall should be 285, since the current "last item" in the list is `sys_eventfd` with number 284.  You'll increment this number each time you make a new syscall.
 
-Build and install your kernel (don't forget to `make install` and `update-grub`!), and reboot, to make your syscall active in the kernel.  As a reminder, this is how you build your kernel (from within the `linux-2.6.22.19` directory):
+Build and install your kernel (don't forget to `make install` and `update-grub` if you are working directly within the virtual machine!), and reboot, to make your syscall active in the kernel.  As a reminder, this is how you build your kernel (from within the `linux-2.6.22.19` directory):
 
 ```
 make -j2 EXTRAVERSION='.19-LASTNAME' C=0
@@ -92,7 +92,8 @@ We're ready to test the function.  To do this, create a user program, **outside 
 int main()
 {
    int syscallnum = 285; // use your syscall number from earlier here
-   printf("Process ID: %d\n", syscall(syscallnum)); // this is an alternative to mygetpid()
+   printf("Process ID: %d\n", syscall(syscallnum)); 
+   /* alternatively: printf("Process ID: %d\n", mygetpid());  */
    return 0;
 }
 ```
