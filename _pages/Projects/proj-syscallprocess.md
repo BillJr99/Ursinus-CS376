@@ -195,7 +195,7 @@ struct list_head *p;
 struct task_struct *sibling;
 
 list_for_each(p, &victim->siblings) {
-        sibling = list_entry(p, struct task_struct, list);
+        sibling = list_entry(p, struct task_struct, siblings);
 }
 ```
 
