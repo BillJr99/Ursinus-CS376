@@ -188,7 +188,7 @@ Write a wrapper user test program as you have before.  You will find it helpful 
 
 Create a system call called `swipe` that takes a process ID called `target` and another process ID called `victim`, and as long as `target != victim`, takes the timeslice from the victim (setting `victim`'s timeslice to 0), and adds it to the `target`.  Also take all `children != target` from the victim and take their timeslice, too.  Return the amount of timeslice taken on success, and a token number on failure. 
 
-Note that the `task_struct` contains a list called `siblings` that you will use to iterate over its children.  You can do this using the following pattern adapted from [Linux Kernel Development by Robert Love](https://litux.nl/mirror/kerneldevelopment/0672327201/app01lev1sec4.html).
+Note that the `task_struct` contains a list called `children` that you will use to iterate over its children (which are stored in a list of `sibling`s of one another).  You can do this using the following pattern adapted from [Linux Kernel Development by Robert Love](https://litux.nl/mirror/kerneldevelopment/0672327201/app01lev1sec4.html).
 
 ```c
 struct list_head *p;
