@@ -138,11 +138,14 @@ For reference, here is the test user program for this system call.  Run this wit
 #include <unistd.h>
 #include <sys/syscall.h>
 
+#define EXIT_FAILURE -1
+#define EXIT_SUCCESS 0
+
 int main(int argc, char *argv[]) {
     // Check if the command line argument count is correct
     if (argc != 2) {
         fprintf(stderr, "Usage: %s <PID>\n", argv[0]);
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE); // A token value for a failure condition
     }
     
     // Convert argv[1] to a long to represent the PID
