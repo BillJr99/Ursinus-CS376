@@ -194,7 +194,8 @@ Note that the `task_struct` contains a list called `siblings` that you will use 
 struct list_head *p;
 struct task_struct *child;
 
-list_for_each(p, &victim->children) {
+// assumes you already have a task_struct* victim defined
+list_for_each(p, &(victim->children)) {
         child = list_entry(p, struct task_struct, sibling); // the next child is a sibling of this child, not the child of this child!
         // your code here
 }
