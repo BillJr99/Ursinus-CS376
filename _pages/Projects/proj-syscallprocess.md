@@ -180,6 +180,10 @@ Create a system call called `quad` that takes a process ID, retrieves its `task_
 
 To find the timeslice field, see the `task_struct` definition in `include/linux/sched.h`, whose definition begins on [line 821](https://elixir.bootlin.com/linux/v2.6.22.19/source/include/linux/sched.h#L821).  The name of the field can be found on line 851.
 
+#### Testing
+
+Write a wrapper user test program as you have before.  You will find it helpful to have a long-running program whose pid you can use to pass as input to this wrapper.  I suggest writing a program called `spin` that consists of a `main` function with a `while(1);` infinite loop. You can run this in the background as many times as you like, and run `ps` to get the pid of those spinning processes.  This approach will be helpful on this and the upcoming tasks.
+
 ### Task 3: Swipe the Timeslice from Another Process
 
 Create a system call called `swipe` that takes a process ID called `target` and another process ID called `victim`, and as long as `target != victim`, takes the timeslice from the victim (setting `victim`'s timeslice to 0), and adds it to the `target`.  Also take all `children != target` from the victim and take their timeslice, too.  Return the amount of timeslice taken on success, and a token number on failure. 
