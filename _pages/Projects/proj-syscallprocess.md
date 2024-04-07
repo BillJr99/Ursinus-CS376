@@ -111,7 +111,9 @@ Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `
 
 Call your syscall `steal`, and it should take in a single parameter of type `pid_t` (the process ID number to elevate to root).  Write a wrapper user program that takes in a process ID as a command line paramter, and invokes the syscall to elevate it to root.  Your wrapper program will have to refer to pid as a `long` (not an `int`!). To convert `argv[1]` to a long, use the `long atol(char*)` function.
 
-Try running it on your bash shell and then run a new instance of bash; you will see your prompt go from `$` to `#`, indicating you are now root!  No `su` password required.  Your syscall should return `0` on success, and a token number on failure.  You may need to start a new bash task to verify this (i.e., type `bash` again at the prompt to run a new instance of the shell as root).
+Try running it on your bash shell and then run a new instance of bash; you will see your prompt go from `$` to `#`, indicating you are now root!  No `su` password required.  To get the pid of your bash shell, run the `ps` command.
+
+Your syscall should return `0` on success, and a token number on failure.  You may need to start a new bash task to verify this (i.e., type `bash` again at the prompt to run a new instance of the shell as root).
 
 #### Searching for a Task by PID
 
@@ -121,8 +123,51 @@ In the tutorial, we operated on the current task, so instead of searching for th
 struct task_struct *task;
 for_each_process(task)
 {
-    // if task>pid is equal to the pid you're searching for
+    // if task->pid is equal to the pid you're searching for
     // then task is the task_struct you are seeking!
+}
+```
+
+#### User Test Program
+
+For reference, here is the test user program for this system call.
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/syscall.h>
+
+int main(int argc, char *argv[]) {
+    // Check if the command line argument count is correct
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <PID>\n", argv[0]);
+        exit(EXIT_FAILURE);
+    }
+    
+    // Convert argv[1] to a long to represent the PID
+    long pid = atol(argv[1]);
+    
+    // Check for conversion error
+    if (pid <= 0) {
+        fprintf(stderr, "Error: Invalid PID.\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    // Attempt to invoke the syscall to elevate the process to root
+    // Note: The syscall number is assumed to be 286 for demonstration purposes.
+    // This syscall number and functionality are hypothetical and not part of standard Linux distributions.
+    long result = syscall(286, pid);
+    
+    // Check the result of the syscall
+    if (result == 0) {
+        printf("Process %ld elevated to root successfully.\n", pid);
+    } else {
+        perror("Error elevating process to root");
+        exit(EXIT_FAILURE);
+    }
+    
+    return EXIT_SUCCESS;
 }
 ```
 
