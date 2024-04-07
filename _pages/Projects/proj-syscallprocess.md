@@ -192,10 +192,11 @@ Note that the `task_struct` contains a list called `siblings` that you will use 
 
 ```c
 struct list_head *p;
-struct task_struct *sibling;
+struct task_struct *child;;
 
-list_for_each(p, &victim->siblings) {
-        sibling = list_entry(p, struct task_struct, siblings);
+list_for_each(p, &victim->children) {
+        child = list_entry(p, struct task_struct, children);
+        // your code here
 }
 ```
 
