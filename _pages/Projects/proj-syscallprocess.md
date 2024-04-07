@@ -130,7 +130,7 @@ for_each_process(task)
 
 #### User Test Program
 
-For reference, here is the test user program for this system call.
+For reference, here is the test user program for this system call.  Run this with `./a.out <your bash pid number>`.
 
 ```c
 #include <stdio.h>
