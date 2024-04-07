@@ -71,7 +71,7 @@ Syscalls are referred to by number rather than by name internally, so we must gi
 __SYSCALL(__NR_mygetpid, sys_mygetpid)
 ```
 
-The syscall number for your first syscall should be 285, since the current "last item" in the list is `sys_eventfd` with number 284.  You'll increment this number each time you make a new syscall.
+The syscall number for your first syscall should be `285`, since the current "last item" in the list is `sys_eventfd` with number `284`.  You'll increment this number each time you make a new syscall.
 
 Build and install your kernel (don't forget to `make install` and `update-grub` if you are working directly within the virtual machine!), and reboot, to make your syscall active in the kernel.  As a reminder, this is how you build your kernel (from within the `linux-2.6.22.19` directory):
 
