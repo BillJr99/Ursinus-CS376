@@ -14,13 +14,13 @@ info:
 
   contract:
     a:
-      - Complete the system call for task 6
-      - Complete the wrapper program for task 6
-      - Complete the writeup as part of the README specified in task 6
+      - "Complete the system call for tasks 5-6 (6 is an A+)"
+      - "Complete the wrapper program for task 5-6 (6 is an A+)"
+      - Complete the writeup as part of the README
     b:
       - Complete the wrapper programs for tasks 1-2
-      - Complete the system calls for tasks 3-5
-      - Complete the wrapper programs for tasks 3-5
+      - Complete the system calls for tasks 3-4
+      - Complete the wrapper programs for tasks 3-4
     c:
       - Complete the system calls programs in tasks 1-2
     d:
