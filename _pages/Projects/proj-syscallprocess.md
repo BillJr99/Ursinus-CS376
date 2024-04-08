@@ -182,7 +182,7 @@ To find the timeslice field, see the `task_struct` definition in `include/linux/
 
 #### Testing
 
-Write a wrapper user test program as you have before.  You will find it helpful to have a long-running program whose pid you can use to pass as input to this wrapper.  I suggest writing a program called `spin` that consists of a `main` function with a `while(1);` infinite loop. You can run this in the background as many times as you like, and run `ps` to get the pid of those spinning processes.  This approach will be helpful on this and the upcoming tasks.
+Write a wrapper user test program as you have before.  You will find it helpful to have a long-running program whose pid you can use to pass as input to this wrapper.  I suggest writing a program called `spin` that consists of a `main` function with a `while(1);` infinite loop. You can run this in the background as many times as you like, and run `ps` to get the pid of those spinning processes.  This approach will be helpful on this and the upcoming tasks.  You won't notice much at first glance when you test system calls like these, but if you run `top` you should see how much CPU time each `spin` program is consuming, and you'll likely see them adjust after the system call!
 
 ### Task 3: Swipe the Timeslice from Another Process
 
