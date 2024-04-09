@@ -213,15 +213,15 @@ For example, one thing `do_exit()` does is send a `SIGCHLD` to its parent.  This
 
 Write a syscall called `myjoin` that also takes a process ID called `target`, and becomes `TASK_UNINTERRUPTIBLE` until that process exits. You will want to do this by using the `sleep_on` and `wake_up` family of methods.  
 
-You will know when the process exists because it will call `do_exit()` (which already exists in `exit.c`) -- so `do_exit()` can check to see if a pid is joined (create a data strucutre of your choice to maintain this information).  You may restrict your implementation such that at most one process may join to a given process.  You can add this information to the `task_struct` data structure in `sched.h`.
+You will know when the process exists because it will call `do_exit()` (which already exists in `kernel/exit.c`) -- so `do_exit()` can check to see if a pid is joined (create a data strucutre of your choice to maintain this information).  You may restrict your implementation such that at most one process may join to a given process.  You can add this information to the `task_struct` data structure in `sched.h`, and initialize any values in `do_fork()` in `kernel/fork.c`.
 
 When a process exits, `do_exit()` should make the source pid state `TASK_RUNNING` again.  Note that you should do some error checking here -- the target pid must exist, and must not be dead, a zombie, or otherwise terminated before executing `myjoin`.  You will need to [lock](https://www.linuxjournal.com/article/5833) using `lock_kernel()` and `unlock_kernel()`, to ensure that the task doesn't finish during your call to `myjoin`, as well!
 
 Here is a pseudocode outline of the approach:
 
 ```
-add a struct task_struct* joiner field to the task_struct, and add a line to fork() to set this field to null
-add a wait_queue_head_t joinqueue to task_struct, and add a line to fork() to init_waitqueue_head(&(current->joinqueue))
+add a struct task_struct* joiner field to the task_struct, and add a line to do_fork() to set this field to null
+add a wait_queue_head_t joinqueue to task_struct, and add a line to do_fork() to init_waitqueue_head(&(current->joinqueue))
 
 in your join system call:
     lock_kernel()
