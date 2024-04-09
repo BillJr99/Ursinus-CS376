@@ -203,7 +203,7 @@ list_for_each(p, &(victim->children)) {
 
 ### Task 4: Turn a Process into a Zombie
 
-Write a syscall called zombify that also takes a process ID called `target`, and sets the task's exit state (see line 869 of `include/linux/sched.h`) to `EXIT_ZOMBIE`.  You can test this one by running it, and then separately running `top` to observe your target program.  
+Write a syscall called zombify that also takes a process ID called `target`, and sets the task's `exit_state` (see line 869 of `include/linux/sched.h`) to `EXIT_ZOMBIE`.  You can test this one by running it, and then separately running `top` to observe your target program.  
 
 Take a detailed look at the [`do_exit()` function in the kernel](https://elixir.bootlin.com/linux/v2.6.22.19/source/kernel/exit.c#L862).  Note that this function does other things besides simply setting the task's state to `EXIT_ZOMBIE` (which it does on line 842 in `exit_notify()`, which is called by `do_exit()`.  Why are these other steps necessary in practice, and what happens differently when you use your syscall instead?  
 
@@ -230,7 +230,7 @@ in your join system call:
 
     get the target pid task_struct
 
-    check if the target->state field is EXIT_ZOMBIE (unlock the kernel and return if so)
+    check if the target->exit_state field is EXIT_ZOMBIE (unlock the kernel and return if so)
 
     check if target->joiner is not null (unlock the kernel and return if so)
 
