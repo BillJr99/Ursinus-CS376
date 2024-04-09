@@ -217,6 +217,36 @@ You will know when the process exists because it will call `do_exit()` -- so `do
 
 When a process exits, `do_exit()` should make the source pid state `TASK_RUNNING` again.  Note that you should do some error checking here -- the target pid must exist, and must not be dead, a zombie, or otherwise terminated before executing `myjoin`.  You will need to [lock](https://www.linuxjournal.com/article/5833) using `lock_kernel()` and `unlock_kernel()`, to ensure that the task doesn't finish during your call to `myjoin`, as well!
 
+Here is a pseudocode outline of the approach:
+
+```
+add a struct task_struct* joiner field to the task_struct, and add a line to fork() to set this field to null
+add a wait_queue_head_t joinqueue to task_struct, and add a line to fork() to init_waitqueue_head(&current->joinqueue)
+
+in your join system call:
+    lock_kernel()
+
+    check if the target pid is null (unlock the kernel and return if it is)
+
+    get the target pid task_struct
+
+    check if the target->state field is EXIT_ZOMBIE (unlock the kernel and return if so)
+
+    check if target->joiner is not null (unlock the kernel and return if so)
+
+    set target->joiner = current
+    
+    unlock_kernel()
+
+    interruptible_sleep_on(&(target->joinqueue)) // or set current->state to TASK_UNINTERRUPTIBLE
+    
+in do_exit:
+    if current->joiner is not null, set it to null
+    wake_up_interruptible_sync(&(current->joinqueue)); // or set current->joiner state to TASK_RUNNING
+```
+
+Test this program by writing and running a program that sleeps for 20 seconds and then returns.  Write a second program to join to it, print a log message, and then return.  That log message should not appear until after the join returns; that is, after the sleeping program terminates after approximately 20 seconds.
+
 ### Task 6: Forcewrite
 
 Write a syscall called `forcewrite` that, given an `int` file descriptor (much like `sys_write`), writes to a file.  The twist is that, in `forcewrite`, you will not check for file permissions (or you will ignore them) before writing to the file.  
