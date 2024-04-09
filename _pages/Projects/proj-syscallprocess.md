@@ -211,7 +211,7 @@ For example, one thing `do_exit()` does is send a `SIGCHLD` to its parent.  This
 
 ### Task 5: Implementing Thread Join
 
-Write a syscall called `myjoin` that also takes a process ID called `target`, and becomes `TASK_UNINTERRUPTABLE` until that process exits. You will want to do this by using the `sleep_on` and `wake_up` family of methods.  
+Write a syscall called `myjoin` that also takes a process ID called `target`, and becomes `TASK_UNINTERRUPTIBLE` until that process exits. You will want to do this by using the `sleep_on` and `wake_up` family of methods.  
 
 You will know when the process exists because it will call `do_exit()` -- so `do_exit()` can check to see if a pid is joined (create a data strucutre of your choice to maintain this information).  You may restrict your implementation such that at most one process may join to a given process.  
 
