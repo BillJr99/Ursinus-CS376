@@ -221,7 +221,7 @@ Here is a pseudocode outline of the approach:
 
 ```
 add a struct task_struct* joiner field to the task_struct, and add a line to fork() to set this field to null
-add a wait_queue_head_t joinqueue to task_struct, and add a line to fork() to init_waitqueue_head(&current->joinqueue)
+add a wait_queue_head_t joinqueue to task_struct, and add a line to fork() to init_waitqueue_head(&(current->joinqueue))
 
 in your join system call:
     lock_kernel()
