@@ -28,7 +28,7 @@ info:
 
   readings:
     - rlink: https://tldp.org/HOWTO/html_single/Implement-Sys-Call-Linux-2.6-i386/
-      rtitle: "Implementing a System Call or Linux 2.6 for i386"
+      rtitle: "Implementing a System Call on Linux 2.6 for i386"
     - rlink: https://linuxgazette.net/133/saha.html
       rtitle: "Learning about Linux Processes by Amit Saha"
     - rlink: https://litux.nl/mirror/kerneldevelopment/0672327201/app01lev1sec4.html
