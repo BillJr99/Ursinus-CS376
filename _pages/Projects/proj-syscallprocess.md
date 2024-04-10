@@ -211,7 +211,7 @@ For example, one thing `do_exit()` does is send a `SIGCHLD` to its parent.  This
 
 ### Task 5: Implementing Thread Join
 
-Write a syscall called `myjoin` that also takes a process ID called `target`, and becomes `TASK_UNINTERRUPTIBLE` until that process exits. You will want to do this by using the `sleep_on` and `wake_up` family of methods.  
+Write a syscall called `myjoin` that also takes a process ID called `target`, and becomes `TASK_INTERRUPTIBLE` until that process exits. You will want to do this by using the `sleep_on` and `wake_up` family of methods.  
 
 You will know when the process exists because it will call `do_exit()` (which already exists in `kernel/exit.c`) -- so `do_exit()` can check to see if a pid is joined (create a data strucutre of your choice to maintain this information).  You may restrict your implementation such that at most one process may join to a given process.  You can add this information to the `task_struct` data structure in `sched.h`, and initialize any values in `do_fork()` in `kernel/fork.c`.  **Note that the process is called `p` in `do_fork()`, and `tsk` in `do_exit()`, as opposed to `current`, since these functions manipulate those structures!**
 
@@ -238,7 +238,8 @@ in your join system call:
     
     unlock_kernel()
 
-    interruptible_sleep_on(&(target->joinqueue)) 
+    WHILE target->joiner == current 
+        interruptible_sleep_on(&(target->joinqueue)) 
     
 in do_exit:
     if tsk->joiner is not null, set it to null
