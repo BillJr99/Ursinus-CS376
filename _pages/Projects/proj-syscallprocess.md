@@ -221,7 +221,7 @@ Here is a pseudocode outline of the approach:
 
 ```
 add a struct task_struct* joiner field to the task_struct, and add a line to do_fork() to set this field to null
-add a wait_queue_head_t joinqueue to task_struct, and add a line to do_fork() to init_waitqueue_head(&(current->joinqueue))
+add a wait_queue_head_t joinqueue to task_struct, and add a line to do_fork() to init_waitqueue_head(&(p->joinqueue)) after the call to copy_process
 
 in your join system call:
     lock_kernel()
@@ -238,13 +238,11 @@ in your join system call:
     
     unlock_kernel()
 
-    interruptible_sleep_on(&(target->joinqueue)) // or set current->state to TASK_UNINTERRUPTIBLE
-
-    schedule() // switch from this task
+    interruptible_sleep_on(&(target->joinqueue)) 
     
 in do_exit:
-    if current->joiner is not null, set it to null
-    wake_up_interruptible_sync(&(current->joinqueue)); // or set current->joiner state to TASK_RUNNING
+    if tsk->joiner is not null, set it to null
+    wake_up_interruptible_sync(&(tsk->joinqueue)); 
 ```
 
 Test this program by writing and running a program that sleeps for 20 seconds and then returns.  Write a second program to join to it, print a log message, and then return.  That log message should not appear until after the join returns; that is, after the sleeping program terminates after approximately 20 seconds.
