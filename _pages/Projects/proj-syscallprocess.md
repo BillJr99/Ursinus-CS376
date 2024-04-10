@@ -239,6 +239,8 @@ in your join system call:
     unlock_kernel()
 
     interruptible_sleep_on(&(target->joinqueue)) // or set current->state to TASK_UNINTERRUPTIBLE
+
+    schedule() // switch from this task
     
 in do_exit:
     if current->joiner is not null, set it to null
