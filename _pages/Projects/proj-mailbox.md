@@ -95,12 +95,26 @@ You will write a kernel module or component that enables us, via syscalls, signa
 
 Implement the following functions:
 * `void mysend(pid_t pid, size_t n, __user char* buf)`
-* `long myreceive(pid_t pid, size_t n, __user char* buf)`
+* `long myreceive(size_t n, __user char* buf)`
 
-In these functions, `pid` is the pid you wish to send to/receive from.  
+Here, `pid` is the pid you wish to send a message to.  Look up the `task_struct` corresponding to that pid.  I recommend writing a function to find a `task_struct` by its pid to help you:
+
+```c
+struct task_struct *find_task_by_pid(pid_t pid) {
+    struct task_struct *task;
+    for_each_process(task) {
+        if (task->pid == pid) {
+            return task;
+        }
+    }
+    return NULL;
+}
+```
+
+You will create (perhaps in `sched.h`) a `struct` containing a `char*` message and an `int` size of the message.  Let's call it `mymessage`.  Add a linked list to `task_struct` of these `mymessage` data structures.  You can initialize it in `do_fork`.  Similarly, add a `wait_queue_head_t` to `task_struct` in order to wait for a message to arrive, and initialize this in `do_fork` as well.
 
 ## Receive Syscall
-When receiving, if `pid` is set to a negative number, `myreceive` shall receive from any process.  `n` specifices the number of bytes to send, and the maximum number of bytes to read.  `buf` is the buffer to send, and is a pointer to a char buffer that `myreceive` will assume has been properly `malloc`'ed.  
+When receiving, `n` specifices the number of bytes to send, and the maximum number of bytes to read.  `buf` is the buffer to send, and is a pointer to a char buffer that `myreceive` will assume has been properly `malloc`'ed.  
 
 ## Send Syscall
 
@@ -121,9 +135,9 @@ You can make modifications directly to `sched.c` and `sched.h` to add the logic 
 
 Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.
 
-### Create a Kernel Linked List of these `message` structures
+### Create a Kernel Linked List of these `mymessage` structures
 
-Add a `struct list_head` to the `message` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
+Add a `struct list_head` to the `mymessage` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
 
 ### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
 
@@ -137,7 +151,7 @@ Here are the function prototypes for `mysend` and `myreceive`:
 
 ```c
 asmlinkage void sys_mysend(pid_t pid, int n, const char __user *buf);
-asmlinkage long sys_myreceive(pid_t pid, int n, char __user *buf);
+asmlinkage long sys_myreceive(int n, char __user *buf);
 ```
 
 ### Register your System Calls
@@ -191,7 +205,7 @@ asmlinkage long sys_mysyscall(char __user *buf, int len)
 
 2. Iterate over the list using `list_for_each_entry_safe`, which is a macro that expands to a `for` loop, and takes as parameters two pointers to your `message` struct (the first one is the one you will use, and the second one is for temporary use by the macro), the address of your `list_head` message queue, and the word `list`.  
 
-3. Check if the `pid` in each message matches the `pid` you are searching for from your syscall parameter.  If it is, copy it to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  If you find that the `pid` parameter is `-1`, you can modify this logic to return the first entry in the list regardless of the `pid` that it came from. 
+3. If there is a message on the linked list, copy its contents to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  If you find that the `pid` parameter is `-1`, you can modify this logic to return the first entry in the list regardless of the `pid` that it came from. 
 
 4. Finally, use `list_del` to remove the item from the list (this takes the address of the `list_head` of the message structure you're removing).  
 
