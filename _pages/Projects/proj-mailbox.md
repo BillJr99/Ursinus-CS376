@@ -227,10 +227,8 @@ If you call `kmalloc`, check that the return value is not `NULL`.  If any call r
 
 3. The parent should call `mysend` and send a message to the child by its `pid`.  The parent can `wait` for the child after calling `mysend` (and then terminate itself).
 
-4. Test this program by receiving from "any" pid by passing `-1` for the pid to `myreceive`, and by passing `getppid()` as the pid in `myreceive` which will provide the `pid` of the child's sending parent.  
-
-If you called your syscalls by name (rather than by number), compile your program with access to the include files you've modified in this project by adding the `-I` flag to `gcc` as follows:
+Call your syscalls by number using the `syscall` method and compile your program with `gcc` as follows:
 
 ```
-gcc -I/The/location/of/your/kernel/linux/include testSysCall.c
+gcc testSysCall.c
 ```
