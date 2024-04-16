@@ -213,7 +213,7 @@ Once a message is found, your syscall has finished.
     
 #### Thread-safe linked list operations
 
-Manipulating kernel linked lists may not be thread-safe.  You can use `rcu_read_lock()` and `rcu_read_unlock()` to get atomic access to those structures.  Try to use these only when necessary (i.e., not for the entie function!).  `list_for_each_safe` is thread-safe by itself.
+Manipulating kernel linked lists may not be thread-safe.  You can use `rcu_read_lock()` and `rcu_read_unlock()` to get atomic access to those structures.  Try to use these only when necessary (i.e., not for the entire function!).  `list_for_each_safe` is thread-safe by itself.
     
 #### Don't forget to be robust
 
