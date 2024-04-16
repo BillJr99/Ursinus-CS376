@@ -77,6 +77,8 @@ You will read the MSDOS FAT12 file system specification so that you can create p
 1. List all the files on the disk image
 2. (Extra Credit) Extract the contents of those files to your local filesystem.
 
+# Listing the File Entries
+
 For example, assuming that the floppy image was named [samplefat.bin](../files/asmt-fat/samplefat.bin), we should be able to do the following:
 
 ```
@@ -140,7 +142,7 @@ Do not begin by writing code to actually read the binary file system dump. Inste
 
 ### Boot Sector Data Structure
 
-Note that this structure is written as a `class` in C++.  You are welcome to use either C++ or C for your implementation; if you use C, you can simply convert this to a struct and include the methods in your implementation file.
+The boot sector is defined as follows:
 
 ```
 /**
@@ -171,47 +173,98 @@ Note that this structure is written as a `class` in C++.  You are welcome to use
 #ifndef BOOTSTRAP_SECTOR_H
 #define BOOTSTRAP_SECTOR_H
 
-#include "types.h"
+typedef char BYTE; // BYTE is just a char, a single byte numeric value
 
-class BootStrapSector {
-	public:
-           BootStrapSector(int is);
-           int getNumBytesInFAT();
-           int getNumClusters();
-           int getNumEntriesInRootDir();
-           int getNumBytesInReservedSectors();
-           int getNumCopiesFAT();
-           int getNumBytesPerCluster();
-           BYTE* getVolumeLabel();
-           BYTE* getVolumeSerialNumber();
-           BYTE* getFormatType();
-		
-	private:
-            void readBootStrapSector();
-            
-            int imageStream;
-            
-            BYTE firstInstruction[3];  // This is often a jump instruction to the boot sector code itself
-            BYTE OEM[8];  		
-            BYTE numBytesPerSector[2];
-            BYTE numSectorsPerCluster[1];
-            BYTE numReservedSectors[2];
-            BYTE numCopiesFAT[1];
-            BYTE numEntriesRootDir[2];
-            BYTE numSectors[2];
-            BYTE mediaDescriptor[1];
-            BYTE numSectorsInFAT[2];
-            BYTE numSectorsPerTrack[2];
-            BYTE numSides[2];
-            BYTE numHiddenSectors[2];
-            BYTE formatType[8]; // FAT12 or FAT16 in this program
-            BYTE hex55AA[2];	// the last bytes of the boot sector are, by definition, 55 AA.  This is a sanity check.
-            BYTE volumeLabel[11];
-            BYTE volumeSN[4];
+struct BootStrapSector {
+    BYTE firstInstruction[3];  // This is often a jump instruction to the boot sector code itself
+    BYTE OEM[8];  		
+    BYTE numBytesPerSector[2];
+    BYTE numSectorsPerCluster[1];
+    BYTE numReservedSectors[2];
+    BYTE numCopiesFAT[1];
+    BYTE numEntriesRootDir[2];
+    BYTE numSectors[2];
+    BYTE mediaDescriptor[1];
+    BYTE numSectorsInFAT[2];
+    BYTE numSectorsPerTrack[2];
+    BYTE numSides[2];
+    BYTE numHiddenSectors[2];
+    BYTE formatType[8]; // FAT12 or FAT16 in this program
+    BYTE hex55AA[2];	// the last bytes of the boot sector are, by definition, 55 AA.  This is a sanity check.
+    BYTE volumeLabel[11];
+    BYTE volumeSN[4];
 };
 
 #endif
 ```
+
+If you `fread` from the disk image into this data structure, you'll have these values!  To convert a single `BYTE` to an integer, simply cast it to an `int`.  If you have a 2 byte value, you can convert it to its corresponding integer value by shifting the upper byte and adding the lower byte; for example:
+
+```c
+int result = (numSectorsInFAT[0] << 8) | numSectorsInFAT[1];
+```
+
+### Root Directory Data Structure
+
+After the boot sector is the FAT.  You know how many sectors are in the FAT from the values above.  You also know how many copies of the FAT there are, and how many bytes are in each sector.  Multiplying these values together, you can find the offset of the root directory.  
+
+Create a data structure for the root directory, and do another `fread` into the following data structure.  You know how many root directory entries there are from the boot sector values above as well, so you can loop the appropriate number of times to do these reads.
+
+```c
+/*
+From https://www.cs.drexel.edu/~johnsojr/2012-13/fall/cs370/resources/UnderstandingFAT12.pdf
+Offset Length Description
+0x00 8 Filename
+0x08 3 Extension
+0x0B 1 Bit field for attributes
+0x0C 10 Reserved
+0x16 2 Time (coded as Hour*2048+Min*32+Sec/2)
+0x18 2 Date (coded as Year-1980)*512+Month*32+Day)
+0x1A 2 Starting Cluster Number
+0x1C 4 File size (in bytes)
+*/
+```
+
+#### Converting the Date and Time Fields
+
+The following C program will manipulate the bites of the date and time fields to extract the file date and time.  This example prints each to the screen; you will want to break this into separate functions for the date and the time that returns the result as a `char*` that you will malloc and populate with `sprintf`.
+
+```c
+#include <stdio.h>
+#include <stdint.h>
+
+void decodeFATDateTimeFromCharArray(const char time[2], const char date[2]) {
+    // Convert char arrays to uint16_t, assuming little-endian format
+    uint16_t encodedTime = (uint16_t)((unsigned char)time[1] << 8 | (unsigned char)time[0]);
+    uint16_t encodedDate = (uint16_t)((unsigned char)date[1] << 8 | (unsigned char)date[0]);
+
+    // Decoding time
+    uint8_t hour = encodedTime >> 11; // Shift right 11 bits to get the first 5 bits
+    uint8_t minute = (encodedTime >> 5) & 0x3F; // Shift right 5 bits and mask to get the next 6 bits
+    uint8_t second = (encodedTime & 0x1F) * 2; // Mask to get the last 5 bits and then multiply by 2
+
+    // Decoding date
+    uint16_t year = (encodedDate >> 9) + 1980; // Shift right 9 bits to get the first 7 bits then add 1980
+    uint8_t month = (encodedDate >> 5) & 0x0F; // Shift right 5 bits and mask to get the next 4 bits
+    uint8_t day = encodedDate & 0x1F; // Mask to get the last 5 bits
+
+    // Print decoded date and time
+    printf("Decoded Date: %d-%02d-%02d\n", year, month, day);
+    printf("Decoded Time: %02d:%02d:%02d\n", hour, minute, second);
+}
+
+int main() {
+    // Example usage with char arrays:
+    char exampleTime[2] = {0x5F, 0x05}; // 14:03:30 in encoded form
+    char exampleDate[2] = {0x21, 0x3C}; // 2020-01-15 in encoded form
+
+    decodeFATDateTimeFromCharArray(exampleTime, exampleDate);
+
+    return 0;
+}
+```
+
+# Extracting the File Data
 
 ## The 12 in FAT12
 There are a few silly nuances in the way the data is represented that you'll want to make sure you're aware of. Particularly, FAT12 stores things in 1.5 bytes, and you'll need to shift and parse accordingly. 
@@ -242,6 +295,8 @@ Feel free to use a hex file viewer like `hexdump` to actually view the disk imag
 ### Using `hexdump` to Examine Directory Entries in a FAT12 File System
 
 To examine directory entries in a FAT12 file system using `hexdump`, you'll need to determine the location of the directory entry and then use `hexdump` to display the relevant data. Here are the steps:
+
+### What to Do
 
 #### Step 1: Determine Directory Entry Location
 
