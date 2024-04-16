@@ -141,7 +141,12 @@ Add a `struct list_head` to the `mymessage` structure, and create a `message_que
 
 ### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
 
-You can add this pointer anywhere within the `struct`.
+You can add this pointer anywhere within the `struct`.  Initialize these in `do_fork` like this, after the call to get a `task_struct* p` returned from `copy_process` (assuming you've named the items as shown):
+
+```c
+INIT_LIST_HEAD(&p->msg_queue->messages);
+init_waitqueue_head(&p->msg_queue->wait);
+```
 
 ### Create System Calls for `mysend` and `myreceive` in `sched.c` 
 
