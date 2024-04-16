@@ -131,7 +131,7 @@ To test, implement a thread barrier using `fork`'ed children that communicate th
 
 You can make modifications directly to `sched.c` and `sched.h` to add the logic for `mysend` and `myreceive` system calls, including any necessary data structures for message queuing.  I suggest the following workflow:
 
-### Add a `message` data structure in `sched.h` 
+### Add a `mymessage` data structure in `sched.h` 
 
 Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.  
 
@@ -155,11 +155,12 @@ struct message_queue {
 };
 ```
 
-### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
+### Modify the `struct task_struct` in `sched.h` to include a pointer to your `struct message_queue` structure called `msg_queue`
 
 You can add this pointer anywhere within the `struct`.  Initialize these in `do_fork` like this, after the call to get a `task_struct* p` returned from `copy_process` (assuming you've named the items as shown):
 
 ```c
+p->msg_queue = kmalloc(sizeof(struct message_queue), GFP_KERNEL);
 INIT_LIST_HEAD(&p->msg_queue->messages);
 init_waitqueue_head(&p->msg_queue->wait);
 ```
@@ -226,11 +227,11 @@ asmlinkage long sys_mysyscall(char __user *buf, int len)
 
 2. Iterate over the list using `list_for_each_entry_safe`, which is a macro that expands to a `for` loop, and takes as parameters two pointers to your `message` struct (the first one is the one you will use, and the second one is for temporary use by the macro), the address of your `list_head` message queue, and the word `list`.  
 
-3. If there is a message on the linked list, copy its contents to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  If you find that the `pid` parameter is `-1`, you can modify this logic to return the first entry in the list regardless of the `pid` that it came from. 
+3. If there is a message on the linked list, copy its contents to your userspace using `copy_to_user` (which takes the `__user buf` you are passed via the syscall, the kernel buffer you are copying, and the number of bytes to copy (which you kept in your `message` structure during `mysend`!).  
 
 4. Finally, use `list_del` to remove the item from the list (this takes the address of the `list_head` of the message structure you're removing).  
 
-Once a message is found, your syscall has finished.  
+Once a message is found, your syscall has finished and you can break out of the loop.  
     
 #### Thread-safe linked list operations
 
