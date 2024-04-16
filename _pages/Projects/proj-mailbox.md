@@ -133,11 +133,27 @@ You can make modifications directly to `sched.c` and `sched.h` to add the logic 
 
 ### Add a `message` data structure in `sched.h` 
 
-Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.
+Define a structure to represent a message and a queue to hold messages for a process.  This struct should contain the `pid_t` of the sender, the `size_t` size of the message, and a `char*` to hold the address of the message itself.  
 
 ### Create a Kernel Linked List of these `mymessage` structures
 
 Add a `struct list_head` to the `mymessage` structure, and create a `message_queue` that contains a `struct list_head` and a `wait_queue_head_t` for blocking on `myreceive`.
+
+This data structure might look like this:
+
+```c
+struct mymessage {
+    pid_t sender_pid;
+    size_t size;
+    char* msg;
+    struct list_head list;
+};
+
+struct message_queue {
+    struct list_head messages;
+    wait_queue_head_t wait;
+};
+```
 
 ### Modify the `struct task_struct` in `sched.h` to include a pointer to your message queue structure
 
