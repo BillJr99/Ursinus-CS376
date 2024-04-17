@@ -216,7 +216,7 @@ To actually run a process in the background, we will modify the `main` loop so t
 
 To do this, check if the last token in your input is the `&` character.  If it is, remove it from the list of tokens, and set a flag variable that indicates that the parent should not `waitpid` on the child like we did above.
 
-Finally, in your main loop, when you start a process in the foreground, set `foreground_pid` to the pid of that child.  Be sure to set it back to `0` when that child terminates (which you'll know by checking the pid that is returned from your call to `wait`).  If you start a process in the background, do not set `foreground_pid`.  We will use this later to keep track of which process is the foreground process (because it should receive signals sent to the shell).
+Finally, in your main loop, when you start a process in the foreground, set `foreground_pid` to the pid of that child.  Be sure to set it back to `0` when that child terminates (which you'll know by checking the pid that is returned from your call to `wait`).  If you start a process in the background, do not set `foreground_pid`.  We will use this later to keep track of which process is the foreground process (because it should receive signals sent to the shell).  I recommend making this variable a global variable, so that these signal handler functions can access the variable when it comes time to write them.
 
 You can test this functionality with a command such as `ls &`.  When this command finishes, run the `ps` command and verify that you do not have a defunct or zombie `ls` process still running (as your shell should terminate it when it receives the `SIGCHLD` signal by calling `wait`).
 
