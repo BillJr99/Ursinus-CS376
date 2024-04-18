@@ -111,7 +111,7 @@ struct task_struct *find_task_by_pid(pid_t pid) {
 }
 ```
 
-You will create (perhaps in `sched.h`) a `struct` containing a `char*` message and an `int` size of the message.  Let's call it `mymessage`.  Add a linked list to `task_struct` of these `mymessage` data structures.  You can initialize it in `do_fork`.  Similarly, add a `wait_queue_head_t` to `task_struct` in order to wait for a message to arrive, and initialize this in `do_fork` as well.
+You will create (perhaps in `include/linux/sched.h`) a `struct` containing a `char*` message and an `int` size of the message.  Let's call it `mymessage`.  Add a linked list to `task_struct` of these `mymessage` data structures.  You can initialize it in `do_fork`.  Similarly, add a `wait_queue_head_t` to `task_struct` in order to wait for a message to arrive, and initialize this in `do_fork` as well.
 
 ## Receive Syscall
 When receiving, `n` specifices the number of bytes to send, and the maximum number of bytes to read.  `buf` is the buffer to send, and is a pointer to a char buffer that `myreceive` will assume has been properly `malloc`'ed.  
