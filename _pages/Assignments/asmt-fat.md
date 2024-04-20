@@ -189,10 +189,8 @@ struct BootStrapSector {
     BYTE numSectorsPerTrack[2];
     BYTE numSides[2];
     BYTE numHiddenSectors[2];
-    BYTE formatType[8]; // FAT12 or FAT16 in this program
-    BYTE hex55AA[2];	// the last bytes of the boot sector are, by definition, 55 AA.  This is a sanity check.
-    BYTE volumeLabel[11];
-    BYTE volumeSN[4];
+    BYTE bootcode[480]; // may include additional metadata
+    BYTE signature[2];	// the last bytes of the boot sector are, by definition, 55 AA.  This is a sanity check.
 };
 
 #endif
