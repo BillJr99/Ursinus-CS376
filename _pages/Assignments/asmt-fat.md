@@ -199,10 +199,10 @@ struct BootStrapSector {
 If you `fread` from the disk image into this data structure, you'll have these values!  To convert a single `BYTE` to an integer, simply cast it to an `int`.  If you have a 2 byte value, you can convert it to its corresponding integer value by shifting the upper byte and adding the lower byte; for example:
 
 ```c
-int result = (sector.numSectorsInFAT[0] << 8) | sector.numSectorsInFAT[1];
+unsigned int result = ((unsigned int)(sector.numSectorsInFAT[0] << 8) | (unsigned int)(sector.numSectorsInFAT[1]);
 ```
 
-For single byte values, you can simply set `int result = (int)(sector.numSectorsInFAT[0]);`.  
+For single byte values, you can simply set `unsigned int result = (unsigned int)(sector.numSectorsInFAT[0]);`.   You can print an `unsigned int` using the `%u` placeholder to `printf`.
 
 ### Root Directory Data Structure
 
