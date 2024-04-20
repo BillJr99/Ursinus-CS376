@@ -196,7 +196,9 @@ struct BootStrapSector {
 #endif
 ```
 
-If you `fread` from the disk image into this data structure, you'll have these values!  To convert a single `BYTE` to an integer, simply cast it to an `int`.  If you have a 2 byte value, you can convert it to its corresponding integer value by shifting the upper byte and adding the lower byte; for example:
+Begin by saving this into a `BootStrapSector.h` header file, and you can `#include "BootStrapSector.h"` from your `main.c` program file.
+
+If you `fopen` the disk image file, `malloc` a `BootStrapSector`, and `fread` from the disk image into this data structure, you'll read all these values automatically!  To convert a single `BYTE` to an integer, simply cast it to an `int`.  If you have a 2 byte value, you can convert it to its corresponding integer value by shifting the upper byte and adding the lower byte; for example:
 
 ```c
 unsigned int result = ((unsigned int)(uint8_t)(sector.numSectorsInFAT[0] << 8) | (unsigned int)(uint8_t)(sector.numSectorsInFAT[1]);
