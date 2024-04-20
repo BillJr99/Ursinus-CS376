@@ -206,6 +206,40 @@ unsigned int result = ((unsigned int)(uint8_t)(sector.numSectorsInFAT[0] << 8) |
 
 For single byte values, you can simply set `unsigned int result = (unsigned int)(sector.numSectorsInFAT[0]);`.   You can print an `unsigned int` using the `%u` placeholder to `printf`.
 
+If you'd like to print a string, like the OEM value, you can pass the `BYTE` array to a function like this, which returns a null-terminated `char*` containing the contents of your byte array that you can print as normal:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+/**
+ * Copies the contents of a char array into a newly allocated, null-terminated char*.
+ *
+ * @param src The source character array.
+ * @param size The number of characters in the source array to copy.
+ * @return A pointer to the newly allocated, null-terminated character array.
+ *         Returns NULL if memory allocation fails.
+ */
+char* copyToNullTerminatedCharPtr(const char src[], size_t size) {
+    // Allocate memory for the characters plus a null terminator
+    char* dest = (char*)malloc((size + 1) * sizeof(char));
+    if (dest == NULL) {
+        // Handle memory allocation failure
+        fprintf(stderr, "Memory allocation failed\n");
+        return NULL;
+    }
+
+    // Copy the characters from src to dest
+    memcpy(dest, src, size);
+
+    // Null-terminate the string
+    dest[size] = '\0';
+
+    return dest;
+}
+```
+
 ### Root Directory Data Structure
 
 After the boot sector is the FAT.  You know how many sectors are in the FAT from the values above.  You also know how many copies of the FAT there are, and how many bytes are in each sector.  Multiplying these values together, you can find the offset of the root directory.  Specifically, this formula will give you the byte offset, with which you can `fseek` and `fread` root directory entries.
