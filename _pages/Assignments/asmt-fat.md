@@ -206,9 +206,13 @@ For single byte values, you can simply set `unsigned int result = (unsigned int)
 
 ### Root Directory Data Structure
 
-After the boot sector is the FAT.  You know how many sectors are in the FAT from the values above.  You also know how many copies of the FAT there are, and how many bytes are in each sector.  Multiplying these values together, you can find the offset of the root directory.  
+After the boot sector is the FAT.  You know how many sectors are in the FAT from the values above.  You also know how many copies of the FAT there are, and how many bytes are in each sector.  Multiplying these values together, you can find the offset of the root directory.  Specifically, this formula will give you the byte offset, with which you can `fseek` and `fread` root directory entries.
 
-Create a data structure for the root directory, and do another `fread` into the following data structure.  You know how many root directory entries there are from the boot sector values above as well, so you can loop the appropriate number of times to do these reads.
+```c
+unsigned int byte_offset_of_root_dir = (num_reserved_sectors + (num_copies_FAT * num_sectors_per_FAT)) * num_bytes_per_sector;
+```
+
+Calculate this offset, `fseek` to this offset within the file, create a data structure for the root directory, and do a loop of `fread` calls into that following data structure.  You know how many root directory entries there are from the boot sector values above as well, so you can loop the appropriate number of times to do these reads.  You can use the following reference to create the data structure like we did above:
 
 ```c
 /*
