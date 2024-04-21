@@ -295,8 +295,8 @@ void decodeFATDateTimeFromCharArray(const char time[2], const char date[2]) {
 
 int main() {
     // Example usage with char arrays:
-    char exampleTime[2] = {0x5F, 0x05}; // 14:03:30 in encoded form
-    char exampleDate[2] = {0x21, 0x3C}; // 2020-01-15 in encoded form
+    char exampleTime[2] = {0x6f, 0x70}; // 14:03:30 in encoded form
+    char exampleDate[2] = {0x2f, 0x50}; // 2020-01-15 in encoded form
 
     decodeFATDateTimeFromCharArray(exampleTime, exampleDate);
 
