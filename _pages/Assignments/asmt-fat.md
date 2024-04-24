@@ -304,6 +304,18 @@ int main() {
 }
 ```
 
+#### Converting the File Size
+
+You can convert the file size to an integer by shifting each byte into place in a 32 bit value, and compute the bitwise or of those bytes:
+
+```c
+uint32_t fileSize = 0;
+fileSize |= (uint32_t)sizeArray[0];   // Least significant byte
+fileSize |= (uint32_t)sizeArray[1] << 8;
+fileSize |= (uint32_t)sizeArray[2] << 16;
+fileSize |= (uint32_t)sizeArray[3] << 24;  // Most significant byte
+```
+
 # Extracting the File Data
 
 ## The 12 in FAT12
