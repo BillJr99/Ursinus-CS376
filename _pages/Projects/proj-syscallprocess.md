@@ -221,7 +221,7 @@ Here is a pseudocode outline of the approach:
 
 ```
 add a struct task_struct* joiner field to the task_struct, and add a line to do_fork() to set this field to null
-add a wait_queue_head_t joinqueue to task_struct, and add a line to do_fork() to init_waitqueue_head(&(p->joinqueue)) after the call to copy_process
+add a wait_queue_head_t joinqueue to task_struct, and add a line to do_fork() to init_waitqueue_head(&(p->joinqueue)) after the call to `copy_process`, and specifically, inside the error check statement `if(!IS_ERR(p))`
 
 in your join system call:
     lock_kernel()
