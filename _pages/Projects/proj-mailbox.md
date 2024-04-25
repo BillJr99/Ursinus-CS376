@@ -157,12 +157,13 @@ struct message_queue {
 
 ### Modify the `struct task_struct` in `sched.h` to include a pointer to your `struct message_queue` structure called `msg_queue`
 
-You can add this pointer anywhere within the `struct`.  Initialize these in `do_fork` like this, after the call to get a `task_struct* p` returned from `copy_process` (assuming you've named the items as shown):
+You can add this pointer anywhere within the `struct`.  Initialize these in `do_fork` like this, after the call to get a `task_struct* p` returned from `copy_process`, and inside the error check statement `if(!IS_ERR(p))` that ensures that this process was established correctly:
 
 ```c
+// These statements assume you've named your variables as we have above; adjust as needed
 p->msg_queue = kmalloc(sizeof(struct message_queue), GFP_KERNEL);
-INIT_LIST_HEAD(&p->msg_queue->messages);
-init_waitqueue_head(&p->msg_queue->wait);
+INIT_LIST_HEAD(&(p->msg_queue->messages));
+init_waitqueue_head(&(p->msg_queue->wait));
 ```
 
 ### Create System Calls for `mysend` and `myreceive` in `sched.c` 
