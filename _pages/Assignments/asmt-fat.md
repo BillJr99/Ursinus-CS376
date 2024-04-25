@@ -173,7 +173,7 @@ The boot sector is defined as follows:
 #ifndef BOOTSTRAP_SECTOR_H
 #define BOOTSTRAP_SECTOR_H
 
-typedef char BYTE; // BYTE is just a char, a single byte numeric value
+typedef unsigned char BYTE; // BYTE is just an unsigned char, a single byte numeric value
 
 struct BootStrapSector {
     BYTE firstInstruction[3];  // This is often a jump instruction to the boot sector code itself
