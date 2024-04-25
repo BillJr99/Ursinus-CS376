@@ -125,7 +125,7 @@ For this project, you are only required to start out by receiving messages that 
 
 ## Testing Your Syscalls
 
-To test, implement a thread barrier using `fork`'ed children that communicate their arrival to one another using messages.  Once any one process has received `N-1` messages (from the others), it sends a release message to all the other processes to release them.  The user processes can print a log message right before and right after they block (perhaps with their PID).
+To test, write a program that `fork`s a child and sends a `char*` message to that child.  The child can receive and print the message.
 
 ## What to Do
 
@@ -193,7 +193,7 @@ The default logic for `myreceive` is to block until a message is received.  You 
 
 #### Copying Between Userspace and Kernel Space
 
-Before we begin, note that the `mysend` and `myreceive` `buf` pointers are addresses that exist in user-space, not in kernel space!  The `__user` tags in the function prototypes indicate that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory to copy data between userspace virtual addresses and physical addresses for access by the kernel.  You can then put that kernel physical pointer onto the message queue when you send, and move that data from this kernel message queue back to user space on receive.  Read [this article](https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8) for details on how to use these functions, or see the example below taken from that article.  
+Before we begin, note that the `mysend` and `myreceive` `buf` pointers are addresses that exist in user-space, not in kernel space!  The `__user` tags in the function prototypes indicate that the pointer is to a userspace address, and must be brought to/from the kernel using `copy_to_user` and `copy_from_user`.  You can [`kmalloc`](https://litux.nl/mirror/kerneldevelopment/0672327201/ch11lev1sec4.html) space in kernel memory to copy data between userspace virtual addresses and physical addresses for access by the kernel.  You can then put that kernel physical pointer onto the message queue when you send, and move that data from this kernel message queue back to user space on receive.  Read [this article](https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8) for details on how to use these functions, or see the example below taken from that article.  **Note that this is a model template from which you can write your two system calls, but it is intended to demonstrate the `copy_to_user` (and, analogously, the `copy_from_user`) functions.  It is not an exact copy of the code you will write.** 
 
 ```c
 // From: https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8
