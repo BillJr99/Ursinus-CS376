@@ -4,3 +4,6 @@ Volatile variables for threads with exercises that start with non-working code a
 Replace PTHREAD_MUTEX_INITIALIZER with pthread_mutex_init everywhere
 Kernel linked lists
 Reading file data structures
+Modify intro project into separate pages for Linux and other operating system implementations, both within and outside of the virtual machine
+Change language of wrapper functions to user test programs, and actually create wrapper functions that call syscall().  Change instructions in all projects to reflect this language.
+Make project instructions consistent, no barrier in mailbox
