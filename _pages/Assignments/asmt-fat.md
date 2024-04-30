@@ -250,7 +250,7 @@ unsigned int byte_offset_of_root_dir = (num_reserved_sectors + (num_copies_FAT *
 
 You can obtain these integer values from the boot sector fields above by casting and converting the `BYTE` values of these fields to `int`.  
 
-Calculate this offset, `fseek` to this offset within the file, create a data structure for the root directory, and do a loop of `fread` calls into that following data structure.  You know how many root directory entries there are from the boot sector values above as well, so you can loop the appropriate number of times to do these reads.  You can use the following reference to create the data structure like we did above:
+Calculate this offset, `fseek` to this offset within the file from the beginning of the file (`SEEK_SET`), create a data structure for the root directory, and do a loop of `fread` calls into that following data structure.  You know how many root directory entries there are from the boot sector values above as well, so you can loop the appropriate number of times to do these reads.  You can use the following reference to create the data structure like we did above:
 
 ```c
 /*
@@ -266,6 +266,8 @@ Offset Length Description
 0x1C 4 File size (in bytes)
 */
 ```
+
+Note that some entries may be empty; you can restrict yourself to only the directory entry if `dir->filename[0] >= 'A' && dir->filename[0] <= 'Z'` to skip these empty entries.
 
 #### Converting the Date and Time Fields
 
