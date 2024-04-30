@@ -201,7 +201,7 @@ Begin by saving this into a `BootStrapSector.h` header file, and you can `#inclu
 If you `fopen` the disk image file, `malloc` a `BootStrapSector`, and `fread` from the disk image into this data structure, you'll read all these values automatically!  To convert a single `BYTE` to an integer, simply cast it to an `int`.  If you have a 2 byte value, you can convert it to its corresponding integer value by shifting the upper byte and adding the lower byte; for example:
 
 ```c
-unsigned int result = (unsigned int)(uint8_t)(sector.numSectorsInFAT[0] << 8) | (unsigned int)(uint8_t)(sector.numSectorsInFAT[1]);
+unsigned int result = (unsigned int)(sector.numSectorsInFAT[1] << 8) | (unsigned int)(sector.numSectorsInFAT[0]);
 ```
 
 For single byte values, you can simply set `unsigned int result = (unsigned int)(sector.numSectorsInFAT[0]);`.   You can print an `unsigned int` using the `%u` placeholder to `printf`.
@@ -275,7 +275,9 @@ The following C program will manipulate the bites of the date and time fields to
 #include <stdio.h>
 #include <stdint.h>
 
-void decodeFATDateTimeFromCharArray(const char time[2], const char date[2]) {
+typedef unsigned char BYTE
+
+void decodeFATDateTimeFromCharArray(BYTE time[2], BYTE date[2]) {
     // Convert char arrays to uint16_t, assuming little-endian format
     uint16_t encodedTime = (uint16_t)((unsigned char)time[1] << 8 | (unsigned char)time[0]);
     uint16_t encodedDate = (uint16_t)((unsigned char)date[1] << 8 | (unsigned char)date[0]);
@@ -297,8 +299,8 @@ void decodeFATDateTimeFromCharArray(const char time[2], const char date[2]) {
 
 int main() {
     // Example usage with char arrays:
-    char exampleTime[2] = {0x6f, 0x70}; // 14:03:30 in encoded form
-    char exampleDate[2] = {0x2f, 0x50}; // 2020-01-15 in encoded form
+    BYTE exampleTime[2] = {0x6f, 0x70}; // 14:03:30 in encoded form
+    BYTE exampleDate[2] = {0x2f, 0x50}; // 2020-01-15 in encoded form
 
     decodeFATDateTimeFromCharArray(exampleTime, exampleDate);
 
@@ -311,11 +313,11 @@ int main() {
 You can convert the file size to an integer by shifting each byte into place in a 32 bit value, and compute the bitwise or of those bytes:
 
 ```c
-uint32_t fileSize = 0;
-fileSize |= (uint32_t)sizeArray[0];   // Least significant byte
-fileSize |= (uint32_t)sizeArray[1] << 8;
-fileSize |= (uint32_t)sizeArray[2] << 16;
-fileSize |= (uint32_t)sizeArray[3] << 24;  // Most significant byte
+unsigned int fileSize = 0;
+fileSize |= (unsigned int)sizeArray[0];   // Least significant byte
+fileSize |= (unsigned int)sizeArray[1] << 8;
+fileSize |= (unsigned int)sizeArray[2] << 16;
+fileSize |= (unsigned int)sizeArray[3] << 24;  // Most significant byte
 ```
 
 # Extracting the File Data
