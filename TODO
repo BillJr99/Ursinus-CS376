@@ -7,6 +7,6 @@ Reading file data structures
 Modify intro project into separate pages for Linux and other operating system implementations, both within and outside of the virtual machine; note that it isn't necessary to make clean before running the diff as it only mentions the new files when the ruB parameter is given
 Change language of wrapper functions to user test programs, and actually create wrapper functions that call syscall().  Change instructions in all projects to reflect this language.
 Make project instructions consistent, no barrier in mailbox
-FAT assignment - write undelete or fsck file chain or defragmenter; possibly port to FAT16
+FAT assignment - write undelete or fsck file chain or defragmenter; possibly port to FAT16; remove file extraction from the rubric if it is extra credit, or use contract grading
 Discuss kernel locking and linked lists in more detail
 Insist that makefiles have make run and make test targets
