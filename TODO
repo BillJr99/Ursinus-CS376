@@ -9,3 +9,4 @@ Change language of wrapper functions to user test programs, and actually create 
 Make project instructions consistent, no barrier in mailbox
 FAT assignment - write undelete or fsck file chain or defragmenter; possibly port to FAT16
 Discuss kernel locking and linked lists in more detail
+Insist that makefiles have make run and make test targets
