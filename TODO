@@ -8,3 +8,4 @@ Modify intro project into separate pages for Linux and other operating system im
 Change language of wrapper functions to user test programs, and actually create wrapper functions that call syscall().  Change instructions in all projects to reflect this language.
 Make project instructions consistent, no barrier in mailbox
 FAT assignment - write undelete or fsck file chain or defragmenter
+Discuss kernel locking and linked lists in more detail
