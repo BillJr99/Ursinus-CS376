@@ -10,3 +10,5 @@ Make project instructions consistent, no barrier in mailbox
 FAT assignment - write undelete or fsck file chain or defragmenter; possibly port to FAT16; remove file extraction from the rubric if it is extra credit, or use contract grading
 Discuss kernel locking and linked lists in more detail
 Insist that makefiles have make run and make test targets
+Consider bochs or qemu gnu debugger for projects
+Slim down make and boot process for kernel boot image projects
