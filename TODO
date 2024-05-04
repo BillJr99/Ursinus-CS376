@@ -12,3 +12,4 @@ Discuss kernel locking and linked lists in more detail
 Insist that makefiles have make run and make test targets
 Consider bochs or qemu gnu debugger for projects
 Slim down make and boot process for kernel boot image projects
+Look for history of slides and pages to retain and reorganize some materials; trim down slides generally
