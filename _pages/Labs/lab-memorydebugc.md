@@ -47,7 +47,7 @@ info:
       proficient: The program is submitted according to the directions, including a readme writeup describing the solution and answering all questions posed in the instructions
       
   readings:  
-    - rlink: http://www.tutorialspoint.com/cprogramming/index.htm
+    - rlink: "https://web.archive.org/web/20260213233031/http://www.tutorialspoint.com/cprogramming/index.htm"
       rtitle: C Programming Tutorial
     - rlink: ../GDBValgrind
       rtitle: "Helpful Debugging Tools: GDB and Valgrind"

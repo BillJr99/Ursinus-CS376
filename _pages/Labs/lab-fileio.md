@@ -32,7 +32,7 @@ info:
   readings:
     - rlink: https://csapp.cs.cmu.edu/3e/ics3/code/include/csapp.h
       rtitle: "csapp.h"
-    - rlink: https://www.cs.cmu.edu/~213/code/22-netprog1/csapp.c
+    - rlink: https://www.csapp.cs.cmu.edu/3e/ics3/code/src/csapp.c
       rtitle: "csapp.c"
     - rlink: https://condor.depaul.edu/glancast/374class/docs/csapp_compile_guide.html
       rtitle: "Compiling with the CSAPP Library"

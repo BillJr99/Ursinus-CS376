@@ -69,7 +69,7 @@ info:
       proficient: A README and code documentation are provided and appropriate.
 
   readings:
-    - rlink: "https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8"
+    - rlink: "https://web.archive.org/web/20220705071626/https://wiki.tldp.org/static/kernel_user_space_howto.html#Implementation-8"
       rtitle: "Kernel Space - User Space Interfaces"
     - rlink: "https://www.oreilly.com/library/view/linux-device-drivers/0596000081/ch10s05.html"
       rtitle: "Kernel Linked Lists"

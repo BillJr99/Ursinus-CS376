@@ -53,13 +53,13 @@ info:
     <div style="width: 100%; display: table; border-collapse:separate; border-spacing:5px;">
     <div style="width: 100%; display: table-row;">
         <div style="display: table-cell; padding:5px; width:33%;">
-            <a title="Maxtremus, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Round-robin_schedule_quantum_3.png"><img width="100%" alt="Round-robin schedule quantum 3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Round-robin_schedule_quantum_3.png/512px-Round-robin_schedule_quantum_3.png"></a>
+            <a title="Maxtremus, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Round-robin_schedule_quantum_3.png"><img width="100%" alt="Round-robin schedule quantum 3" src="https://upload.wikimedia.org/wikipedia/commons/9/9f/Round-robin_schedule_quantum_3.png"></a>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
             <a title="Huihermit, CC0, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:MINIX_3.2_Top_Command.png"><img width="100%" alt="MINIX 3.2 Top Command" src="https://upload.wikimedia.org/wikipedia/commons/2/2e/MINIX_3.2_Top_Command.png"></a>
         </div>
         <div style="display: table-cell; padding:5px; width:33%;">
-            <a title="Traced by User:Stannered, original by en:User:Dysprosia, BSD &lt;http://opensource.org/licenses/bsd-license.php&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Virtual_address_space_and_physical_address_space_relationship.svg"><img width="100%" alt="Virtual address space and physical address space relationship" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/Virtual_address_space_and_physical_address_space_relationship.svg/512px-Virtual_address_space_and_physical_address_space_relationship.svg.png"></a>
+            <a title="Traced by User:Stannered, original by en:User:Dysprosia, BSD &lt;http://opensource.org/licenses/bsd-license.php&gt;, via Wikimedia Commons" href="https://commons.wikimedia.org/wiki/File:Virtual_address_space_and_physical_address_space_relationship.svg"><img width="100%" alt="Virtual address space and physical address space relationship" src="https://upload.wikimedia.org/wikipedia/commons/3/32/Virtual_address_space_and_physical_address_space_relationship.svg"></a>
         </div>
     </div>
     </div>
@@ -363,7 +363,7 @@ schedule:
       - rtitle: "Linux Kernel Internals - Linux Task Management"
         rlink: "http://tldp.org/LDP/lki/lki-2.html"
       - rtitle: "Linux Kernel Process Management"
-        rlink: "http://www.informit.com/articles/article.aspx?p=370047"
+        rlink: "https://web.archive.org/web/20250207152722/http://www.informit.com/articles/article.aspx?p=370047"
       - rtitle: "OS Concepts Chapter 20.1-2.4, 20.9"
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 3"
@@ -394,7 +394,7 @@ schedule:
         rubricpath: "_pages/Projects/proj-mailbox.md"
     readings:
       - rtitle: "Inside the Linux 2.6 Scheduler"
-        rlink: "http://arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
+        rlink: "https://archive.arstechnica.com/etc/linux/2003/linux.ars-12242003.html"
       - rtitle: "OS Concepts Chapter 20.5"
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 4"
@@ -453,7 +453,7 @@ schedule:
         points: 100                
     readings:
       - rtitle: "Memory Management"
-        rlink: "http://www.informit.com/articles/article.aspx?p=336868"
+        rlink: "https://web.archive.org/web/20241006234120/http://www.informit.com/articles/article.aspx?p=336868"
       - rtitle: "OS Concepts Chapter 9-10"
         rlink: false
       - rtitle: "Linux Kernel Development Chapter 11, 14-15"
