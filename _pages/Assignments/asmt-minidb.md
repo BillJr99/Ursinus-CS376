@@ -62,6 +62,8 @@ tags:
 
 ---
 
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topics of *persistent storage*, *file-based data structures*, and *serialization/deserialization* across the file-system interface. A database is ultimately just structured bytes on disk plus code that seeks, reads, and writes them — the same file abstraction explored in the [File I/O assignment](FileIO) and, on the kernel side, in the [Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures).
+
 In this assignment, you will write a mini-database program in the C language that uses basic file I/O.  You may choose any file format you like, including flat file, XML, JSON, comma separated values, binary files, or a format of your own choosing, but you must support the following:
 
 * Some SQL-like operations, namely:
@@ -162,6 +164,17 @@ insertIntoTable(head, "TableName", values, 3);
 ## Makefile
 
 Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
+
+### Makefile Requirements
+
+Your submission must include a `Makefile` supporting the following standard targets:
+
+| Target       | What it must do                                                                    |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `make`       | Compile your program with no errors.                                               |
+| `make run`   | Build if needed and run your program against a representative sample query.         |
+| `make test`  | Build if needed and run your test cases (e.g., a scripted set of SQL-like commands), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, generated data files, and core dumps.        |
 
 ## Helpful Utility Functions
 

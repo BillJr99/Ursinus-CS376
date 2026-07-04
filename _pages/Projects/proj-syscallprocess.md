@@ -10,19 +10,20 @@ info:
     - To manipulate kernel data structures that manage tasks
     - To explore the permissions model used by the Linux operating system
     - To create system calls to expose functionality from the kernel to the user
-    - To test kernel functionality with wrapper programs
+    - To write user-space wrapper functions that invoke a system call by number using `syscall()`
+    - To test kernel functionality with user test programs that call those wrapper functions
 
   contract:
     a:
       - "Complete the system call for tasks 5-6 (6 is an A+)"
-      - "Complete the wrapper program for task 5-6 (6 is an A+)"
+      - "Complete the wrapper function and user test program for task 5-6 (6 is an A+)"
       - Complete the writeup as part of the README
     b:
-      - Complete the wrapper programs for tasks 1-2
+      - Complete the wrapper functions and user test programs for tasks 1-2
       - Complete the system calls for tasks 3-4
-      - Complete the wrapper programs for tasks 3-4
+      - Complete the wrapper functions and user test programs for tasks 3-4
     c:
-      - Complete the system calls programs in tasks 1-2
+      - Complete the system calls in tasks 1-2
     d:
       - Complete the tutorial system call
 
@@ -45,7 +46,9 @@ tags:
 
 ---
 
-The following projects in this course will involve your directly manipulating and modifying kernel data structures.  Naturally, only the kernel can do this, but for simplicity of testing, we'd like you to use user-level programs to test your code.  Normally, you wouldn't want to expose so much to the user (there are only a couple hundred total syscalls!), but this will make things easier in the scope of our course, without loss of anything academic.  This is akin to calling read() or write() from a user program -- you're calling code in the kernel, but you can only do so using the interface that it provides you.  That interface is a collection of functions known as system calls (or syscalls).  You will write a series of syscalls for these projects, and test them using user programs (which I will call wrappers).  First, a tutorial on creating a system call is helpful (code examples are thanks to Dr. Haungs of Cal Poly State University and [this article](https://tldp.org/HOWTO/html_single/Implement-Sys-Call-Linux-2.6-i386/)).
+> **Core Concepts — why this matters.** This project reinforces the essential OS topics of *system calls*, *the user/kernel privilege boundary*, and *process and task management* in Linux. Every task here has you cross the boundary between user space and kernel space through the one door the kernel provides: the system-call interface. The kernel-side data structures you traverse (the task list, `children`/`sibling` lists) are explained step by step in the [Kernel Linked Lists, Locking, and File Data Structures](../KernelDataStructures) reference, which you should read alongside Tasks 3 and 5.
+
+The following projects in this course will involve your directly manipulating and modifying kernel data structures.  Naturally, only the kernel can do this, but for simplicity of testing, we'd like you to use user-level programs to test your code.  Normally, you wouldn't want to expose so much to the user (there are only a couple hundred total syscalls!), but this will make things easier in the scope of our course, without loss of anything academic.  This is akin to calling read() or write() from a user program -- you're calling code in the kernel, but you can only do so using the interface that it provides you.  That interface is a collection of functions known as system calls (or syscalls).  You will write a series of syscalls for these projects, and test them from user space in two layers: a thin **wrapper function** that invokes the syscall by number using `syscall()`, and a **user test program** that calls that wrapper function.  First, a tutorial on creating a system call is helpful (code examples are thanks to Dr. Haungs of Cal Poly State University and [this article](https://tldp.org/HOWTO/html_single/Implement-Sys-Call-Linux-2.6-i386/)).
 
 ## Tutorial: Creating a System Call
 
@@ -101,15 +104,71 @@ You can write this in your home directory **outside of the linux-2.6.22.19 direc
 
 Compile the user program with `gcc -I/The/location/of/your/kernel/include testSysCall.c`, and run as normal on your virtual machine booted with your custom kernel. If you simply invoke your syscall by number, i.e., `syscall(285)`, you can omit the `-I` flag.  For example, if your linux source code is in your `user` home directory and called `linux-2.6.22.19`, you would compile with `gcc -I/home/user/linux-2.6.22.19/include testSysCall.c`.  This gives your program access to the Linux kernel header files which you edited with your new system call number and function prototype.
 
+## Building a User-Space Wrapper Function Library
+
+In real systems, user programs do not scatter raw `syscall(285)` calls throughout their code. Instead, the C library provides a **wrapper function** with a friendly name and signature that hides the syscall number. `getpid()`, `read()`, and `write()` are all wrapper functions — each is a one-line function that forwards its arguments to `syscall()`. You will build the same thing for your syscalls: a small user-space library that your **user test programs** call.
+
+Create a header `mysyscalls.h` and an implementation `mysyscalls.c` in your home directory (outside the kernel source tree). Each wrapper is a genuine function that calls `syscall()`:
+
+```c
+/* mysyscalls.h */
+#ifndef MYSYSCALLS_H
+#define MYSYSCALLS_H
+#include <sys/types.h>
+
+long mygetpid(void);
+long steal(pid_t pid);
+long quad(pid_t pid);
+
+#endif
+```
+
+```c
+/* mysyscalls.c */
+#include <unistd.h>
+#include <sys/syscall.h>
+#include "mysyscalls.h"
+
+/* Replace the numbers below with the syscall numbers you assigned in unistd.h */
+long mygetpid(void)      { return syscall(285); }
+long steal(pid_t pid)    { return syscall(286, (long)pid); }
+long quad(pid_t pid)     { return syscall(287, (long)pid); }
+```
+
+Now your **user test program** reads like ordinary C, because the syscall number is hidden inside the wrapper:
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include "mysyscalls.h"
+
+int main(int argc, char *argv[]) {
+    if (argc != 2) { fprintf(stderr, "Usage: %s <PID>\n", argv[0]); return -1; }
+    long pid = atol(argv[1]);
+    if (steal(pid) == 0) printf("Process %ld elevated to root.\n", pid);
+    else                 perror("steal failed");
+    return 0;
+}
+```
+
+Build and run by compiling the wrapper library together with your test program:
+
+```
+gcc -o teststeal testSteal.c mysyscalls.c
+./teststeal <your bash pid>
+```
+
+For each task below, add a wrapper function to `mysyscalls.c`/`mysyscalls.h`, then write a small **user test program** that calls it.
+
 ## What to Do
 
-Now that you know how to create a syscall in the kernel, you will create a few syscalls and, for each, **write a user wrapper program to test the syscall**.
+Now that you know how to create a syscall in the kernel, you will create a few syscalls and, for each, **write a wrapper function that calls it and a user test program that exercises that wrapper function**.
 
 ### Task 1: Elevate a Process to Root Privileges
 
-Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `0`, thus claiming the process by the root user (giving the process root priveleges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
+Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `0`, thus claiming the process by the root user (giving the process root privileges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
 
-Call your syscall `steal`, and it should take in a single parameter of type `pid_t` (the process ID number to elevate to root).  Write a wrapper user program that takes in a process ID as a command line paramter, and invokes the syscall to elevate it to root.  Your wrapper program will have to refer to pid as a `long` (not an `int`!). To convert `argv[1]` to a long, use the `long atol(char*)` function.
+Call your syscall `steal`, and it should take in a single parameter of type `pid_t` (the process ID number to elevate to root).  Add a `steal` wrapper function to your library (as shown above), and write a user test program that takes in a process ID as a command line parameter and invokes that wrapper to elevate the process to root.  Your wrapper function will have to refer to pid as a `long` (not an `int`!). To convert `argv[1]` to a long, use the `long atol(char*)` function.
 
 Try running it on your bash shell and then run a new instance of bash; you will see your prompt go from `$` to `#`, indicating you are now root!  No `su` password required.  To get the pid of your bash shell, run the `ps` command.
 
@@ -182,7 +241,7 @@ To find the timeslice field, see the `task_struct` definition in `include/linux/
 
 #### Testing
 
-Write a wrapper user test program as you have before.  You will find it helpful to have a long-running program whose pid you can use to pass as input to this wrapper.  I suggest writing a program called `spin` that consists of a `main` function with a `while(1);` infinite loop. You can run this in the background as many times as you like, and run `ps` to get the pid of those spinning processes.  This approach will be helpful on this and the upcoming tasks.  You won't notice much at first glance when you test system calls like these, but if you run `top` you should see how much CPU time each `spin` program is consuming, and you'll likely see them adjust after the system call!
+Add a `quad` wrapper function to your library, and write a user test program that calls it, as you have before.  You will find it helpful to have a long-running program whose pid you can use to pass as input to this test program.  I suggest writing a program called `spin` that consists of a `main` function with a `while(1);` infinite loop. You can run this in the background as many times as you like, and run `ps` to get the pid of those spinning processes.  This approach will be helpful on this and the upcoming tasks.  You won't notice much at first glance when you test system calls like these, but if you run `top` you should see how much CPU time each `spin` program is consuming, and you'll likely see them adjust after the system call!
 
 ### Task 3: Swipe the Timeslice from Another Process
 
@@ -255,3 +314,39 @@ Write a syscall called `forcewrite` that, given an `int` file descriptor (much l
 You can test this by creating a file (manually) on your file system, and making it read-only.  Use `forcewrite` to write to the file anyway.  You should refer to `sys_write` as a reference implementation, and copy liberally from this function to implement your own syscall.  You might omit some calls from this function, or make copies of and modify subroutines that it calls in your implementation.  
 
 Write a paragraph detailing how your version of `forcewrite` differs from the kernel stock version of `sys_write`, and, more importantly, why you think it differs from the stock version (i.e., what changes did you make exactly and why).
+
+## Getting Started
+
+1. Build and boot your custom kernel first, following the [Booting a Custom Linux Kernel](BootingCustomKernel) project. You cannot test a syscall until you are running a kernel that contains it.
+2. Do the tutorial `mygetpid` syscall end to end before attempting Task 1. Getting one trivial syscall to compile, register, boot, and return the right value proves your whole build-and-test loop works.
+3. **Expected checkpoint output:** compiling and running the tutorial test program should print your process's PID, matching what `ps` reports for that shell.
+4. Add each new syscall's wrapper function to `mysyscalls.c` and write a tiny user test program for it, as described above.
+
+## Common Pitfalls
+
+* **Forgetting to register the syscall** in all three places (the function, `syscalls.h`, and `syscall_table.S` / `unistd.h`). A missing entry gives you `-ENOSYS` at runtime.
+* **Reusing an old kernel at boot.** After `make install; update-grub; reboot`, make sure you actually select the kernel with *your* `EXTRAVERSION` name in GRUB.
+* **`int` vs `long` for the PID.** `syscall()` passes arguments as `long`; convert with `atol`, not `atoi`.
+* **Dereferencing a `task_struct` you never found.** `for_each_process` may finish without a match; check for `NULL` before using the task.
+* **Not locking around the task list** in `myjoin`, so the target exits mid-call. Review [kernel locking](../KernelDataStructures#part-2-kernel-locking).
+
+## Makefile Requirements
+
+Include a `Makefile` that builds your user-space wrapper library and test programs. It must support the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile `mysyscalls.c` together with each user test program, with no errors.        |
+| `make run`   | Build if needed and launch a representative test program with a sample argument.     |
+| `make test`  | Build if needed and run your test programs, printing observable pass/fail output.    |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean. |
+
+## Glossary
+
+* **System call (syscall)** — the controlled entry point through which user programs request kernel services.
+* **Wrapper function** — a small user-space function that hides a syscall number behind a friendly name/signature by calling `syscall()`.
+* **User test program** — a user-space program that calls your wrapper functions to exercise and verify a syscall.
+* **`task_struct`** — the kernel's per-process record; the structure your syscalls locate and modify.
+* **`current`** — a kernel macro giving the `task_struct` of the process that made the syscall.
+* **Timeslice** — the amount of CPU time the scheduler grants a task before preempting it.
+* **Zombie** — a process that has terminated but whose exit status has not yet been reaped by its parent.

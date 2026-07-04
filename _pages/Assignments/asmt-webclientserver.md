@@ -81,6 +81,8 @@ tags:
 
 ## Overview
 
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topics of *interprocess communication over sockets*, *the client-server model*, and *the system-call interface to the network stack* (`socket`, `bind`, `listen`, `accept`, `connect`, `read`/`write`). Sockets are file descriptors too, so the same `read`/`write` and file-descriptor concepts from the [File I/O assignment](FileIO) and the [Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures) apply directly here — you are just reading and writing to a network endpoint instead of a disk file.
+
 In this assignment, you will develop a basic HTTP client and a corresponding HTTP server. This exercise aims to deepen your understanding of HTTP protocols, network sockets, and the client-server model. By the end of this assignment, you will have a functional understanding of HTTP headers, bodies, and error codes, along with practical experience in handling network communications.
 
 ---
@@ -161,3 +163,14 @@ $ ./httpServer 8080
 ## Part 3: Makefile
 
 Provide a makefile (or two) to build and run your client and server.
+
+### Makefile Requirements
+
+Your submission must include a `Makefile` supporting the following standard targets (you may split these across separate client/server makefiles, but every target below must exist):
+
+| Target       | What it must do                                                                    |
+| ------------ | ---------------------------------------------------------------------------------- |
+| `make`       | Compile the client and server with no errors.                                       |
+| `make run`   | Build if needed and launch the server (and/or run the client against it).           |
+| `make test`  | Build if needed and run your test cases (e.g., client requests against your server for several status codes), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean.|

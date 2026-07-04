@@ -64,6 +64,8 @@ tags:
 
 ---
 
+> **Core Concepts — why this matters.** This lab reinforces the essential OS topics of *manual memory management*, *pointers and the process address space*, and *debugging systems code* with gdb and Valgrind. Every OS is written in C and lives or dies by correct pointer and memory handling — the leaks, overflows, and dangling pointers you hunt here are exactly the bugs that crash kernels. The linked-list work also previews the intrusive kernel lists in the [Kernel Data Structures reference](../KernelDataStructures).
+
 ## Part 1: C Programming and Pointer Arithmetic
 
 1. Define an `int*` pointer variable, and create an array of 10 integers using `malloc()`.  Then, assign values to that array, print their values, and `free()` the integers.  Verify that your program does not leak memory by running it against `valgrind` (and include the report you get from `valgrind` in your submission).
@@ -273,3 +275,14 @@ int main() {
     return 0;
 }
 ```
+
+## Makefile Requirements
+
+Include a `Makefile` with your submission supporting the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile all of your programs with `-g` (debug symbols) and no errors.               |
+| `make run`   | Build if needed and run your primary program.                                        |
+| `make test`  | Build if needed and run your programs under Valgrind (`valgrind --leak-check=full`), showing observable output. |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean. |

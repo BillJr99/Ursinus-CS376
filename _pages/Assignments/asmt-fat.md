@@ -27,17 +27,17 @@ info:
       progressing: Successfully lists FAT file entries with minor issues or improvements needed.
       proficient: Accurately lists all FAT file entries with clear and well-organized output.
     - weight: 20
-      description: Extracting Files
-      preemerging: No evidence of file extraction.
-      beginning: Partial file extraction with major issues or inaccuracies.
-      progressing: Successfully extracts files with minor issues or improvements needed.
-      proficient: Accurately extracts all files with proper handling of file data and formats.
+      description: "Capstone Task (choose one): Undelete, fsck Chain Verifier, or Defragmenter"
+      preemerging: No capstone task is attempted, or the chosen task does not run.
+      beginning: A capstone task is attempted but does not correctly follow the FAT cluster chain (e.g., ignores end-of-chain markers or the 12-bit packing).
+      progressing: The chosen capstone task follows the cluster chain and produces correct results on the sample image, with minor gaps in edge cases (fragmented files, empty files, or the final partial cluster).
+      proficient: The chosen capstone task correctly follows the cluster chain, handles end-of-chain and edge cases, and its output is verified against hexdump with the chain arithmetic explained in the README.
     - weight: 15
-      description: Makefile
-      preemerging: Absence of a Makefile or Makefile does not compile or execute both programs.
-      beginning: Partially functional Makefile with significant gaps in compiling or testing both programs.
-      progressing: Functional Makefile that compiles and tests both programs but may lack automation or efficiency.
-      proficient: A complete and efficient Makefile that automates compilation, testing, and cleanup effectively.
+      description: Makefile (make, make run, make test, make clean)
+      preemerging: Absence of a Makefile, or the Makefile does not compile the program.
+      beginning: A Makefile is provided but is missing required targets (run, test, or clean) or fails to build.
+      progressing: A Makefile that builds and provides most required targets, but one target is missing or does not behave as described.
+      proficient: A complete Makefile providing make, make run, make test, and make clean, each behaving as documented, automating compilation, testing, and cleanup.
     - weight: 15
       description: README
       preemerging: Absence of a README or README lacks essential information.
@@ -69,13 +69,18 @@ tags:
 
 ---
 
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topics of *file-system on-disk layout*, *the File Allocation Table as a linked list of clusters*, and *binary data parsing with endianness*. The FAT is the historical ancestor of every file system's block-allocation scheme; understanding how a file's data is scattered across clusters and chained together in a table is exactly the intuition you need for modern file systems, and for the kernel file structures in the [Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures).
+
 We have been asked to recover data from floppies that use an old version of Microsoft's DOS file system called FAT12 (i.e. does not have support for long file names, so you can consider all files to have names of up to 8 characters with a 3 character extension). The entire contents of these floppies have been extracted and are stored as separate Unix files.
 However, the data files within each floppy volume are still stored within the Unix file in the format used by the MSDOS file system.
 
-You will read the MSDOS FAT12 file system specification so that you can create programs that will be able to write the following **two** programs:
+You will read the MSDOS FAT12 file system specification so that you can build the following:
 
-1. List all the files on the disk image
-2. (Extra Credit) Extract the contents of those files to your local filesystem.
+1. **(Required)** List all the files on the disk image (`msdosdir`).
+2. **(Required — choose ONE) A capstone task** that follows the FAT cluster chain: an **undelete** tool, an **fsck-style chain verifier**, or a **defragmenter**. These are described in the [Capstone Task](#capstone-task-choose-one) section below.
+3. **(Extra Credit)** Extract the contents of all files to your local filesystem (`msdosextr`). This is now optional extra credit — pursue it if you finish the required work and want to go further.
+
+> **This is a UDL choice point.** The three capstone options exercise the same core skill — walking a file's chain of clusters through the FAT — but let you pick the framing that motivates you most (data recovery, integrity checking, or performance). Choose the **one** that appeals to you; you are not expected to do more than one.
 
 # Listing the File Entries
 
@@ -322,7 +327,9 @@ fileSize |= (unsigned int)sizeArray[2] << 16;
 fileSize |= (unsigned int)sizeArray[3] << 24;  // Most significant byte
 ```
 
-# Extracting the File Data
+# Following the FAT Cluster Chain
+
+Both the required capstone task and the extra-credit extraction rely on the same core skill: starting from a file's **starting cluster number** (from its directory entry) and walking the chain of clusters in the File Allocation Table until you hit the end-of-chain marker. This section explains how the FAT stores that chain. Read it carefully — the [Capstone Task](#capstone-task-choose-one) below builds directly on it.
 
 ## The 12 in FAT12
 There are a few silly nuances in the way the data is represented that you'll want to make sure you're aware of. Particularly, FAT12 stores things in 1.5 bytes, and you'll need to shift and parse accordingly. 
@@ -406,3 +413,120 @@ By following these steps, you can use `hexdump` to view and analyze directory en
 
 Wrap this up in a for loop for each entry found in `msdoslist`, and you have the extract program!
 
+
+# Capstone Task (Choose One)
+
+After you can list files, choose **one** of the following. All three walk a file's cluster chain through the FAT; they differ only in what they *do* with that chain. Pick the one that motivates you most.
+
+## Option A: Undelete
+
+When DOS deletes a file it does **not** erase the data. It does two things: (1) it replaces the first byte of the directory entry's filename with the marker byte `0xE5`, and (2) it frees the file's FAT chain by zeroing the entries. Your undelete tool recovers a deleted file by:
+
+1. Finding directory entries whose first filename byte is `0xE5` (these are the deleted files the [listing suggestions](#suggestions) told you to *skip* — now you seek them out).
+2. Reading the starting cluster from the directory entry (this field usually survives deletion).
+3. Reading the file size from the directory entry, and reading that many bytes of **consecutive** clusters starting at the starting cluster (because the FAT chain is gone, assume the file was contiguous — a common and reasonable simplification).
+4. Writing the recovered bytes to a new file, prompting the user for a replacement first character of the filename.
+
+## Option B: fsck-Style Chain Verifier
+
+A file-system checker validates that the on-disk structures are consistent. Your verifier walks every file's cluster chain and reports problems:
+
+1. For each file in the root directory, follow its cluster chain from the starting cluster to the end-of-chain marker.
+2. Verify that the number of clusters in the chain matches the file size (see the chain-length arithmetic below).
+3. Detect **cross-linked** clusters (a cluster that appears in two different files' chains) and **lost** clusters (marked in-use in the FAT but not reachable from any directory entry).
+4. Print a report of each file's cluster chain and any inconsistencies found.
+
+## Option C: Defragmenter
+
+A fragmented file occupies clusters that are not consecutive on disk, which slows reads. Your defragmenter reports (and optionally rewrites) files so their clusters are contiguous:
+
+1. For each file, follow its cluster chain and record the list of cluster numbers.
+2. A file is **fragmented** if its cluster numbers are not consecutive (e.g., `5, 6, 9, 10` instead of `5, 6, 7, 8`).
+3. Report each file's fragmentation (number of non-consecutive jumps in its chain).
+4. (Ambitious extension) Rewrite the image so each file's clusters are contiguous, updating both the directory entry's starting cluster and the FAT chain accordingly.
+
+## Worked Example: The FAT Chain Arithmetic (Step by Step)
+
+Every option needs two calculations. Work them with concrete numbers the first time.
+
+**Where does the data region start?** Suppose the boot sector gives you:
+
+* reserved sectors = `1`
+* number of FATs = `2`
+* sectors per FAT = `9`
+* root directory entries = `224`
+* bytes per sector = `512`
+* sectors per cluster = `1`
+
+Compute the byte offset of the data region (cluster 2, the first data cluster) in numbered micro-steps:
+
+1. Sectors used by reserved area: `1`.
+2. Sectors used by both FATs: `2 x 9 = 18`.
+3. Sectors used by the root directory: `(224 entries x 32 bytes) / 512 bytes-per-sector = 7168 / 512 = 14` sectors.
+4. First data sector = `1 + 18 + 14 = 33`.
+5. Byte offset of the data region = `33 x 512 = 16896`.
+
+**Where is cluster N on disk?** Because the first two FAT entries (0 and 1) are reserved, data cluster numbering starts at **2**. The byte offset of cluster `N` is:
+
+```
+offset(N) = data_region_start + (N - 2) * sectors_per_cluster * bytes_per_sector
+```
+
+Worked with `N = 5`, using the numbers above (`data_region_start = 16896`, `sectors_per_cluster = 1`, `bytes_per_sector = 512`):
+
+1. Clusters past the first data cluster: `N - 2 = 5 - 2 = 3`.
+2. Bytes per cluster: `sectors_per_cluster x bytes_per_sector = 1 x 512 = 512`.
+3. Offset into the data region: `3 x 512 = 1536`.
+4. Absolute byte offset: `16896 + 1536 = 18432`. `fseek` here to read cluster 5.
+
+**How do I get the next cluster in the chain?** Look up the current cluster number in the FAT using the 12-bit unpacking rule described in [The 12 in FAT12](#the-12-in-fat12). The value you read is either the **next** cluster number, or an **end-of-chain** marker (`0xFF8`–`0xFFF` for FAT12), which means "this is the last cluster of the file." So the loop is:
+
+```
+cluster = starting_cluster (from the directory entry)
+while cluster is not an end-of-chain marker (< 0xFF8):
+    read/inspect the data at offset(cluster)
+    cluster = FAT_lookup(cluster)   # the 12-bit unpacked value
+```
+
+**How many clusters should a file occupy?** From the file size, the expected chain length is:
+
+1. Bytes per cluster = `512` (from above).
+2. File size = `1300` bytes (example).
+3. Clusters needed = `ceil(1300 / 512) = ceil(2.54) = 3` clusters. The last cluster is only partially used (`1300 - 2*512 = 276` bytes), which is why extraction truncates the final cluster.
+
+## Getting Started
+
+1. `hexdump -C samplefat.bin | less` and locate the boot sector fields — confirm you can read "512" as the bytes `00 02` (little-endian). This proves you understand endianness before you write parsing code.
+2. Implement `msdosdir` (listing) first and match its output to the sample above. **Expected checkpoint:** your list shows 27 files with the right sizes.
+3. Add a helper that, given a cluster number, returns its byte offset (the arithmetic above) — test it by `hexdump`ing a known cluster and comparing.
+4. Add a helper that, given a cluster number, returns the next cluster from the FAT (the 12-bit unpacking) — test it by printing a whole chain and checking it ends at an end-of-chain marker.
+5. Only then implement your chosen capstone.
+
+## Common Pitfalls
+
+* **Forgetting clusters start at 2.** The `(N - 2)` term is essential; omitting it reads the wrong cluster.
+* **Getting the 12-bit packing backwards.** Re-read [The 12 in FAT12](#the-12-in-fat12): for bytes `UV WX YZ`, the two entries are `XUV` and `YZW`.
+* **Ignoring the end-of-chain marker,** so your loop runs off the end. Stop at `>= 0xFF8`.
+* **Reading past the file size on the last cluster.** Use `filesize mod clustersize` to truncate the final cluster.
+* **Little-endian confusion** when combining two bytes into one integer. `(high << 8) | low`.
+
+## Makefile Requirements
+
+Include a `Makefile` supporting the following standard targets:
+
+| Target       | What it must do                                                                       |
+| ------------ | ------------------------------------------------------------------------------------- |
+| `make`       | Compile `msdosdir` and your capstone program, with no errors.                          |
+| `make run`   | Build if needed and run `msdosdir` on the sample image.                                |
+| `make test`  | Build if needed and run your test cases (e.g., listing plus your capstone on the sample image), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, extracted files, and core dumps so a fresh `make` starts clean. |
+
+## Glossary
+
+* **Cluster** — the smallest unit of disk space a file occupies; a file is a chain of clusters.
+* **FAT (File Allocation Table)** — a table with one entry per cluster; each entry is either the *next* cluster in a file's chain or an end-of-chain marker. It is a linked list stored as an array.
+* **End-of-chain marker** — a FAT value (`0xFF8`–`0xFFF` in FAT12) meaning "last cluster of this file."
+* **Directory entry** — a 32-byte record holding a file's name, attributes, starting cluster, and size.
+* **Little-endian** — byte ordering where the least significant byte comes first (why 512 appears as `00 02`).
+* **Fragmentation** — the condition of a file whose clusters are not stored consecutively on disk.
+* **Cross-linked clusters** — a corruption where one cluster is claimed by two files' chains.

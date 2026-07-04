@@ -40,11 +40,15 @@ info:
       rtitle: "Makefile Tutorial"
     - rlink: "https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/"
       rtitle: "A Simple Makefile Tutorial"
+    - rlink: ../KernelDataStructures#part-3-reading-file-data-structures
+      rtitle: "How the Kernel Represents Open Files (fd table, struct file, inode, dentry)"
 
 tags:
   - files
 
 ---
+
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topic of *the file abstraction and system-level I/O*. Every `open`, `read`, and `close` you write here trips a chain of kernel data structures — the per-process file-descriptor table, `struct file`, `dentry`, and `inode`. To see what happens on the kernel side of the calls you are making, read [Part 3 of the Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures); it explains why a file descriptor is "just an int" and where the file offset actually lives.
 
 In this assignment, you will open a text file, get its size, `malloc` a buffer, and read the contents of the file into that buffer.  
 
@@ -291,3 +295,14 @@ On some systems, the correct parameter is `-pthread` instead of `-lpthread`.
 ## Makefile
 
 Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
+
+### Makefile Requirements
+
+Your submission must include a `Makefile` supporting the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile your program (with `csapp.c` if used) with no errors.                        |
+| `make run`   | Build if needed and run your program against a sample input and output file.          |
+| `make test`  | Build if needed and run your test cases (e.g., search for a known word in a sample file), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, generated output files, and core dumps.        |

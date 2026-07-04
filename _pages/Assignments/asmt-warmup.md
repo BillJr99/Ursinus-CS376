@@ -18,6 +18,8 @@ tags:
   
 ---
 
+> **Core Concepts — why this matters.** This warmup sets up the foundation for the essential OS topics ahead: getting your development environment working (compilers, debuggers, a Linux shell) and understanding the course's policies. Everything you build this semester — from C memory debugging to modifying the Linux kernel — depends on the toolchain you set up here, so take the time to get it running now.
+
 The purpose of this assignment is to get us set up for the course, both by getting to know each other better, and by setting up the software environment.
 
 ## Personal Survey (5 Pts)

@@ -60,6 +60,8 @@ tags:
 
 ---
 
+> **Core Concepts — why this matters.** This lab reinforces the essential OS topics of *processes and process creation* (`fork`/`exec`/`wait`), *signals*, and *the shell as the user's interface to the kernel*. Writing your own shell demystifies what happens every time you type a command: a process is forked, a program is loaded into it, and the parent waits for it to finish. These are the same process-management ideas you manipulate directly in the kernel [System Calls project](../Projects/SyscallProcess).
+
 ## Part 1: Exploring the UNIX Shell
 
 * Create a subfolder in your home directory and populate it with a number of files (their names and contents do not matter).  Give them different file permissions (they don't matter -- just mix them up).  Make some directories as well.  
@@ -104,6 +106,15 @@ You will create a simple shell program in C that allows the user to execute comm
 #### Makefile
 
 Provide a makefile that builds and runs your shell.  Provide test cases by running your shell with standard input redirected from a file of sample commands (a shell script!).
+
+Your `Makefile` must support the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile your shell with no errors.                                                   |
+| `make run`   | Build if needed and launch your shell interactively.                                 |
+| `make test`  | Build if needed and run your shell with standard input redirected from a file of sample commands, printing observable output. |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean. |
 
 ### What to Do
 

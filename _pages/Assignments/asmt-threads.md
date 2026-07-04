@@ -54,11 +54,36 @@ info:
   readings:
     - rlink: https://makefiletutorial.com/
       rtitle: Makefile Tutorial
+    - rlink: ../Labs/Volatile
+      rtitle: "Warmup Lab: Volatile Variables and Thread Visibility"
       
 tags:
   - concurrent
 
 ---
+
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topics of *concurrency*, *race conditions*, and *synchronization with mutex locks, semaphores, and condition variables*. These are the ideas that make multi-core operating systems both powerful and dangerous. If you have not yet done the [Volatile Variables lab](../Labs/Volatile), start there: it walks you through *why* a shared counter goes wrong and *why `volatile` alone cannot fix it* before you tackle the larger problems below.
+
+> **New to threads?** Complete the [Volatile Variables and Thread Visibility lab](../Labs/Volatile) first. It starts from deliberately broken code and guides you through observing a race condition, understanding the difference between visibility and atomicity, and fixing it with a mutex — exactly the skills Part 1 assumes.
+
+## Initializing Your Mutex Locks: Use `pthread_mutex_init`
+
+Throughout this assignment, create your mutex locks at runtime with `pthread_mutex_init` and release them with `pthread_mutex_destroy`:
+
+```c
+pthread_mutex_t lock;
+pthread_mutex_init(&lock, NULL);   // second argument is the attribute set; NULL = defaults
+// ... use the lock ...
+pthread_mutex_destroy(&lock);      // free the lock's resources when done
+```
+
+You may have seen the static form `pthread_mutex_t lock = PTHREAD_MUTEX_INITIALIZER;` elsewhere. **Prefer `pthread_mutex_init` in this course** for three reasons:
+
+1. **It returns an error code** you can check, so you learn immediately if initialization failed (the static initializer gives you no such feedback).
+2. **It accepts an attributes argument**, letting you request recursive or error-checking mutexes later without rewriting your declarations.
+3. **It is the only option for dynamically allocated mutexes** — for example, the locks you `malloc` and place on a linked list in Part 2. `PTHREAD_MUTEX_INITIALIZER` can only initialize a statically declared mutex, so using `pthread_mutex_init` everywhere keeps your code consistent.
+
+Whenever you `pthread_mutex_init` a lock, be sure to `pthread_mutex_destroy` it when you are finished, and `free` it if you `malloc`'ed it.
 
 ## Part 1: Introduction to Concurrent Programming
 
@@ -164,3 +189,14 @@ It's a good idea to put print statements in your program to log what your thread
 ## Part 3: Makefile
 
 Write a makefile to compile and run your programs.  You may write separate makefiles for each program, if you prefer, but each should have a target to build the program, and one to run/test the program.
+
+### Makefile Requirements
+
+Your submission must include a `Makefile` supporting the following standard targets:
+
+| Target       | What it must do                                                                       |
+| ------------ | ------------------------------------------------------------------------------------- |
+| `make`       | Compile all programs with `-pthread`, with no errors.                                  |
+| `make run`   | Build if needed and run your primary program with a representative default input.      |
+| `make test`  | Build if needed and run your test cases (e.g., the stadium counter under helgrind), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean.   |

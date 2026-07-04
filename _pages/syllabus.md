@@ -275,6 +275,11 @@ schedule:
     date: "0"
     title: "Multithreading and Cache Considerations"
     link: "./files/lectures/threading.pptx"
+    deliverables:
+      - dtitle: "Warmup Lab: Volatile Variables and Thread Visibility (Optional)"
+        dlink: "Labs/Volatile"
+        points: 100
+        rubricpath: "_pages/Labs/lab-volatile.md"
     readings:
       - rtitle: "pthreads Tutorial from the LLNL"
         rlink: "https://computing.llnl.gov/tutorials/pthreads/"
@@ -527,3 +532,38 @@ university:
 ---
 
 Welcome to CS376: Operating Systems!
+
+## Essential Topics Roadmap
+
+Everything in this course orbits a small set of **essential operating-system topics**. The lectures introduce each one, and the labs, assignments, and projects reinforce it with hands-on practice. When you open any lab or assignment, look for its **Core Concepts** callout at the top — it names exactly which of these essential topics that activity reinforces, so you always know *why* you are doing it.
+
+| Essential Topic | Introduced in Notes | Reinforced by |
+| --------------- | ------------------- | ------------- |
+| C, memory, and debugging | Introduction to C (`introc`) | [Memory Debugging Lab](Labs/MemoryDebugC), [GDB & Valgrind](GDBValgrind) |
+| The file abstraction and I/O | File I/O (`fileio`), Filesystems (`filesystems`) | [File I/O Assignment](Assignments/FileIO), [File I/O Lab](Labs/FileIO), [Mini Database](Assignments/MiniDB), [FAT Assignment](Assignments/FAT) |
+| Processes and IPC | Shell & IPC (`shellipc`), Process Management (`processes`) | [Shell Lab](Labs/Shell), [Web Client/Server](Assignments/WebClientServer), [Mailbox Project](Projects/Mailbox) |
+| Concurrency and synchronization | Multithreading (`threading`), Mutual Exclusion (`mutex`), Semaphores (`semaphores`), Monitors (`monitors`) | [Volatile Lab](Labs/Volatile), [Threaded Programming](Assignments/Threads) |
+| Kernel internals and data structures | Representing Processes in Linux (`linuxprocesses`) | [System Calls Project](Projects/SyscallProcess), [Mailbox Project](Projects/Mailbox), [Kernel Data Structures](KernelDataStructures) |
+| Scheduling | CPU Scheduling (`scheduling`) | Final Exam project, in-class exercises |
+| The kernel and boot process | *(project-led)* | [Booting a Custom Kernel](Projects/BootingCustomKernel), [Final Exam Project](Projects/FinalExam) |
+| Memory management and virtual memory | Virtual Memory (`virtualmemory`) | Reinforced across kernel projects |
+
+## Course Notes: Essential and Supplemental Decks
+
+The lecture slide decks in the schedule above are provided as PowerPoint (`.pptx`) files. They fall into two groups:
+
+* **Essential decks** cover the core topics every student is responsible for: Introduction to C, File I/O, Shell & IPC, Multithreading, Mutual Exclusion, Semaphores, Monitors, Process Management, Representing Processes in Linux, CPU Scheduling, Filesystems, and Virtual Memory. These stay in the main weekly schedule flow.
+* **Supplemental / historical decks** go deeper into Linux-specific implementations and historical context. They enrich the essential topics but are not themselves examinable core material; they are grouped in **Additional / Historical Materials** below so the main schedule stays focused.
+
+### Additional / Historical Materials
+
+These supplemental decks (linked from the schedule in the weeks noted) expand on the essential topics. Treat them as optional enrichment and historical background:
+
+| Deck | Week | One-line topic | Status |
+| ---- | ---- | -------------- | ------ |
+| `linuxscheduling` | 12 | How Linux implements the CPU scheduling algorithms (deepens `scheduling`) | Supplemental |
+| `linuxdiskscheduling` | 14 | Linux-specific disk scheduling implementation (deepens `diskscheduling`) | Supplemental |
+| `diskscheduling` | 14 | I/O systems and disk-arm scheduling algorithms | Supplemental |
+| `linuxprocesses` | 11 | Historical detail on Linux 2.6 task representation (supports the kernel projects) | Supplemental — essential *for the kernel projects only* |
+
+> **Note on slide history and trimming.** The lecture decks are binary PowerPoint files, which cannot be edited from this course-site repository. The intent of "trimming the slides and moving history to a backup section" is therefore realized here at the site level: essential decks remain in the weekly flow, supplemental and historical decks are labeled and grouped in this section, and each deck now carries a one-line topic summary so students can see at a glance what is core versus enrichment. Editing the deck contents themselves (removing dated history slides, tightening length) remains a manual task to be done in PowerPoint.
