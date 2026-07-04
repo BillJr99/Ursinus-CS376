@@ -253,8 +253,8 @@ As in the [System Calls project](SyscallProcess), do not scatter raw `syscall(..
 #ifndef MAILBOX_H
 #define MAILBOX_H
 #include <sys/types.h>
-int mailbox_send(pid_t pid, int n, const char *buf);
-long mailbox_receive(int n, char *buf);
+long mailbox_send(pid_t pid, size_t n, const char *buf);
+long mailbox_receive(size_t n, char *buf);
 #endif
 ```
 
@@ -265,8 +265,8 @@ long mailbox_receive(int n, char *buf);
 #include "mailbox.h"
 
 /* Replace the numbers with the syscall numbers you registered in unistd.h */
-int  mailbox_send(pid_t pid, int n, const char *buf) { return syscall(288, pid, n, buf); }
-long mailbox_receive(int n, char *buf)               { return syscall(289, n, buf); }
+long mailbox_send(pid_t pid, size_t n, const char *buf) { return syscall(288, pid, n, buf); }
+long mailbox_receive(size_t n, char *buf)               { return syscall(289, n, buf); }
 ```
 
 Now write a **user test program** that `fork`s a child and uses the wrapper functions:

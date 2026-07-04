@@ -166,7 +166,7 @@ Now that you know how to create a syscall in the kernel, you will create a few s
 
 ### Task 1: Elevate a Process to Root Privileges
 
-Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `0`, thus claiming the process by the root user (giving the process root priveleges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
+Create a system call to set a process ID's `task_struct`'s `uid` and `euid` to `0`, thus claiming the process by the root user (giving the process root privileges).  This is an awful thing to do in reality, but we will try it here to give you an idea of the power that comes with manipulating the kernel (and the care that you must take in doing so!).  
 
 Call your syscall `steal`, and it should take in a single parameter of type `pid_t` (the process ID number to elevate to root).  Add a `steal` wrapper function to your library (as shown above), and write a user test program that takes in a process ID as a command line parameter and invokes that wrapper to elevate the process to root.  Your wrapper function will have to refer to pid as a `long` (not an `int`!). To convert `argv[1]` to a long, use the `long atol(char*)` function.
 

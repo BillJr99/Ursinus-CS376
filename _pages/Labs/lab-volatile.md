@@ -169,11 +169,11 @@ Rebuild and run ten more times. **Record the results.** You will find the count 
 
 | Problem       | Question it answers                                          | Does `volatile` solve it? |
 | ------------- | ----------------------------------------------------------- | ------------------------- |
-| **Visibility**| "When one thread writes, will another thread *see* the new value?" | Partially — it forces reads/writes to memory instead of a cached register. |
+| **Visibility**| "When one thread writes, will another thread *see* the new value?" | **No.** It only stops the *compiler* from caching the value in a register — it creates no happens-before relationship, so with a data race the other thread still has no guarantee of seeing the write. |
 | **Atomicity** | "Does `counter = counter + 1` happen as one indivisible step?" | **No.** `volatile` does not make read-modify-write atomic. |
 | **Reordering**| "Can the compiler/CPU move instructions around this access?"  | Only for the `volatile` access itself; it is **not** a general memory barrier and does not order other variables. |
 
-Our bug is an **atomicity** failure: two threads perform the three-step load-add-store and clobber each other. `volatile` addresses *visibility* (and only weakly), so it cannot help. This is the key lesson:
+Our bug is an **atomicity** failure: two threads perform the three-step load-add-store and clobber each other — and as the table shows, `volatile` solves none of the three problems for threads. This is the key lesson:
 
 > **`volatile` is not a synchronization primitive.** It tells the compiler "this variable may change unexpectedly, so always read it from memory." It says **nothing** about making a compound operation atomic and it provides **no** mutual exclusion. In C, `volatile` is for things like memory-mapped hardware registers and signal handlers — *not* for coordinating threads.
 

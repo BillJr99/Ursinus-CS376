@@ -36,7 +36,7 @@ sudo sysctl -w kernel.core_pattern=core.%u.%p.%t
 
 On WSL2 specifically, core dumps sometimes land under `/mnt/wslg/dumps`. That is all you need — skip the rest of this page and start coding. The Docker sections below are only for people who cannot or prefer not to install these tools directly.
 
-# Using Docker for an Isolated Ubuntu Environment
+## Using Docker for an Isolated Ubuntu Environment
 
 If standard development tools like `gdb` and `valgrind` are not available on your computer, or you prefer an isolated, disposable environment, you can create a container from which to access them. The setup is the same on every platform except for a couple of OS-specific details called out below.  
 
@@ -199,7 +199,7 @@ A password is not required, since we provided our ssh key.
 cat ~/.ssh/id_rsa.pub
 ```
 
-# Quickstart: Launching a Vanilla Ubuntu Image
+## Quickstart: Launching a Vanilla Ubuntu Image
 
 You can quickly spin up an Ubuntu instance by typing:
 
@@ -210,7 +210,7 @@ docker run -it ubuntu
 
 However, this will not have incoming SSH access or any of the software packages we use.  You'll have to install those manually.
 
-# References
+## References
 
 * [https://tecadmin.net/setting-up-ubuntu-docker-container-with-ssh-access/](https://tecadmin.net/setting-up-ubuntu-docker-container-with-ssh-access/)
 * [https://www.digitalocean.com/community/tutorials/how-to-share-data-between-the-docker-container-and-the-host](https://www.digitalocean.com/community/tutorials/how-to-share-data-between-the-docker-container-and-the-host)
