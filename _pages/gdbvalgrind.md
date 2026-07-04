@@ -251,3 +251,7 @@ valgrind --leak-check=full ./program
 ```
 
 Valgrind's `--leak-check=full` flag enables detailed memory leak reporting, highlighting any memory blocks that were not freed. This can help identify memory leaks caused by failing to call `free` or other memory management errors.  Valgrind will run your program and monitor memory operations, checking for memory leaks, buffer overflows, and other memory errors.  After running your program, Valgrind will generate a report detailing any memory errors or leaks it found. It will provide information about the source code location where the error occurred, including the file name and line number.
+
+## Debugging the Kernel Itself with gdb
+
+The same gdb skills above work on the Linux kernel, not just user programs. Because the kernel is the program that runs everything else, you attach to it remotely: QEMU exposes the virtual machine's CPU as a gdb server (with the `-s -S` flags), and you connect gdb to `vmlinux` over `localhost:1234` to set breakpoints inside kernel functions. See the [Debugging the Kernel with QEMU and gdb](Projects/BootingCustomKernel#debugging-the-kernel-with-qemu-and-gdb) section of the Booting a Custom Linux Kernel project for a full walkthrough (including the Bochs built-in debugger as an alternative). This is invaluable for the kernel [System Calls](Projects/SyscallProcess) and [Mailbox](Projects/Mailbox) projects.
