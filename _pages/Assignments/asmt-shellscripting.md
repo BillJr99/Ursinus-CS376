@@ -40,6 +40,8 @@ tags:
 
 ---
 
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topics of *the shell as the user interface to the operating system*, *composing small tools via pipes and redirection*, and *reading OS state* (here, per-core CPU usage). Shell scripting is how you glue together the system utilities the kernel exposes — a skill you will reuse to test every later program in this course.
+
 In this tutorial, we'll create a Bash script to monitor and alert about increases in CPU usage on a Linux system. We'll break down the process into simple steps, making it easy to understand even for beginners in Bash scripting.   You will write a script that calculates the average CPU usage over all cores and checks if there's an increase beyond a predefined threshold compared to the previous minute.
 
 ## Prerequisites
@@ -141,6 +143,17 @@ Then, execute it:
 ```
 ./cpu_monitor.sh
 ```
+
+## Makefile Requirements
+
+Even though this deliverable is a shell script rather than a compiled program, include a small `Makefile` so your work runs with the same standard commands as every other assignment:
+
+| Target       | What it must do                                                             |
+| ------------ | -------------------------------------------------------------------------- |
+| `make`       | A no-op build (or `chmod +x cpu_monitor.sh`) so the script is executable.   |
+| `make run`   | Run `./cpu_monitor.sh`.                                                     |
+| `make test`  | Run the script against a representative scenario, printing observable output.|
+| `make clean` | Remove any log or temporary files the script produced.                      |
 
 ## Submitting Your Work
 

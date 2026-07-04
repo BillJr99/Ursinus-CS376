@@ -295,3 +295,14 @@ On some systems, the correct parameter is `-pthread` instead of `-lpthread`.
 ## Makefile
 
 Be sure to include a Makefile with your submission that builds and tests your program.  If you prefer, you can include a shell script of test cases that you execute via the Makefile.
+
+### Makefile Requirements
+
+Your submission must include a `Makefile` supporting the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile your program (with `csapp.c` if used) with no errors.                        |
+| `make run`   | Build if needed and run your program against a sample input and output file.          |
+| `make test`  | Build if needed and run your test cases (e.g., search for a known word in a sample file), printing observable pass/fail output. |
+| `make clean` | Remove all executables, object files, generated output files, and core dumps.        |
