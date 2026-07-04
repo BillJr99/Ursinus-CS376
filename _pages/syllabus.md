@@ -275,6 +275,11 @@ schedule:
     date: "0"
     title: "Multithreading and Cache Considerations"
     link: "./files/lectures/threading.pptx"
+    deliverables:
+      - dtitle: "Warmup Lab: Volatile Variables and Thread Visibility (Optional)"
+        dlink: "Labs/Volatile"
+        points: 100
+        rubricpath: "_pages/Labs/lab-volatile.md"
     readings:
       - rtitle: "pthreads Tutorial from the LLNL"
         rlink: "https://computing.llnl.gov/tutorials/pthreads/"
