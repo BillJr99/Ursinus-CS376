@@ -91,7 +91,9 @@ tags:
 
 ---
 
-You will write a kernel module or component that enables us, via syscalls, signals, or other mechanism, to communicate between two processes.  You will implement a mailbox with `send` and `receive` capabilities.  `receive` shall be a blocking call, which blocks until a message is received.
+> **Core Concepts — why this matters.** This project reinforces the essential OS topics of *interprocess communication (IPC)*, *the user/kernel memory boundary*, *blocking and waking processes*, and *kernel data structures and locking*. You will build a mailbox using the kernel's intrusive linked list and wait queues — read the [Kernel Linked Lists, Locking, and File Data Structures](../KernelDataStructures) reference first, as it walks through `struct list_head`, `container_of`, and the spinlock-vs-mutex decision using this very mailbox as its worked example.
+
+You will write a kernel module or component that enables us, via syscalls, signals, or other mechanism, to communicate between two processes.  You will implement a mailbox with `send` and `receive` capabilities.  `receive` shall be a blocking call, which blocks until a message is received.  There is **no barrier** in this project: the only synchronization requirement is that `myreceive` blocks until a message arrives (and, optionally, that `mysend` blocks until its message is received). You do not need to make all senders and receivers rendezvous at a common point — each send/receive pair stands on its own.
 
 Implement the following functions:
 * `void mysend(pid_t pid, size_t n, __user char* buf)`
@@ -242,16 +244,75 @@ Manipulating kernel linked lists may not be thread-safe.  You can use `rcu_read_
 
 If you call `kmalloc`, check that the return value is not `NULL`.  If any call returns an error state like `0` or `-1` as appropriate for the call, clean up your memory with `kfree` and exit gracefully by returning a negative number as well.  Either way, be sure to `kfree` everything you `kmalloc` when you are able to do so.
 
-### Test Your Program from User Space
+### Build Wrapper Functions and a User Test Program
 
-1. Write a user program that `fork`s a child.  
+As in the [System Calls project](SyscallProcess), do not scatter raw `syscall(...)` calls through your test code. Write a small **wrapper function library** so your **user test program** reads like ordinary C. Real IPC libraries do exactly this — `msgsnd`/`msgrcv` are wrapper functions over syscalls.
 
-2. The child should create a buffer and call `myreceive` with that buffer.  The child can print the message it receives and `exit`.
+```c
+/* mailbox.h */
+#ifndef MAILBOX_H
+#define MAILBOX_H
+#include <sys/types.h>
+int mailbox_send(pid_t pid, int n, const char *buf);
+long mailbox_receive(int n, char *buf);
+#endif
+```
 
-3. The parent should call `mysend` and send a message to the child by its `pid`.  The parent can `wait` for the child after calling `mysend` (and then terminate itself).
+```c
+/* mailbox.c */
+#include <unistd.h>
+#include <sys/syscall.h>
+#include "mailbox.h"
 
-Call your syscalls by number using the `syscall` method and compile your program with `gcc` as follows:
+/* Replace the numbers with the syscall numbers you registered in unistd.h */
+int  mailbox_send(pid_t pid, int n, const char *buf) { return syscall(288, pid, n, buf); }
+long mailbox_receive(int n, char *buf)               { return syscall(289, n, buf); }
+```
+
+Now write a **user test program** that `fork`s a child and uses the wrapper functions:
+
+1. Write a user test program that `fork`s a child.
+2. The child creates a buffer and calls `mailbox_receive(...)` with that buffer, prints the message it receives, and `exit`s.
+3. The parent calls `mailbox_send(...)` to send a message to the child by its `pid`, then `wait`s for the child before terminating.
+
+Compile the wrapper library together with your test program:
 
 ```
-gcc testSysCall.c
+gcc -o testmailbox testmailbox.c mailbox.c
 ```
+
+## Getting Started
+
+1. Boot your custom kernel (see [Booting a Custom Linux Kernel](BootingCustomKernel)) and make sure the tutorial `mygetpid` syscall from the [System Calls project](SyscallProcess) works. That confirms your build/register/boot loop is sound before you add the more complex mailbox syscalls.
+2. Add the `mymessage` and `message_queue` structures to `sched.h`, then initialize the queue in `do_fork` and rebuild. Boot and confirm the kernel still runs normally — this checkpoint catches struct/initialization mistakes early.
+3. Implement `mysend` first and verify (with a `printk`) that a message lands on the target's queue. **Expected checkpoint output:** a `dmesg` line showing the sender pid and message each time you send.
+4. Implement `myreceive` and test the full `fork` parent/child round-trip. **Expected output:** the child prints exactly the message the parent sent.
+
+## Common Pitfalls
+
+* **Holding a spinlock across `copy_to_user` or `kmalloc(..., GFP_KERNEL)`.** Both can sleep; do the pointer surgery inside the lock and the copying/allocation outside it. See [kernel locking](../KernelDataStructures#part-2-kernel-locking).
+* **Forgetting to `INIT_LIST_HEAD`** the queue in `do_fork`, so the first `list_add_tail` dereferences garbage.
+* **`kfree`ing the wrong pointer** — free the `mymessage`, and remember to also free its `msg` buffer.
+* **Waking the receiver inside the lock.** Call `wake_up_interruptible` after unlocking.
+* **Copying past the buffer.** Copy only the `size` you stored during `mysend`, never more than `n`.
+
+## Makefile Requirements
+
+Include a `Makefile` that builds your user-space wrapper library and test program. It must support the following standard targets:
+
+| Target       | What it must do                                                                     |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `make`       | Compile `mailbox.c` together with your user test program(s), with no errors.        |
+| `make run`   | Build if needed and launch the parent/child mailbox demo.                            |
+| `make test`  | Build if needed and run your test cases, printing observable pass/fail output.       |
+| `make clean` | Remove all executables, object files, and core dumps so a fresh `make` starts clean. |
+
+## Glossary
+
+* **Interprocess communication (IPC)** — mechanisms that let separate processes exchange data; here, a mailbox.
+* **Wrapper function** — a user-space function (e.g., `mailbox_send`) that hides a syscall number behind a friendly signature by calling `syscall()`.
+* **User test program** — a user-space program that calls your wrapper functions to exercise the mailbox syscalls.
+* **`wait_queue_head_t`** — a kernel structure a task blocks on until an event (a message arriving) wakes it.
+* **`copy_to_user` / `copy_from_user`** — the only safe way to move bytes across the user/kernel memory boundary.
+* **Intrusive linked list** — the kernel's `struct list_head`, embedded inside your `mymessage`; see the [reference](../KernelDataStructures).
+* **Blocking call** — a call that puts the caller to sleep until its condition is satisfied (here, `myreceive` until a message arrives).

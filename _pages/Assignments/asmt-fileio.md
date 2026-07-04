@@ -40,11 +40,15 @@ info:
       rtitle: "Makefile Tutorial"
     - rlink: "https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/"
       rtitle: "A Simple Makefile Tutorial"
+    - rlink: ../KernelDataStructures#part-3-reading-file-data-structures
+      rtitle: "How the Kernel Represents Open Files (fd table, struct file, inode, dentry)"
 
 tags:
   - files
 
 ---
+
+> **Core Concepts — why this matters.** This assignment reinforces the essential OS topic of *the file abstraction and system-level I/O*. Every `open`, `read`, and `close` you write here trips a chain of kernel data structures — the per-process file-descriptor table, `struct file`, `dentry`, and `inode`. To see what happens on the kernel side of the calls you are making, read [Part 3 of the Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures); it explains why a file descriptor is "just an int" and where the file offset actually lives.
 
 In this assignment, you will open a text file, get its size, `malloc` a buffer, and read the contents of the file into that buffer.  
 

@@ -40,11 +40,15 @@ info:
       rtitle: "Makefile Tutorial"
     - rlink: "https://www.cs.colby.edu/maxwell/courses/tutorials/maketutor/"
       rtitle: "A Simple Makefile Tutorial"
+    - rlink: ../KernelDataStructures#part-3-reading-file-data-structures
+      rtitle: "How the Kernel Represents Open Files (fd table, struct file, inode, dentry)"
 
 tags:
   - files
 
 ---
+
+> **Core Concepts — why this matters.** This lab reinforces the essential OS topic of *file organization and record-oriented I/O*. As you `fwrite`/`fread` fixed-size records and `fseek` to a record by number, you are exercising the file offset that the kernel tracks in `struct file`. To connect this user-space work to the kernel structures underneath, read [Part 3 of the Kernel Data Structures reference](../KernelDataStructures#part-3-reading-file-data-structures).
 
 The goal is to create a simple Flight Logbook System that allows users (pilots) to store and manage their flight records. This system should enable the addition, modification, viewing, and searching of flight logs. Each log entry will represent a flight, containing details such as date, aircraft type, departure and arrival locations, flight time, and any remarks.
 
