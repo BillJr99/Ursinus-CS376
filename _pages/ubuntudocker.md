@@ -5,25 +5,68 @@ title: "CS376: Operating Systems - Launching an Ubuntu virtual machine with Dock
 
 ---
 
-# Launching an Ubuntu Environment with Docker
+# Getting a Linux Development Environment
 
-If standard development tools like `gdb` and `valgrind` are not available on your computer, you can create a virtual machine from which to access them.  
+Several assignments need standard Linux development tools (`gcc`, `gdb`, `valgrind`). How you get them depends on your computer. **Find your situation in the table below and follow that path** — you do not need to read the sections that do not apply to you.
+
+| Your situation                                             | What to do                                               |
+| ---------------------------------------------------------- | -------------------------------------------------------- |
+| You already run **Linux** (native or WSL2 on Windows)       | [Native Linux — No VM Needed](#native-linux--no-vm-needed) |
+| You run **Windows** and want an isolated Linux environment  | [Docker on Windows](#docker-on-windows)                  |
+| You run **macOS** (Intel or Apple Silicon)                  | [Docker on macOS](#docker-on-macos)                      |
+| You run **Linux** but want a disposable container           | [Docker on Linux](#docker-on-linux)                      |
+
+> These paths get you the *user-space* tools (`gcc`, `gdb`, `valgrind`) for the C assignments. The kernel projects use a separate QEMU virtual machine; see [Booting a Custom Linux Kernel](Projects/BootingCustomKernel) for that.
+
+## Native Linux — No VM Needed
+
+If you are already on a Linux machine (including **Windows with WSL2**, or a Linux desktop/laptop, or a lab machine), you do **not** need Docker or any virtual machine at all. Just install the tools directly:
+
+```
+sudo apt update
+sudo apt install -y build-essential gdb valgrind git vim
+```
+
+To enable core dumps in your current directory (used in the [GDB and Valgrind](GDBValgrind) walkthrough):
+
+```
+ulimit -c unlimited
+sudo sysctl -w kernel.core_pattern=core.%u.%p.%t
+```
+
+On WSL2 specifically, core dumps sometimes land under `/mnt/wslg/dumps`. That is all you need — skip the rest of this page and start coding. The Docker sections below are only for people who cannot or prefer not to install these tools directly.
+
+# Using Docker for an Isolated Ubuntu Environment
+
+If standard development tools like `gdb` and `valgrind` are not available on your computer, or you prefer an isolated, disposable environment, you can create a container from which to access them. The setup is the same on every platform except for a couple of OS-specific details called out below.  
 
 ## Installing Prerequisite Software
 
-First, install the following tools on your computer:
+Install Docker and Git for **your** operating system using the matching section below, then continue to [Creating an SSH Key](#creating-an-ssh-key-to-log-into-your-virtual-machine), which is the same for everyone.
 
-1. Docker
-    * [Windows](https://docs.docker.com/desktop/install/windows-install/)
-        * If you have the Windows Subsystem for Linux (WSL) installed, select the option during the installation to use WSL.  If you have VirtualBox or another virtualization software installed (or otherwise do not have WSL installed), choose Hyper-V.
-    * [Mac](https://docs.docker.com/desktop/install/mac-install/)
-        * The Mac download page will ask if you want to install the x86 or Apple Silicon version of the software.  If you are running an ARM processor, choose the Apple Silicon version.  If you aren't sure, click the Apple menu at the top left, and choose "About this Mac."  If it says Intel, it's an x86/x64 installation, and if it says M1 or M2, it's an ARM installation.
-      
-2. Git
-    * [Windows](https://git-scm.com/downloads)
-    * [Mac](https://git-scm.com/download/mac)
-        * Open a terminal and execute `sudo port install git` if you have [MacPorts](https://www.macports.org/) installed, or `brew install git` if you have [Homebrew](https://brew.sh/) installed.  
-        *  If you don't have either MacPorts or Homebrew installed (or if the command above fails), run the command `sudo xcode-select –install` in your terminal, and then download and install either [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/), and then re-run the appropriate install command above.
+### Docker on Windows
+
+* Install **Docker Desktop**: [Windows installer](https://docs.docker.com/desktop/install/windows-install/).
+    * If you have the Windows Subsystem for Linux (WSL) installed, select the option during installation to use WSL. If you have VirtualBox or another virtualization tool installed (or do not have WSL), choose Hyper-V.
+    * (If you already use WSL2, consider the [Native Linux](#native-linux--no-vm-needed) path instead — it is simpler.)
+* Install **Git**: [Git for Windows](https://git-scm.com/downloads).
+* When you reach [Launching the Image](#launching-the-image), use the **Windows** volume-mount example (`/c/Users/<your user name>/...`).
+
+### Docker on macOS
+
+* Install **Docker Desktop**: [Mac installer](https://docs.docker.com/desktop/install/mac-install/).
+    * The download page asks whether you want the Intel (x86) or Apple Silicon version. Click the Apple menu > "About This Mac": if it says Intel, choose x86/x64; if it says M1/M2/M3 or "Apple", choose Apple Silicon.
+* Install **Git**: [Git for Mac](https://git-scm.com/download/mac), or via a package manager:
+    * `sudo port install git` if you have [MacPorts](https://www.macports.org/), or `brew install git` if you have [Homebrew](https://brew.sh/).
+    * If you have neither (or the command fails), run `sudo xcode-select --install`, then install [MacPorts](https://www.macports.org/) or [Homebrew](https://brew.sh/) and re-run the appropriate command.
+* When you reach [Launching the Image](#launching-the-image), use the **macOS** volume-mount example (`/Users/<your user name>/...`).
+
+### Docker on Linux
+
+* Install **Docker Engine** from your distribution's packages or [Docker's Linux install guide](https://docs.docker.com/engine/install/), then add yourself to the `docker` group (`sudo usermod -aG docker $USER`) and log out/in.
+* Install **Git**: `sudo apt install git` (or your distribution's equivalent).
+* When you reach [Launching the Image](#launching-the-image), use the **Linux** volume-mount example (`/home/<your user name>/...`).
+* (Most Linux users are better served by the [Native Linux](#native-linux--no-vm-needed) path — Docker here is only for an isolated/disposable container.)
     
 ## Creating an SSH Key to Log Into Your Virtual Machine
 
@@ -116,13 +159,27 @@ docker build -t ubuntu-ssh .
 
 ## Launching the Image
 
-To start the image, run the following command (which you can skip to once you've built the image above):
+To start the image, run the `docker run` command **for your operating system** (they differ only in the host path before the `:` in the `-v` volume mount):
+
+**Windows** (paths under `C:\Users`):
 
 ```
-docker run -d -v /c/Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 --privileged ubuntu-ssh 
+docker run -d -v /c/Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 --privileged ubuntu-ssh
 ```
 
-The path including `<your user name>` allows you to share a local directory within your virtual image home directory!  This example will mount your local `Desktop` directory at `/home/ubuntu/shared/desktop`, but you can select other possibilities here.  Feel free to specify this or omit the entire `-v` parameter to skip it.
+**macOS** (paths under `/Users`):
+
+```
+docker run -d -v /Users/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 --privileged ubuntu-ssh
+```
+
+**Linux** (paths under `/home`):
+
+```
+docker run -d -v /home/<your user name>/Desktop:/home/ubuntu/shared/desktop -p 2222:22 --privileged ubuntu-ssh
+```
+
+The `-v` path including `<your user name>` shares a local directory inside your container's home directory. This example mounts your local `Desktop` at `/home/ubuntu/shared/desktop`, but you can choose another directory, or omit the entire `-v` parameter to skip sharing altogether.
 
 ### Logging into the Image
 
