@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default-standard
 permalink: /GDBValgrind
 title: "CS376: Operating Systems - Debugging and Memory Management in C with GDB and Valgrind"
 

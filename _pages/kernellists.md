@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: default-standard
 permalink: /KernelDataStructures
 title: "CS376: Operating Systems - Kernel Linked Lists, Locking, and File Data Structures"
 
