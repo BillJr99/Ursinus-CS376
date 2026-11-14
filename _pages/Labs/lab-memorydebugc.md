@@ -236,6 +236,7 @@ For each example, run the program, and run it through the step debugger and valg
 
 ### Step 1
 
+<!-- run: id=cs376-lab-memorydebugc-1 viz=c -->
 ```c
 #include <stdio.h>
 
@@ -248,9 +249,11 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-lab-memorydebugc-1) <!-- code-viz link -->
 
 ### Step 2
 
+<!-- run: id=cs376-lab-memorydebugc-2 viz=c -->
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -263,6 +266,7 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-lab-memorydebugc-2) <!-- code-viz link -->
 
 ### Step 3
 

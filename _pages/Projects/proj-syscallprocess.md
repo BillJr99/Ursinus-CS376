@@ -88,6 +88,7 @@ reboot
 
 We're ready to test the function.  To do this, create a user program, **outside of the kernel source directory** called `testSysCall.c`, in which we call the syscall as follows:
 
+<!-- run: id=cs376-proj-syscallprocess-1 viz=c -->
 ```c
 #include<stdio.h>
 #include<unistd.h> /* Has mygetpid syscall number */
@@ -99,6 +100,7 @@ int main()
    return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-proj-syscallprocess-1) <!-- code-viz link -->
 
 You can write this in your home directory **outside of the linux-2.6.22.19 directory** since this is now a user program that invokes your system call by its system call number.  Later, if your system call has parameters, you can simply add them like this: `syscall(syscallnum, parameter1, parameter2)` as appropriate. 
 

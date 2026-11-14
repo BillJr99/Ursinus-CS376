@@ -11,6 +11,7 @@ title: "CS376: Operating Systems - Debugging and Memory Management in C with GDB
 
 Consider the following corrected sample program that calculates the sum of two numbers (with a bug in the code):
 
+<!-- run: id=cs376-gdbvalgrind-1 viz=c -->
 ```c
 #include <stdio.h>
 
@@ -26,6 +27,7 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-gdbvalgrind-1) <!-- code-viz link -->
 
 Let's walk through the step-by-step debugging process using GDB:
 

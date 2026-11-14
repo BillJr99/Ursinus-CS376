@@ -80,6 +80,7 @@ This lab is structured as three passes over the same tiny program:
 
 ## Pass 1: The Broken Program
 
+<!-- run: id=cs376-lab-volatile-1 viz=plain -->
 ```c
 /* counter.c -- BROKEN ON PURPOSE. Do not fix yet; run it and observe. */
 #include <stdio.h>
@@ -106,6 +107,7 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-lab-volatile-1) <!-- code-viz link -->
 
 ### Observe
 
@@ -181,6 +183,7 @@ Our bug is an **atomicity** failure: two threads perform the three-step load-add
 
 The missing ingredient is **mutual exclusion**: only one thread may execute the load-add-store at a time. A `pthread_mutex_t` provides exactly this. Note that we initialize it at runtime with `pthread_mutex_init` and clean it up with `pthread_mutex_destroy`.
 
+<!-- run: id=cs376-lab-volatile-2 viz=plain -->
 ```c
 /* counter.c -- CORRECT version */
 #include <stdio.h>
@@ -214,6 +217,7 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-lab-volatile-2) <!-- code-viz link -->
 
 ### Observe
 

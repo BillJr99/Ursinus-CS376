@@ -182,6 +182,7 @@ Your submission must include a `Makefile` supporting the following standard targ
 
 You can use the `strtok` function to tokenize a string.  Here is a function that dynamically allocates (and re-allocates) an array of tokens given an input string, a string of possible delimiters, and an integer representing the number of tokens found (passed as a pointer so that updates are seen in the `main` function).
 
+<!-- run: id=cs376-asmt-minidb-1 viz=c -->
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -265,11 +266,13 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-asmt-minidb-1) <!-- code-viz link -->
 
 ### Comparing Two Strings
 
 You can compare two strings using the `strcmp` function, which returns `0` when the strings are equal.  Here is an example:
 
+<!-- run: id=cs376-asmt-minidb-2 viz=c -->
 ```c
 #include <stdio.h>
 #include <string.h>
@@ -307,3 +310,4 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-asmt-minidb-2) <!-- code-viz link -->

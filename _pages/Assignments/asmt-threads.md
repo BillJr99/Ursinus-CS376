@@ -148,6 +148,7 @@ By the end of your program, loop over the linked list of mutex locks (or once yo
 
 It may be helpful to have your threads sleep occasionally in their loops so that the print statements are easier to read.  You can use the `sleep` and `rand` functions to do this.  An example is given below that will sleep for a minimum period of 1 to 5 seconds.  I recommend incorporating this into a function that you can call on-demand.  
 
+<!-- run: id=cs376-asmt-threads-1 viz=c -->
 ```c
 #include <stdio.h>
 #include <stdlib.h>
@@ -173,6 +174,7 @@ int main() {
     return 0;
 }
 ```
+[Visualize this example](https://billjr99.github.io/Ursinus-CS376/viz/#cs376-asmt-threads-1) <!-- code-viz link -->
 
 ### Avoding Deadlocks
 
