@@ -1,0 +1,47 @@
+{
+ "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nchar** tokenize(char* input, const char* delimiter, int* tokenCount) {\n    char** tokens = NULL;\n    int capacity = 10; // Initial capacity for the array of tokens\n    *tokenCount = 0; // Initialize the token count\n\n    // Allocate initial memory for tokens\n    tokens = (char**)malloc(capacity * sizeof(char*));\n    if (tokens == NULL) {\n        fprintf(stderr, \"Memory allocation failed\\n\");\n        return NULL;\n    }\n\n    // Duplicate the input string to avoid modifying the original string\n    char* inputDup = strdup(input);\n    if (inputDup == NULL) {\n        free(tokens);\n        fprintf(stderr, \"Memory allocation failed\\n\");\n        return NULL;\n    }\n\n    // Tokenize the input string\n    char* token = strtok(inputDup, delimiter);\n    while (token != NULL) {\n        if (*tokenCount >= capacity) {\n            // Increase capacity\n            capacity *= 2;\n            char** temp = (char**)realloc(tokens, capacity * sizeof(char*));\n            if (temp == NULL) {\n                // Cleanup and error handling\n                for (int i = 0; i < *tokenCount; ++i) {\n                    free(tokens[i]);\n                }\n                free(tokens);\n                free(inputDup);\n                fprintf(stderr, \"Memory allocation failed\\n\");\n                return NULL;\n            }\n            tokens = temp;\n        }\n\n        // Duplicate token and add to the array\n        tokens[*tokenCount] = strdup(token);\n        if (tokens[*tokenCount] == NULL) {\n            // Cleanup and error handling\n            for (int i = 0; i < *tokenCount; ++i) {\n                free(tokens[i]);\n            }\n            free(tokens);\n            free(inputDup);\n            fprintf(stderr, \"Memory allocation failed\\n\");\n            return NULL;\n        }\n\n        (*tokenCount)++;\n        token = strtok(NULL, delimiter);\n    }\n\n    free(inputDup); // Cleanup the duplicated string\n    return tokens;\n}\n\nint main() {\n    char input[] = \"This is a test string, with several delimiters.\";\n    const char* delimiter = \" ,.\"; // Tokenize based on space, comma, and period\n    int tokenCount = 0;\n\n    char** tokens = tokenize(input, delimiter, &tokenCount);\n    if (tokens != NULL) {\n        for (int i = 0; i < tokenCount; i++) {\n            printf(\"%d: %s\\n\", i + 1, tokens[i]);\n            free(tokens[i]); // Free each token\n        }\n        free(tokens); // Free the array of tokens\n    }\n\n    return 0;\n}",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "example": "cs376-asmt-minidb-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "description": "Lines 1-4 set things up.",
+   "kind": "reveal",
+   "lines": "1-4"
+  },
+  {
+   "description": "Lines 5-64 define `tokenize`.",
+   "kind": "reveal",
+   "lines": "5-64"
+  },
+  {
+   "description": "Line 12 makes a decision.",
+   "kind": "focus",
+   "lines": "12"
+  },
+  {
+   "description": "Line 27 starts a loop.",
+   "kind": "focus",
+   "lines": "27"
+  },
+  {
+   "description": "Line 40 returns a value.",
+   "kind": "focus",
+   "lines": "40"
+  },
+  {
+   "description": "Line 63 returns a value.",
+   "kind": "focus",
+   "lines": "63"
+  },
+  {
+   "description": "Lines 66-81 define `main`.",
+   "kind": "reveal",
+   "lines": "66-81"
+  }
+ ],
+ "title": "Tokenizing a String",
+ "version": 1
+}

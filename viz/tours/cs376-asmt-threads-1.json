@@ -1,0 +1,33 @@
+{
+ "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <time.h>\n#include <unistd.h>\n\nint main() {\n    // Initialize the random number generator with the current time\n    srand(time(NULL));\n\n    // Generate a random number between 1 and 5\n    int sleepTime = rand() % 5 + 1;\n\n    // Inform the user about the sleep time\n    printf(\"The program will sleep for %d seconds.\\n\", sleepTime);\n\n    // Sleep for the determined number of seconds\n    sleep(sleepTime);\n\n    // Inform the user that the program has finished sleeping\n    printf(\"The program has woken up.\\n\");\n\n    return 0;\n}",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "example": "cs376-asmt-threads-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "description": "Lines 1-5 set things up.",
+   "kind": "reveal",
+   "lines": "1-5"
+  },
+  {
+   "description": "Lines 6-23 define `main`.",
+   "kind": "reveal",
+   "lines": "6-23"
+  },
+  {
+   "description": "Line 22 returns a value.",
+   "kind": "focus",
+   "lines": "22"
+  },
+  {
+   "description": "This is the end of the run: the final state, and all of the output.",
+   "kind": "run",
+   "lines": "23",
+   "trace_step": 6
+  }
+ ],
+ "title": "Causing a Thread to Sleep",
+ "version": 1
+}

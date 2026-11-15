@@ -1,0 +1,10 @@
+{
+ "volatile": [
+  "cs376-asmt-threads-1",
+  "cs376-gdbvalgrind-1",
+  "cs376-lab-memorydebugc-1",
+  "cs376-lab-memorydebugc-2",
+  "cs376-lab-volatile-1",
+  "cs376-proj-syscallprocess-1"
+ ]
+}

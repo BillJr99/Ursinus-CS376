@@ -1,0 +1,33 @@
+{
+ "code": "#include<stdio.h>\n#include<unistd.h> /* Has mygetpid syscall number */\n\nint main()\n{\n   int syscallnum = 285; // use your syscall number from earlier here\n   printf(\"Process ID: %d\\n\", syscall(syscallnum)); // alternative to mygetpid() if this function is not exposed by the kernel to user-space\n   return 0;\n}",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "example": "cs376-proj-syscallprocess-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "description": "Lines 1-3 set things up.",
+   "kind": "reveal",
+   "lines": "1-3"
+  },
+  {
+   "description": "Lines 4-9 define `main`.",
+   "kind": "reveal",
+   "lines": "4-9"
+  },
+  {
+   "description": "Line 8 returns a value.",
+   "kind": "focus",
+   "lines": "8"
+  },
+  {
+   "description": "This is the end of the run: the final state, and all of the output.",
+   "kind": "run",
+   "lines": "9",
+   "trace_step": 3
+  }
+ ],
+ "title": "Tutorial: Creating a System Call",
+ "version": 1
+}

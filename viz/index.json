@@ -1,7 +1,7 @@
 {
  "course": "cs376",
  "site": "https://billjr99.github.io/Ursinus-CS376",
- "built": "2026-11-14 18:18",
+ "built": "2026-11-15 00:53",
  "examples": [
   {
    "id": "cs376-asmt-fileio-1",
@@ -11,7 +11,11 @@
    "line": 86,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Assignments/asmt-fileio",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-asmt-fileio-2",
@@ -21,7 +25,11 @@
    "line": 176,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Assignments/asmt-fileio",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-asmt-minidb-1",
@@ -31,7 +39,11 @@
    "line": 186,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Assignments/asmt-minidb",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-asmt-minidb-2",
@@ -41,7 +53,11 @@
    "line": 276,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Assignments/asmt-minidb",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-asmt-threads-1",
@@ -51,7 +67,11 @@
    "line": 152,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Assignments/asmt-threads",
    "error": null,
-   "steps": 7
+   "steps": 7,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-lab-memorydebugc-1",
@@ -61,7 +81,11 @@
    "line": 240,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Labs/lab-memorydebugc",
    "error": null,
-   "steps": 26
+   "steps": 26,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-lab-memorydebugc-2",
@@ -71,7 +95,11 @@
    "line": 257,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Labs/lab-memorydebugc",
    "error": null,
-   "steps": 5
+   "steps": 5,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-lab-volatile-1",
@@ -81,7 +109,11 @@
    "line": 84,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Labs/lab-volatile",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-lab-volatile-2",
@@ -91,7 +123,11 @@
    "line": 187,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Labs/lab-volatile",
    "error": null,
-   "steps": 0
+   "steps": 0,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-proj-syscallprocess-1",
@@ -101,7 +137,11 @@
    "line": 92,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/Projects/proj-syscallprocess",
    "error": null,
-   "steps": 4
+   "steps": 4,
+   "modes": [
+    "run",
+    "explain"
+   ]
   },
   {
    "id": "cs376-gdbvalgrind-1",
@@ -111,7 +151,11 @@
    "line": 15,
    "page_url": "https://billjr99.github.io/Ursinus-CS376/gdbvalgrind",
    "error": null,
-   "steps": 8
+   "steps": 8,
+   "modes": [
+    "run",
+    "explain"
+   ]
   }
  ]
 }

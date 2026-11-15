@@ -1,0 +1,43 @@
+{
+ "code": "#include <stdio.h>\n\nint add(int a, int b) {\n    return a - b;\n}\n\nint main() {\n    int a = 5;\n    int b = 10;\n    int result = add(a, b);\n    printf(\"The sum of %d and %d is %d\\n\", a, b, result);\n    return 0;\n}",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "example": "cs376-gdbvalgrind-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "description": "Lines 1-2 set things up.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Lines 3-5 define `add`.",
+   "kind": "reveal",
+   "lines": "3-5"
+  },
+  {
+   "description": "Line 4 returns a value.",
+   "kind": "focus",
+   "lines": "4"
+  },
+  {
+   "description": "Lines 7-13 define `main`.",
+   "kind": "reveal",
+   "lines": "7-13"
+  },
+  {
+   "description": "Line 12 returns a value.",
+   "kind": "focus",
+   "lines": "12"
+  },
+  {
+   "description": "This is the end of the run: the final state, and all of the output.",
+   "kind": "run",
+   "lines": "13",
+   "trace_step": 7
+  }
+ ],
+ "title": "Using gdb to Step Through your Code",
+ "version": 1
+}

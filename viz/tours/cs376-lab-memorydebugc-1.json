@@ -1,0 +1,38 @@
+{
+ "code": "#include <stdio.h>\n\nint main() {\n    char buffer[10];\n    for (int i = 0; i <= 10; i++) {\n        buffer[i] = 'a'; \n    }\n    printf(\"Buffer: %s\\n\", buffer);\n    return 0;\n}",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "example": "cs376-lab-memorydebugc-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "description": "Lines 1-2 set things up.",
+   "kind": "reveal",
+   "lines": "1-2"
+  },
+  {
+   "description": "Lines 3-10 define `main`.",
+   "kind": "reveal",
+   "lines": "3-10"
+  },
+  {
+   "description": "Line 5 starts a loop.",
+   "kind": "focus",
+   "lines": "5"
+  },
+  {
+   "description": "Line 9 returns a value.",
+   "kind": "focus",
+   "lines": "9"
+  },
+  {
+   "description": "This is the end of the run: the final state, and all of the output.",
+   "kind": "run",
+   "lines": "10",
+   "trace_step": 25
+  }
+ ],
+ "title": "Step 1",
+ "version": 1
+}
