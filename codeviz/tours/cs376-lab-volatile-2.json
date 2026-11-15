@@ -1,0 +1,40 @@
+{
+ "version": 1,
+ "example": "cs376-lab-volatile-2",
+ "title": "Pass 3: Fix It Properly with a Mutex",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "kind": "reveal",
+   "lines": "1-9",
+   "description": "Lines 1-9 set things up."
+  },
+  {
+   "kind": "reveal",
+   "lines": "10-17",
+   "description": "Lines 10-17 define `increment`."
+  },
+  {
+   "kind": "focus",
+   "lines": "11",
+   "description": "Line 11 starts a loop."
+  },
+  {
+   "kind": "focus",
+   "lines": "16",
+   "description": "Line 16 returns a value."
+  },
+  {
+   "kind": "reveal",
+   "lines": "19-31",
+   "description": "Lines 19-31 define `main`."
+  },
+  {
+   "kind": "focus",
+   "lines": "30",
+   "description": "Line 30 returns a value."
+  }
+ ]
+}

@@ -1,0 +1,41 @@
+{
+ "version": 1,
+ "example": "cs376-gdbvalgrind-1",
+ "title": "Using gdb to Step Through your Code",
+ "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "reviewed": false,
+ "source": "skeleton",
+ "steps": [
+  {
+   "kind": "reveal",
+   "lines": "1-2",
+   "description": "Lines 1-2 set things up."
+  },
+  {
+   "kind": "reveal",
+   "lines": "3-5",
+   "description": "Lines 3-5 define `add`."
+  },
+  {
+   "kind": "focus",
+   "lines": "4",
+   "description": "Line 4 returns a value."
+  },
+  {
+   "kind": "reveal",
+   "lines": "7-13",
+   "description": "Lines 7-13 define `main`."
+  },
+  {
+   "kind": "focus",
+   "lines": "12",
+   "description": "Line 12 returns a value."
+  },
+  {
+   "kind": "run",
+   "trace_step": 7,
+   "description": "This is the end of the run: the final state, and all of the output.",
+   "lines": "13"
+  }
+ ]
+}
