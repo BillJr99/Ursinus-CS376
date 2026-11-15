@@ -1,33 +1,33 @@
 {
  "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <time.h>\n#include <unistd.h>\n\nint main() {\n    // Initialize the random number generator with the current time\n    srand(time(NULL));\n\n    // Generate a random number between 1 and 5\n    int sleepTime = rand() % 5 + 1;\n\n    // Inform the user about the sleep time\n    printf(\"The program will sleep for %d seconds.\\n\", sleepTime);\n\n    // Sleep for the determined number of seconds\n    sleep(sleepTime);\n\n    // Inform the user that the program has finished sleeping\n    printf(\"The program has woken up.\\n\");\n\n    return 0;\n}",
- "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "description": "You can inspect the order of random selection, notification and resumption.",
  "example": "cs376-asmt-threads-1",
  "lang": "c",
  "reviewed": false,
- "source": "skeleton",
+ "source": "draft: codex free model",
  "steps": [
   {
-   "description": "Lines 1-5 set things up.",
+   "description": "The program imports random-number and sleep facilities. You seed the random generator before requesting a value.",
    "kind": "reveal",
-   "lines": "1-5"
+   "lines": "1-8"
   },
   {
-   "description": "Lines 6-23 define `main`.",
+   "description": "The expression based on rand stores a bounded positive value in sleepTime. You print the selected value before calling sleep.",
    "kind": "reveal",
-   "lines": "6-23"
+   "lines": "10-14"
   },
   {
-   "description": "Line 22 returns a value.",
-   "kind": "focus",
-   "lines": "22"
+   "answer": "sleep must return first. The wake-up print follows it in the same main function.",
+   "kind": "predict",
+   "lines": "17-20",
+   "question": "Which call must return before the wake-up message prints?"
   },
   {
-   "description": "This is the end of the run: the final state, and all of the output.",
-   "kind": "run",
-   "lines": "23",
-   "trace_step": 6
+   "description": "You see a sleep announcement followed by The program has woken up. This example demonstrates sequential calls in main without creating a thread.",
+   "kind": "reveal",
+   "lines": "17-23"
   }
  ],
- "title": "Causing a Thread to Sleep",
+ "title": "Following a pause and its messages",
  "version": 1
 }

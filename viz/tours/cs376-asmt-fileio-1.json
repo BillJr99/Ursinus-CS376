@@ -1,47 +1,38 @@
 {
  "code": "#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\nchar** tokenize(char* input, const char* delimiter, int* tokenCount) {\n    char** tokens = NULL;\n    int capacity = 10; // Initial capacity for the array of tokens\n    *tokenCount = 0; // Initialize the token count\n\n    // Allocate initial memory for tokens\n    tokens = (char**)malloc(capacity * sizeof(char*));\n    if (tokens == NULL) {\n        fprintf(stderr, \"Memory allocation failed\\n\");\n        return NULL;\n    }\n\n    // Duplicate the input string to avoid modifying the original string\n    char* inputDup = strdup(input);\n    if (inputDup == NULL) {\n        free(tokens);\n        fprintf(stderr, \"Memory allocation failed\\n\");\n        return NULL;\n    }\n\n    // Tokenize the input string\n    char* token = strtok(inputDup, delimiter);\n    while (token != NULL) {\n        if (*tokenCount >= capacity) {\n            // Increase capacity\n            capacity *= 2;\n            char** temp = (char**)realloc(tokens, capacity * sizeof(char*));\n            if (temp == NULL) {\n                // Cleanup and error handling\n                for (int i = 0; i < *tokenCount; ++i) {\n                    free(tokens[i]);\n                }\n                free(tokens);\n                free(inputDup);\n                fprintf(stderr, \"Memory allocation failed\\n\");\n                return NULL;\n            }\n            tokens = temp;\n        }\n\n        // Duplicate token and add to the array\n        tokens[*tokenCount] = strdup(token);\n        if (tokens[*tokenCount] == NULL) {\n            // Cleanup and error handling\n            for (int i = 0; i < *tokenCount; ++i) {\n                free(tokens[i]);\n            }\n            free(tokens);\n            free(inputDup);\n            fprintf(stderr, \"Memory allocation failed\\n\");\n            return NULL;\n        }\n\n        (*tokenCount)++;\n        token = strtok(NULL, delimiter);\n    }\n\n    free(inputDup); // Cleanup the duplicated string\n    return tokens;\n}\n\nint main() {\n    char input[] = \"This is a test string, with several delimiters.\";\n    const char* delimiter = \" ,.\"; // Tokenize based on space, comma, and period\n    int tokenCount = 0;\n\n    char** tokens = tokenize(input, delimiter, &tokenCount);\n    if (tokens != NULL) {\n        for (int i = 0; i < tokenCount; i++) {\n            printf(\"%d: %s\\n\", i + 1, tokens[i]);\n            free(tokens[i]); // Free each token\n        }\n        free(tokens); // Free the array of tokens\n    }\n\n    return 0;\n}",
- "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "description": "You can follow allocation and cleanup around a strtok loop.",
  "example": "cs376-asmt-fileio-1",
  "lang": "c",
  "reviewed": false,
- "source": "skeleton",
+ "source": "draft: codex free model",
  "steps": [
   {
-   "description": "Lines 1-4 set things up.",
+   "description": "tokenize starts an array of ten token pointers and duplicates input. You update the caller's token count through its pointer parameter.",
    "kind": "reveal",
-   "lines": "1-4"
+   "lines": "1-23"
   },
   {
-   "description": "Lines 5-64 define `tokenize`.",
+   "description": "The loop starts with strtok on inputDup and grows the pointer array when needed. Allocation failure paths release the objects already owned by the function.",
    "kind": "reveal",
-   "lines": "5-64"
+   "lines": "25-43"
   },
   {
-   "description": "Line 12 makes a decision.",
-   "kind": "focus",
-   "lines": "12"
+   "answer": "It allocates another string with strdup. Those token copies remain valid after inputDup is freed.",
+   "kind": "predict",
+   "lines": "45-63",
+   "question": "Does saving a token keep a pointer into inputDup or allocate another string?"
   },
   {
-   "description": "Line 27 starts a loop.",
-   "kind": "focus",
-   "lines": "27"
-  },
-  {
-   "description": "Line 40 returns a value.",
-   "kind": "focus",
-   "lines": "40"
-  },
-  {
-   "description": "Line 63 returns a value.",
-   "kind": "focus",
-   "lines": "63"
-  },
-  {
-   "description": "Lines 66-81 define `main`.",
+   "description": "You advance the token count and request the next token until strtok returns NULL. The driver splits on space, comma and period characters.",
    "kind": "reveal",
-   "lines": "66-81"
+   "lines": "45-69"
+  },
+  {
+   "description": "The supplied output lists eight words, numbered 1 through 8. You free the token strings individually and then release their pointer array.",
+   "kind": "reveal",
+   "lines": "71-81"
   }
  ],
- "title": "Tokenizing a String",
+ "title": "Splitting text into owned token copies",
  "version": 1
 }

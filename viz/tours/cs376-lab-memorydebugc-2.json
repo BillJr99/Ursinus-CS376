@@ -1,33 +1,33 @@
 {
  "code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    char src[] = \"hello\";\n    char dest[5]; \n    strcpy(dest, src); \n    printf(\"Dest: %s\\n\", dest);\n    return 0;\n}",
- "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "description": "You can compare the source string's storage needs with the destination array.",
  "example": "cs376-lab-memorydebugc-2",
  "lang": "c",
  "reviewed": false,
- "source": "skeleton",
+ "source": "draft: codex free model",
  "steps": [
   {
-   "description": "Lines 1-3 set things up.",
+   "description": "src contains hello and its terminating null character. You reserve only five characters in dest.",
    "kind": "reveal",
-   "lines": "1-3"
+   "lines": "1-6"
   },
   {
-   "description": "Lines 4-10 define `main`.",
+   "answer": "No. The five letters and terminating null character require six positions, so the copy exceeds dest's bounds.",
+   "kind": "predict",
+   "lines": "7",
+   "question": "Does dest have room for every character strcpy copies?"
+  },
+  {
+   "description": "strcpy copies through the terminator before printf reads dest as a string. This out-of-bounds write gives the program undefined behavior.",
    "kind": "reveal",
-   "lines": "4-10"
+   "lines": "7-8"
   },
   {
-   "description": "Line 9 returns a value.",
-   "kind": "focus",
-   "lines": "9"
-  },
-  {
-   "description": "This is the end of the run: the final state, and all of the output.",
-   "kind": "run",
-   "lines": "10",
-   "trace_step": 4
+   "description": "The supplied recording prints Dest: hello and reaches the return. You can observe that output while still identifying the invalid copy from the array sizes.",
+   "kind": "reveal",
+   "lines": "9-10"
   }
  ],
- "title": "Step 2",
+ "title": "Reading a string copy's bounds",
  "version": 1
 }

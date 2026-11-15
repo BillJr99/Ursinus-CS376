@@ -1,43 +1,33 @@
 {
  "code": "#include <stdio.h>\n\nint add(int a, int b) {\n    return a - b;\n}\n\nint main() {\n    int a = 5;\n    int b = 10;\n    int result = add(a, b);\n    printf(\"The sum of %d and %d is %d\\n\", a, b, result);\n    return 0;\n}",
- "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "description": "You can compare a function's name and printed label with its actual expression.",
  "example": "cs376-gdbvalgrind-1",
  "lang": "c",
  "reviewed": false,
- "source": "skeleton",
+ "source": "draft: codex free model",
  "steps": [
   {
-   "description": "Lines 1-2 set things up.",
+   "description": "The function is named add, but its return expression is a - b. You can inspect that expression before following its caller.",
    "kind": "reveal",
-   "lines": "1-2"
+   "lines": "1-5"
   },
   {
-   "description": "Lines 3-5 define `add`.",
+   "description": "main assigns 5 to a and 10 to b. The call passes those values into add and saves its result.",
    "kind": "reveal",
-   "lines": "3-5"
+   "lines": "7-10"
   },
   {
-   "description": "Line 4 returns a value.",
-   "kind": "focus",
-   "lines": "4"
+   "answer": "It supplies -5 because the executed expression subtracts 10 from 5.",
+   "kind": "predict",
+   "lines": "10-11",
+   "question": "Which number will result supply to printf?"
   },
   {
-   "description": "Lines 7-13 define `main`.",
+   "description": "You see The sum of 5 and 10 is -5. The output label says sum while the returned value comes from subtraction.",
    "kind": "reveal",
-   "lines": "7-13"
-  },
-  {
-   "description": "Line 12 returns a value.",
-   "kind": "focus",
-   "lines": "12"
-  },
-  {
-   "description": "This is the end of the run: the final state, and all of the output.",
-   "kind": "run",
-   "lines": "13",
-   "trace_step": 7
+   "lines": "11-13"
   }
  ],
- "title": "Using gdb to Step Through your Code",
+ "title": "Tracing the value returned by add",
  "version": 1
 }

@@ -1,38 +1,33 @@
 {
  "code": "#include <stdio.h>\n\nint main() {\n    char buffer[10];\n    for (int i = 0; i <= 10; i++) {\n        buffer[i] = 'a'; \n    }\n    printf(\"Buffer: %s\\n\", buffer);\n    return 0;\n}",
- "description": "A walkthrough built from the code's structure: each part in reading order, then the moments to look at.",
+ "description": "You can compare array bounds and string-printing requirements with this loop.",
  "example": "cs376-lab-memorydebugc-1",
  "lang": "c",
  "reviewed": false,
- "source": "skeleton",
+ "source": "draft: codex free model",
  "steps": [
   {
-   "description": "Lines 1-2 set things up.",
+   "description": "buffer reserves ten characters. You can use indices 0 through 9 within that array.",
    "kind": "reveal",
-   "lines": "1-2"
+   "lines": "1-4"
   },
   {
-   "description": "Lines 3-10 define `main`.",
+   "answer": "No. The <= condition also reaches i equal to 10, causing an out-of-bounds write.",
+   "kind": "predict",
+   "lines": "5-6",
+   "question": "Does the loop stay within those ten positions?"
+  },
+  {
+   "description": "The loop writes letters without placing a null terminator. printf's %s conversion expects a terminated string, so this code also lacks a bounded string to read.",
    "kind": "reveal",
-   "lines": "3-10"
+   "lines": "5-8"
   },
   {
-   "description": "Line 5 starts a loop.",
-   "kind": "focus",
-   "lines": "5"
-  },
-  {
-   "description": "Line 9 returns a value.",
-   "kind": "focus",
-   "lines": "9"
-  },
-  {
-   "description": "This is the end of the run: the final state, and all of the output.",
-   "kind": "run",
-   "lines": "10",
-   "trace_step": 25
+   "description": "The recording prints Buffer: aaaaaaaaaab and reaches return. You can report that observed output while recognizing that undefined behavior gives no dependable string result.",
+   "kind": "reveal",
+   "lines": "9-10"
   }
  ],
- "title": "Step 1",
+ "title": "Inspecting a buffer loop boundary",
  "version": 1
 }
