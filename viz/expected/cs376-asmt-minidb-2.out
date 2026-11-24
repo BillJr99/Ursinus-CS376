@@ -1,0 +1,7 @@
+Comparing "apple" and "apple": The strings are equal; result == 0.
+Comparing "apple" and "banana": The first string is less than the second string.
+Comparing "banana" and "apple": The first string is greater than the second string.
+Comparing "apple" and "Apple": The first string is greater than the second string.
+Comparing "" and "": The strings are equal; result == 0.
+Comparing "apple" and "": The first string is greater than the second string.
+Comparing "apple" and "apple": The strings are equal; result == 0.

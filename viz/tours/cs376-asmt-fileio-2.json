@@ -1,0 +1,33 @@
+{
+ "code": "#include <stdio.h>\n#include <string.h>\n\nint main() {\n    // Define pairs of strings to compare\n    char* pairs[][2] = {\n        {\"apple\", \"apple\"}, // Equal strings\n        {\"apple\", \"banana\"}, // Lexicographically less\n        {\"banana\", \"apple\"}, // Lexicographically greater\n        {\"apple\", \"Apple\"}, // Case sensitivity, 'a' > 'A' in ASCII\n        {\"\", \"\"}, // Both strings are empty\n        {\"apple\", \"\"}, // Non-empty string compared with an empty string\n        {\"apple\", \"apple\"} // The strings are equal\n    };\n\n    // Calculate the number of pairs\n    int numPairs = sizeof(pairs) / sizeof(pairs[0]);\n\n    for (int i = 0; i < numPairs; i++) {\n        // Compare the strings\n        int result = strcmp(pairs[i][0], pairs[i][1]);\n\n        // Print the result of the comparison\n        printf(\"Comparing \\\"%s\\\" and \\\"%s\\\": \", pairs[i][0], pairs[i][1]);\n        if (result < 0) {\n            printf(\"The first string is less than the second string.\\n\");\n        } else if (result > 0) {\n            printf(\"The first string is greater than the second string.\\n\");\n        } else {\n            printf(\"The strings are equal; result == 0.\\n\");\n        }\n    }\n\n    return 0;\n}",
+ "description": "You can read strcmp results by their sign rather than a particular nonzero value.",
+ "example": "cs376-asmt-fileio-2",
+ "lang": "c",
+ "reviewed": false,
+ "source": "draft: codex free model",
+ "steps": [
+  {
+   "description": "pairs holds seven string pairs, including equal strings, different cases and empty strings. You compute the row count from the array sizes.",
+   "kind": "reveal",
+   "lines": "1-17"
+  },
+  {
+   "description": "Each iteration compares the two strings in one row with strcmp. You print the pair before describing its result.",
+   "kind": "reveal",
+   "lines": "19-24"
+  },
+  {
+   "answer": "The equality branch handles it because strcmp returns zero for equal strings.",
+   "kind": "predict",
+   "lines": "25-30",
+   "question": "Which branch handles the pair containing two empty strings?"
+  },
+  {
+   "description": "You see equality, less-than and greater-than messages for the supplied cases. The recording places lowercase apple after Apple and places a nonempty apple after the empty string.",
+   "kind": "reveal",
+   "lines": "25-35"
+  }
+ ],
+ "title": "Branching on string comparisons",
+ "version": 1
+}

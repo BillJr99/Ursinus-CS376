@@ -1,0 +1,33 @@
+{
+ "code": "#include<stdio.h>\n#include<unistd.h> /* Has mygetpid syscall number */\n\nint main()\n{\n   int syscallnum = 285; // use your syscall number from earlier here\n   printf(\"Process ID: %d\\n\", syscall(syscallnum)); // alternative to mygetpid() if this function is not exposed by the kernel to user-space\n   return 0;\n}",
+ "description": "You can separate the custom-kernel test's intent from its supplied result.",
+ "example": "cs376-proj-syscallprocess-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "draft: codex free model",
+ "steps": [
+  {
+   "description": "The user program stores 285 in syscallnum. The deck assigns this number to a custom syscall in its specified kernel setup.",
+   "kind": "reveal",
+   "lines": "1-6"
+  },
+  {
+   "description": "You pass that number to syscall and print its result under the label Process ID. This statement uses the numeric interface rather than a named custom wrapper.",
+   "kind": "focus",
+   "lines": "7"
+  },
+  {
+   "answer": "No. The label is fixed text, and the supplied recording shows a result of -1.",
+   "kind": "predict",
+   "lines": "7",
+   "question": "Does the Process ID label establish that the call succeeded?"
+  },
+  {
+   "description": "You see Process ID: -1 followed by the program's return. This recording supplies no successful process ID or errno detail to identify the failure.",
+   "kind": "reveal",
+   "lines": "7-9"
+  }
+ ],
+ "title": "Reading a numbered syscall test",
+ "version": 1
+}

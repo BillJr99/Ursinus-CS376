@@ -1,0 +1,33 @@
+{
+ "code": "/* counter.c -- BROKEN ON PURPOSE. Do not fix yet; run it and observe. */\n#include <stdio.h>\n#include <pthread.h>\n\n#define ITERATIONS 1000000\n\nint counter = 0;   /* shared between both threads */\n\nvoid* increment(void* arg) {\n    for (int i = 0; i < ITERATIONS; i++) {\n        counter = counter + 1;   /* the dangerous line */\n    }\n    return NULL;\n}\n\nint main() {\n    pthread_t t1, t2;\n    pthread_create(&t1, NULL, increment, NULL);\n    pthread_create(&t2, NULL, increment, NULL);\n    pthread_join(t1, NULL);\n    pthread_join(t2, NULL);\n    printf(\"Final count: %d (expected %d)\\n\", counter, 2 * ITERATIONS);\n    return 0;\n}",
+ "description": "You can locate the shared update and compare the recorded count with its target.",
+ "example": "cs376-lab-volatile-1",
+ "lang": "c",
+ "reviewed": false,
+ "source": "draft: codex free model",
+ "steps": [
+  {
+   "description": "counter is a global integer shared by both workers. You set each worker's loop count with ITERATIONS.",
+   "kind": "reveal",
+   "lines": "1-7"
+  },
+  {
+   "description": "increment repeatedly reads and writes counter in one C expression. You can see that this worker contains no synchronization around that shared access.",
+   "kind": "reveal",
+   "lines": "9-14"
+  },
+  {
+   "answer": "No. They wait for completion after the workers start; the worker's read and write remain unprotected.",
+   "kind": "predict",
+   "lines": "16-22",
+   "question": "Do the joins themselves protect each update inside increment?"
+  },
+  {
+   "description": "The supplied run prints Final count: 1161395 (expected 2000000). You have an observed mismatch rather than a dependable count from this data-racing program.",
+   "kind": "reveal",
+   "lines": "16-24"
+  }
+ ],
+ "title": "Observing an unprotected shared counter",
+ "version": 1
+}

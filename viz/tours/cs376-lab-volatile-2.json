@@ -1,0 +1,33 @@
+{
+ "code": "/* counter.c -- CORRECT version */\n#include <stdio.h>\n#include <pthread.h>\n\n#define ITERATIONS 1000000\n\nint counter = 0;               /* volatile is not needed once the mutex is correct */\npthread_mutex_t lock;          /* declare the lock */\n\nvoid* increment(void* arg) {\n    for (int i = 0; i < ITERATIONS; i++) {\n        pthread_mutex_lock(&lock);     /* enter the critical section */\n        counter = counter + 1;         /* now indivisible with respect to other threads */\n        pthread_mutex_unlock(&lock);   /* leave the critical section */\n    }\n    return NULL;\n}\n\nint main() {\n    pthread_t t1, t2;\n    pthread_mutex_init(&lock, NULL);   /* runtime initialization */\n\n    pthread_create(&t1, NULL, increment, NULL);\n    pthread_create(&t2, NULL, increment, NULL);\n    pthread_join(t1, NULL);\n    pthread_join(t2, NULL);\n\n    pthread_mutex_destroy(&lock);      /* release the lock's resources */\n    printf(\"Final count: %d (expected %d)\\n\", counter, 2 * ITERATIONS);\n    return 0;\n}",
+ "description": "You can follow the supplied mutex and thread lifecycle.",
+ "example": "cs376-lab-volatile-2",
+ "lang": "c",
+ "reviewed": false,
+ "source": "draft: codex free model",
+ "steps": [
+  {
+   "description": "counter starts at zero and lock is a shared mutex. ITERATIONS sets the number of loop passes for each worker.",
+   "kind": "reveal",
+   "lines": "1-8"
+  },
+  {
+   "description": "Each worker locks before updating counter and unlocks afterward. You can locate the shared read and write inside this protected region.",
+   "kind": "reveal",
+   "lines": "10-17"
+  },
+  {
+   "answer": "No. It joins both threads before reaching the print statement.",
+   "kind": "predict",
+   "lines": "19-26",
+   "question": "Does main print the count before either worker finishes?"
+  },
+  {
+   "description": "main initializes the mutex, starts and joins both workers, then destroys the mutex. You see Final count: 2000000 (expected 2000000) in the supplied run.",
+   "kind": "reveal",
+   "lines": "19-31"
+  }
+ ],
+ "title": "Reading a protected shared increment",
+ "version": 1
+}
